@@ -11,7 +11,7 @@ import { Router, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterOutlet],
+  imports: [ReactiveFormsModule, RouterOutlet, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -20,6 +20,8 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
+
+  loading = false;
 
   constructor(private router: Router) {}
 
@@ -58,6 +60,12 @@ export class LoginComponent {
   }
 
   onRegister() {
-    this.router.navigate(['/sign-up']);
+    this.loading = true;
+    setTimeout(() => {
+      this.router.navigate(['/sign-up']).then(() => {
+        this.loading = false;
+      });
+    }, 1000);
   }
+  
 }
