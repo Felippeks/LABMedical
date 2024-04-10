@@ -1,26 +1,28 @@
-<main class="flex min-h-screen relative font-poppins">
+<main class="flex min-h-screen relative font-roboto">
   <section
     class="w-1/2 bg-[#014c8b] flex items-center justify-center text-white px-4 relative"
   >
-    <div class="absolute top-0 left-0 flex items-center px-12 pt-8">
-      <img src="./assets/LAB365.png" class="inline-block mr-2 w-48" />
-      <!-- <span class="text-2xl">LabMedical</span> -->
+    <div class="absolute top-0 left-0 flex items-center lg:px-4 md:px-2 pt-2 uppercase ">
+      <img src="./assets/logo.svg" class="inline-block lg:w-28 w-16" />
+      <span class="lg:text-4xl text-lg lg:-ml-4 -ml-2 font-medium">Lab</span
+      ><span class="lg:text-4xl text-lg font-extralight">Medical</span>
     </div>
-    <div class="pr-96 pl-12 text-justify">
-      <h2 class="text-2xl mb-4">Gestão de inventário médico simplificada</h2>
-      <p>
+
+    <div class="lg:pr-96 md:pr-52 lg:pl-6 md:pl-2 lg:text-justify hide-on-mobile">
+      <h2 class="lg:text-3xl text-start md:text-xl mb-4">Gestão de inventário médico simplificada</h2>
+      <p class="lg:text-lg md:text-sm">
         Descubra o poder da inovação com o LABMedical da Medicine365 Inc.
         Simplifique a gestão hospitalar e otimize seus processos com nosso
         software revolucionário.
       </p>
     </div>
   </section>
-  <section class="w-1/2 bg-white flex items-center justify-center relative">
+  <section class="w-1/2 bg-white flex items-center justify-center relative hide-on-mobile">
     <div class="absolute inset-0 flex items-center justify-center">
       <img
         src="./assets/LABMedical.png"
         alt="fundo imagem"
-        class="h-[650px] w-[900px]"
+        class="xl:h-[500px] xl:w-[700px] md:h-64 md:w-72 md:absolute md:right-0 xl:right-20 3xl:right-auto top-center"
       />
     </div>
   </section>
@@ -50,16 +52,16 @@
         placeholder="********"
         class="mb-2 p-1 rounded-lg border-[1px] placeholder:text-xs placeholder:pl-2"
       />
-      <input
+      <input 
         type="submit"
         (click)="onLogin()"
         value="Entrar no portal"
-        class="mt-4 mb-2 bg-[#064c8c] text-white rounded-3xl p-2 uppercase font-medium"
+        class="mt-4 mb-2 bg-[#064c8c] text-white rounded-3xl p-2 uppercase font-medium hover:bg-[#064d8fe4]"
       />
       <button
         type="button"
         (click)="onRegister()"
-        class="mb-2 border-[1px] border-[#064c8c] rounded-3xl p-2 text-[#064c8c] uppercase font-medium"
+        class="mb-2 border-[1px] border-[#064c8c] rounded-3xl p-2 text-[#064c8c] uppercase font-medium hover:bg-gray-200 hover:text-black hover:border-[#FFD700]"
       >
         <span *ngIf="!loading">Quero me cadastrar</span>
         <div *ngIf="loading" class="loading-spinner"></div>
@@ -67,7 +69,7 @@
       <button
         type="button"
         (click)="onForgotPassword()"
-        class="p-2 uppercase text-[#064c8c] font-medium mb-4"
+        class="p-2 uppercase text-[#064c8c] font-medium mb-4 hover:bg-gray-100 hover:text-[#FFD700] rounded-3xl"
       >
         Esqueci a senha
       </button>
