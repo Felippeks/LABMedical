@@ -1,0 +1,32 @@
+<main class="flex justify-center items-center min-h-screen bg-gray-300">
+  <div>
+    <img src="./assets/LABMedical.png" alt="logo" class="mx-auto h-72 w-96" />
+  </div>
+  <form
+    [formGroup]="loginForm"
+    class="flex flex-col justify-center items-center"
+  >
+    <label for="email" class="mb-2 font-bold"> Email:</label>
+    <input
+      type="text"
+      id="email"
+      formControlName="email"
+      class="w-64 mb-2 p-1 rounded-2xl"
+    />
+
+    <label for="password" class="mb-2 font-bold">Senha:</label>
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      class="w-64 mb-2 p-1 rounded-2xl"
+    />
+
+    <input type="submit" (click)="onLogin()" value="Entrar" />
+    <button type="button" (click)="onRegister()">Criar Conta</button>
+    <button type="button" (click)="onForgotPassword()">
+      Esqueceu sua senha?
+    </button>
+  </form>
+</main>
+<router-outlet />
