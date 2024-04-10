@@ -1,26 +1,167 @@
-<main
-class="flex justify-center items-center min-h-screen bg-gray-300">
-  <div>
-    <img src="./assets/LABMedical.png" alt="logo" class="mx-auto h-72 w-96" />
-  </div>
-  <form [formGroup]="SignUpForm" class="flex flex-col justify-center items-center">
-    <label for="name" class="mb-2 font-bold">Nome</label>
-    <input type="text" id="name" formControlName="name" class="w-64 mb-2 p-1 rounded-2xl"/>
-    <label for="email"class="mb-2 font-bold">Email</label>
-    <input type="text" id="email" formControlName="email" class="w-64 mb-2 p-1 rounded-2xl"/>
-    <label for="date" class="mb-2 font-bold">data de nascimento</label>
-    <input type="date" id="date" formControlName="date" class="w-64 mb-2 p-1 rounded-2xl text-center"/>
+<main class="flex min-h-screen relative font-roboto">
+  <section
+    class="w-1/2 bg-[#014c8b] flex items-center justify-center text-white px-4 relative"
+  >
+    <div
+      class="absolute top-0 left-0 flex items-center lg:px-4 md:px-2 pt-2 uppercase"
+    >
+      <img src="./assets/logo.svg" class="inline-block lg:w-28 w-16" />
+      <span class="lg:text-4xl text-lg lg:-ml-4 -ml-2 font-medium">Lab</span
+      ><span class="lg:text-4xl text-lg font-extralight">Medical</span>
+    </div>
 
-    <label for="password" class="mb-2 font-bold">Senha</label>
-    <input type="password" id="password" formControlName="password" class="w-64 mb-2 p-1 rounded-2xl" />
-    <label for="password-forgot" class="mb-2 font-bold" >Confirmar Senha</label>
-    <input
-      type="password"
-      id="password-forgot"
-      formControlName="confirmPassword"
-      class="w-64 mb-2 p-1 rounded-2xl"
-    />
-    <button type="submit" (click)="SignUp()">Cadastrar</button>
-    <button type="button" (click)="onLogin()">Login</button>
-  </form>
+    <div
+      class="lg:pr-96 md:pr-52 lg:pl-6 md:pl-2 lg:text-justify hide-on-mobile"
+    >
+      <h2 class="lg:text-3xl text-start md:text-xl mb-4">
+        Gestão de inventário médico simplificada
+      </h2>
+      <p class="lg:text-lg md:text-sm">
+        Descubra o poder da inovação com o LABMedical da Medicine365 Inc.
+        Simplifique a gestão hospitalar e otimize seus processos com nosso
+        software revolucionário.
+      </p>
+    </div>
+  </section>
+  <section
+    class="w-1/2 bg-white flex items-center justify-center relative hide-on-mobile"
+  >
+    <div class="absolute inset-0 flex items-center justify-center">
+      <img
+        src="./assets/LABMedical.png"
+        alt="fundo imagem"
+        class="xl:h-[500px] xl:w-[700px] md:h-64 md:w-72 md:absolute md:right-0 xl:right-20 3xl:right-auto top-center"
+      />
+    </div>
+  </section>
+  <div
+    class="absolute inset-0 flex items-center justify-center backdrop-brightness-75"
+  >
+    <form
+      [formGroup]="SignUpForm"
+      class="flex flex-col bg-white shadow-2xl p-4 rounded-3xl w-[360px] px-10"
+    >
+      <h3 class="text-center text-xl font-light p-6">Cadastro</h3>
+      <label for="name" class="mb-2 text-[#014c8b] font-light">Nome:</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="mb-2 p-1 rounded-lg border-[1px] placeholder:text-xs"
+      />
+      <div
+      *ngIf="
+        SignUpForm.controls.name.invalid &&
+        (SignUpForm.controls.name.dirty || SignUpForm.controls.name.touched)
+      "
+      class="text-red-900 font-extralight text-xs mb-2"
+    >
+      <div *ngIf="SignUpForm.controls.name.errors.required">
+        Preenchimento obrigatório
+      </div>
+    </div>
+      <label for="email" class="mb-2 text-[#014c8b] font-light">Email:</label>
+      <input
+        type="text"
+        id="email"
+        formControlName="email"
+        placeholder="exemplo@exemplo.com"
+        class="mb-2 p-1 rounded-lg border-[1px] placeholder:text-xs placeholder:pl-2"
+      />
+      <div
+      *ngIf="
+        SignUpForm.controls.email.invalid &&
+        (SignUpForm.controls.email.dirty || SignUpForm.controls.email.touched)
+      "
+      class="text-red-900 font-extralight text-xs mb-2"
+    >
+      <div *ngIf="SignUpForm.controls.email.errors.required">
+        Preenchimento obrigatório
+      </div>
+    </div>
+      <label for="date" class="mb-2 text-[#014c8b] font-light "
+        >Data de nascimento:</label
+      >
+      <input
+        type="date"
+        id="date"
+        formControlName="date"
+        class="mb-2 p-1 rounded-lg border-[1px] text-[#014c8b] w-full bg-white"
+      />
+      <div
+      *ngIf="
+        SignUpForm.controls.date.invalid &&
+        (SignUpForm.controls.date.dirty || SignUpForm.controls.date.touched)
+      "
+      class="text-red-900 font-extralight text-xs mb-2"
+    >
+      <div *ngIf="SignUpForm.controls.date.errors.required">
+        Preenchimento obrigatório
+      </div>
+    </div>
+
+      <label for="password" class="mb-2 text-[#014c8b] font-light"
+        >Senha:</label
+      >
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="********"
+        class="mb-2 p-1 rounded-lg border-[1px] placeholder:text-xs placeholder:pl-2"
+      />
+      <div
+      *ngIf="
+        SignUpForm.controls.password.invalid &&
+        (SignUpForm.controls.password.dirty || SignUpForm.controls.password.touched)
+      "
+      class="text-red-900 font-extralight text-xs mb-2"
+    >
+      <div *ngIf="SignUpForm.controls.password.errors.required">
+        Preenchimento obrigatório
+      </div>
+      <div *ngIf="SignUpForm.controls.password.errors.minlength">
+        A senha deve conter ao menos 8 caracteres
+      </div>
+    </div>
+      <label for="password-forgot" class="mb-2 text-[#014c8b] font-light"
+        >Confirmar Senha:</label
+      >
+      <input
+        type="password"
+        id="password-forgot"
+        formControlName="confirmPassword"
+        placeholder="********"
+        class="mb-2 p-1 rounded-lg border-[1px] placeholder:text-xs placeholder:pl-2"
+      />
+      <div
+      *ngIf="
+        SignUpForm.controls.confirmPassword.invalid &&
+        (SignUpForm.controls.confirmPassword.dirty || SignUpForm.controls.confirmPassword.touched)
+      "
+      class="text-red-900 font-extralight text-xs mb-2"
+    >
+      <div *ngIf="SignUpForm.controls.confirmPassword.errors.required">
+        Preenchimento obrigatório
+      </div>
+      <div *ngIf="SignUpForm.controls.confirmPassword.errors.minlength">
+        A senha deve conter ao menos 8 caracteres
+      </div>
+    </div>
+      <button
+        type="button"
+        (click)="SignUp()"
+        class="mb-2 border-[1px] border-[#064c8c] rounded-3xl p-2 text-[#064c8c] uppercase font-medium hover:bg-gray-200 hover:text-black hover:border-[#FFD700]"
+      >
+        <span>cadastrar</span>
+      </button>
+      <button
+        type="button"
+        (click)="onLogin()"
+        class="p-2 uppercase text-[#064c8c] font-medium mb-4 hover:bg-gray-100 hover:text-[#FFD700] rounded-3xl"
+      >
+        Voltar ao login
+      </button>
+    </form>
+  </div>
 </main>
