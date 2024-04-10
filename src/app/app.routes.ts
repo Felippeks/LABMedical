@@ -10,13 +10,33 @@ import { PatientMedicalListingComponent } from './components/patient-medical-lis
 import { PatientRegistrationComponent } from './components/patient-registration/patient-registration.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'login', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent},
-    {path: 'sign-up', component: SignUpComponent},
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuardRouter] },
-    { path: 'appointment', component: AppointmentRegistrationComponent, canActivate: [AuthGuardRouter] },
-    { path: 'exam', component: ExamRegistrationComponent, canActivate: [AuthGuardRouter] },
-    { path: 'medicalListing', component: MedicalRecordListingComponent, canActivate: [AuthGuardRouter] },
-    { path: 'patientListing', component: PatientMedicalListingComponent, canActivate: [AuthGuardRouter]},
-    {path : 'patientRegistration', component: PatientRegistrationComponent, canActivate: [AuthGuardRouter]}
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'sign-up', component: SignUpComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardRouter] },
+  {
+    path: 'appointment',
+    component: AppointmentRegistrationComponent,
+    canActivate: [AuthGuardRouter],
+  },
+  {
+    path: 'exam',
+    component: ExamRegistrationComponent,
+    canActivate: [AuthGuardRouter],
+  },
+  {
+    path: 'medicalListing',
+    component: MedicalRecordListingComponent,
+    canActivate: [AuthGuardRouter],
+  },
+  {
+    path: 'patientListing',
+    component: PatientMedicalListingComponent,
+    canActivate: [AuthGuardRouter],
+  },
+  {
+    path: 'patientRegistration',
+    component: PatientRegistrationComponent,
+    canActivate: [AuthGuardRouter],
+  },
 ];

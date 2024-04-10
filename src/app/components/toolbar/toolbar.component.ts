@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [MatMenuModule, MatToolbarModule, CommonModule],
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.scss'
+  styleUrl: './toolbar.component.scss',
 })
 export class ToolbarComponent implements OnInit {
   userName: string | undefined;
@@ -17,7 +17,10 @@ export class ToolbarComponent implements OnInit {
   userIcon: string | undefined = './assets/user-icon.png';
   showMenu = false;
 
-  constructor(private router: Router, @Inject(DOCUMENT) private document: Document) { }
+  constructor(
+    private router: Router,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
   ngOnInit(): void {
     const userData = JSON.parse(localStorage.getItem('userData') as string);
