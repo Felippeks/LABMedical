@@ -33,6 +33,7 @@ export class LoginComponent {
       const userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
       if (email && userData.email === email && userData.password === password) {
+        this.router.navigate(['/home']);
         localStorage.setItem('isLoggedIn', 'true');
       } else {
         alert('Usuário ou senha inválidos');
