@@ -5,8 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuardRouter } from './guardsRoutes/guards.guard';
 import { AppointmentRegistrationComponent } from './components/appointment-registration/appointment-registration.component';
 import { ExamRegistrationComponent } from './components/exam-registration/exam-registration.component';
-import { MedicalRecordListingComponent } from './components/medical-record-listing/medical-record-listing.component';
-import { PatientMedicalListingComponent } from './components/patient-medical-listing/patient-medical-listing.component';
+import { MedicalRecordListingComponent } from './components/medical-listing/medical-listing.component';
+import { PatientMedicalListingComponent } from './components/patient-listing/patient-listing.component';
 import { PatientRegistrationComponent } from './components/patient-registration/patient-registration.component';
 
 export const routes: Routes = [
@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardRouter] },
   {
-    path: 'appointment',
+    path: 'appointments',
     component: AppointmentRegistrationComponent,
     canActivate: [AuthGuardRouter],
   },
