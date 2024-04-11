@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ScreenSizeService } from '../../services/screen-size-service.service';
 import {
   Router,
   ActivatedRoute,
@@ -9,15 +10,31 @@ import {
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { SidebarService } from '../../services/sidebar-service.service';
 import { Observable } from 'rxjs';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
+  animations: [
+    trigger('sidebarAnimation', [
+      state('open', style({
+        width: '256px',
+      })),
+      state('closed', style({
+        width: '{{sidebarWidth}}',
+      }), {params: {sidebarWidth: '160px'}}),
+      transition('open <=> closed', [
+        animate('0.7s')
+      ]),
+    ]),
+  ]
 })
 export class SidebarComponent implements OnInit {
+  sidebarWidth = '160px';
   isOpen$: Observable<boolean> | undefined;
+  isClosed$: Observable<boolean> | undefined;
   menuItems = [
     {
       route: '/home',
@@ -62,10 +79,15 @@ export class SidebarComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private sidebarService: SidebarService,
+    private screenSizeService: ScreenSizeService
   ) {}
 
   ngOnInit(): void {
+    this.screenSizeService.isDesktop.subscribe(isDesktop => {
+      this.sidebarWidth = isDesktop ? '160px' : '80px';
+    });
     this.isOpen$ = this.sidebarService.isOpen$;
+    this.isClosed$ = this.isOpen$.pipe(map(isOpen => !isOpen));
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
