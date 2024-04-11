@@ -10,11 +10,10 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [HttpClientModule,ReactiveFormsModule,FormsModule,CommonModule],
+  imports: [HttpClientModule, ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
@@ -52,8 +51,10 @@ export class SignUpComponent {
     }
   }
   passwordsMatch(): boolean {
-    return this.SignUpForm.value.password === this.SignUpForm.value.confirmPassword;
-  }  
+    return (
+      this.SignUpForm.value.password === this.SignUpForm.value.confirmPassword
+    );
+  }
   storeUserData() {
     let formData = { ...this.SignUpForm.value };
     localStorage.setItem('userData', JSON.stringify(formData));
@@ -62,4 +63,3 @@ export class SignUpComponent {
     this.router.navigate(['/login']);
   }
 }
-

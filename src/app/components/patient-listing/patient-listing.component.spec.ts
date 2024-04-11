@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PatientMedicalListingComponent } from './patient-medical-listing.component';
+import { PatientMedicalListingComponent } from './patient-listing.component';
 
 describe('PatientMedicalListingComponent', () => {
   let component: PatientMedicalListingComponent;
@@ -8,10 +8,9 @@ describe('PatientMedicalListingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PatientMedicalListingComponent]
-    })
-    .compileComponents();
-    
+      imports: [PatientMedicalListingComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PatientMedicalListingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

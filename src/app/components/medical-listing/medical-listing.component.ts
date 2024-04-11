@@ -3,10 +3,10 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
-  selector: 'app-appointment-registration',
+  selector: 'app-medical-record-listing',
   standalone: true,
-  templateUrl: './appointment-registration.component.html',
-  styleUrl: './appointment-registration.component.scss',
+  templateUrl: './medical-listing.component.html',
+  styleUrl: './medical-listing.component.scss',
   imports: [SidebarComponent, ToolbarComponent],
 })
-export class AppointmentRegistrationComponent {}
+export class MedicalRecordListingComponent {}
