@@ -1,0 +1,24 @@
+.sidebar {
+  &.open {
+    div button {
+      @apply flex-row justify-start;
+
+      .menu-text {
+        @apply text-start;
+      }
+    }
+  }
+
+  &.closed {
+    @apply w-[120px];
+
+    div button {
+      @apply flex-col items-center;
+
+      .menu-text {
+        @apply opacity-100 visible text-center;
+      }
+    }
+  }
+
+}

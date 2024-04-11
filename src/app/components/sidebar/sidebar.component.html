@@ -1,12 +1,43 @@
-<aside class="bg-[#014c8b] max-w-64">
-  <section class="flex flex-col justify-start items-start">
-    <button>hamburguer</button>
-    <button (click)="home()">Estatísticas e Informações</button>
-    <button (click)="patientRegistration()">Cadastro de Paciente</button>
-    <button (click)="appointments()">Cadastro de Consulta</button>
-    <button (click)="exam()">Cadastro de Exame</button>
-    <button (click)="medicalListing()">Listagem de Prontuário</button>
-    <button (click)="patientListing()">Prontuário de Paciente</button>
-    <button (click)="logout()">Sair</button>
+<aside
+  [ngClass]="{
+    sidebar: true,
+    open: (isOpen$ | async),
+    closed: !(isOpen$ | async)
+  }"
+  class="max-w-64 text-white h-screen bg-[#014c8b] shadow-md transition-width duration-1000 overflow-hidden"
+>
+  <section class="flex flex-col justify-start items-start pt-4">
+    <button (click)="toggleSidebar()" class="self-center w-8 h-8">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-8 h-8"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+        />
+      </svg>
+    </button>
+    <div
+      *ngFor="let item of menuItems"
+      class="my-2 flex w-full items-center justify-start transition-colors duration-700"
+    >
+      <button
+        [routerLink]="item.route"
+        routerLinkActive="bg-blue-900 text-[#ffd900e6] "
+        class="flex w-full items-center justify-start py-3"
+      >
+        <img src="{{ item.icon }}" alt="icon" class="w-6 mx-2" />
+        <span
+          class="menu-text text-lg transition-opacity duration-500 min-w-[100px] text-start"
+          >{{ item.text }}</span
+        >
+      </button>
+    </div>
   </section>
 </aside>
