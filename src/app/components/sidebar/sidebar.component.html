@@ -4,7 +4,7 @@
     open: (isOpen$ | async),
     closed: !(isOpen$ | async)
   }"
-  class="max-w-64 text-white h-screen bg-[#014c8b] shadow-md transition-width duration-1000 overflow-hidden"
+  class="md:max-w-64 max-w-40 text-white h-screen bg-[#014c8b] shadow-md transition-width duration-1000 overflow-hidden"
 >
   <section class="flex flex-col justify-start items-start pt-4">
     <button (click)="toggleSidebar()" class="self-center w-8 h-8">
@@ -30,11 +30,11 @@
       <button
         [routerLink]="item.route"
         routerLinkActive="bg-blue-900 text-[#ffd900e6] "
-        class="flex w-full items-center justify-start py-3"
+        class="flex w-full items-center justify-start md:py-3 py-1"
       >
-        <img src="{{ item.icon }}" alt="icon" class="w-6 mx-2" />
+        <img src="{{ item.icon }}" alt="icon" class="md:w-6 w-4 mx-2" />
         <span
-          class="menu-text text-lg transition-opacity duration-500 min-w-[100px] text-start"
+          class="menu-text md:text-lg text-[10px] mt-0.5 transition-opacity duration-500 md:min-w-[100px] min-w-[80px] mx-1 text-start"
           >{{ item.text }}</span
         >
       </button>
