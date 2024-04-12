@@ -1,0 +1,198 @@
+{
+  "pacientes": [
+    {
+      "id": "1",
+      "nomeCompleto": "João Silva",
+      "genero": "Masculino",
+      "dataNascimento": "1980-01-01",
+      "cpf": "123.456.789-00",
+      "rg": "20.345.678-9",
+      "OrgaoExpedidor": "SSP",
+      "estadoCivil": "Casado",
+      "telefone": "(11) 98765-4321",
+      "email": "joao.silva@example.com",
+      "naturalidade": "Brasileiro",
+      "contatoEmergencia": "(11) 87654-3210",
+      "listaAlergias": ["Amendoim", "Frutos do mar"],
+      "listaCuidadosEspecificos": ["Diabetes", "Hipertensão"],
+      "convenio": "Unimed",
+      "numeroConvenio": "123456789",
+      "validadeConvenio": "2025-12-31",
+      "endereco": "Rua Exemplo, 123, São Paulo, SP"
+    },
+    {
+      "id": "2",
+      "nomeCompleto": "Ana Santos",
+      "genero": "Feminino",
+      "dataNascimento": "1985-06-15",
+      "cpf": "987.654.321-00",
+      "rg": "19.876.543-2",
+      "OrgaoExpedidor": "SSP",
+      "estadoCivil": "Solteira",
+      "telefone": "(11) 91234-5678",
+      "email": "ana.santos@example.com",
+      "naturalidade": "Brasileira",
+      "contatoEmergencia": "(11) 98765-4321",
+      "listaAlergias": ["Glúten", "Lactose"],
+      "listaCuidadosEspecificos": ["Colesterol alto"],
+      "convenio": "Amil",
+      "numeroConvenio": "987654321",
+      "validadeConvenio": "2026-06-30",
+      "endereco": "Avenida Exemplo, 456, Rio de Janeiro, RJ"
+    },
+    {
+      "id": "3",
+      "nomeCompleto": "Maria Oliveira",
+      "genero": "Feminino",
+      "dataNascimento": "1976-08-22",
+      "cpf": "654.321.987-00",
+      "rg": "12.345.678-1",
+      "OrgaoExpedidor": "SSP",
+      "estadoCivil": "Divorciada",
+      "telefone": "(11) 94567-8901",
+      "email": "maria.oliveira@example.com",
+      "naturalidade": "Brasileira",
+      "contatoEmergencia": "(11) 91234-5678",
+      "listaAlergias": ["Penicilina"],
+      "listaCuidadosEspecificos": ["Asma"],
+      "convenio": "SulAmérica",
+      "numeroConvenio": "654321987",
+      "validadeConvenio": "2025-10-31",
+      "endereco": "Rua da Amizade, 321, Salvador, BA"
+    },
+    {
+      "id": "4",
+      "nomeCompleto": "Pedro Almeida",
+      "genero": "Masculino",
+      "dataNascimento": "1992-03-10",
+      "cpf": "876.543.210-00",
+      "rg": "23.456.789-4",
+      "OrgaoExpedidor": "SSP",
+      "estadoCivil": "Solteiro",
+      "telefone": "(21) 98765-4321",
+      "email": "pedro.almeida@example.com",
+      "naturalidade": "Brasileiro",
+      "contatoEmergencia": "(21) 91234-5678",
+      "listaAlergias": ["Poeira"],
+      "listaCuidadosEspecificos": ["Asma"],
+      "convenio": "Bradesco Saúde",
+      "numeroConvenio": "654987321",
+      "validadeConvenio": "2025-08-31",
+      "endereco": "Rua da Paz, 789, Belo Horizonte, MG"
+    },
+    {
+      "id": "5",
+      "nomeCompleto": "Mariana Costa",
+      "genero": "Feminino",
+      "dataNascimento": "1988-07-25",
+      "cpf": "234.567.890-00",
+      "rg": "34.567.890-5",
+      "OrgaoExpedidor": "SSP",
+      "estadoCivil": "Casada",
+      "telefone": "(31) 87654-3210",
+      "email": "mariana.costa@example.com",
+      "naturalidade": "Brasileira",
+      "contatoEmergencia": "(31) 94567-8901",
+      "listaAlergias": ["AAS", "Amendoim"],
+      "listaCuidadosEspecificos": ["Gestação"],
+      "convenio": "Golden Cross",
+      "numeroConvenio": "765432109",
+      "validadeConvenio": "2025-11-30",
+      "endereco": "Av. Principal, 456, Florianópolis, SC"
+    }
+  ],
+  "consultas": [
+    {
+      "id": "1",
+      "motivoConsulta": "Dor de cabeça persistente",
+      "dataConsulta": "2024-04-15",
+      "horarioConsulta": "14:00",
+      "descricaoProblema": "Dor de cabeça constante por 3 dias",
+      "medicacaoReceitada": "Paracetamol",
+      "dosagemPrecaucoes": "500mg a cada 6 horas"
+    },
+    {
+      "id": "2",
+      "motivoConsulta": "Dor no peito",
+      "dataConsulta": "2024-05-10",
+      "horarioConsulta": "10:00",
+      "descricaoProblema": "Dor no peito ao realizar esforços físicos",
+      "medicacaoReceitada": "Atenolol",
+      "dosagemPrecaucoes": "25mg uma vez ao dia"
+    },
+    {
+      "id": "3",
+      "motivoConsulta": "Febre persistente",
+      "dataConsulta": "2024-04-20",
+      "horarioConsulta": "09:30",
+      "descricaoProblema": "Febre alta por 5 dias",
+      "medicacaoReceitada": "Dipirona",
+      "dosagemPrecaucoes": "1g a cada 6 horas"
+    },
+    {
+      "id": "4",
+      "motivoConsulta": "Tosse persistente",
+      "dataConsulta": "2024-04-30",
+      "horarioConsulta": "15:45",
+      "descricaoProblema": "Tosse seca por mais de duas semanas",
+      "medicacaoReceitada": "Xarope para tosse",
+      "dosagemPrecaucoes": "10ml a cada 8 horas"
+    },
+    {
+      "id": "5",
+      "motivoConsulta": "Acompanhamento gestacional",
+      "dataConsulta": "2024-04-25",
+      "horarioConsulta": "10:30",
+      "descricaoProblema": "Consulta de rotina para acompanhamento da gestação",
+      "medicacaoReceitada": "Ácido fólico",
+      "dosagemPrecaucoes": "1 comprimido por dia"
+    }
+  ],
+  "exames": [
+    {
+      "id": "1",
+      "nomeExame": "Hemograma completo",
+      "dataExame": "2024-04-16",
+      "horarioExame": "08:00",
+      "tipoExame": "Sangue",
+      "laboratorio": "Unimed Diagnósticos",
+      "urlDocumento": "http://exemplo.com/exames/1.pdf"
+    },
+    {
+      "id": "2",
+      "nomeExame": "Eletrocardiograma",
+      "dataExame": "2024-05-20",
+      "horarioExame": "09:00",
+      "tipoExame": "Cardiológico",
+      "laboratorio": "Lab Cardiologia",
+      "urlDocumento": "http://exemplo.com/exames/2.pdf"
+    },
+    {
+      "id": "3",
+      "nomeExame": "Tomografia computadorizada",
+      "dataExame": "2024-04-25",
+      "horarioExame": "11:00",
+      "tipoExame": "Radiológico",
+      "laboratorio": "Lab Imagem",
+      "urlDocumento": "http://exemplo.com/exames/3.pdf"
+    },
+    {
+      "id": "4",
+      "nomeExame": "Raio-X do tórax",
+      "dataExame": "2024-05-05",
+      "horarioExame": "09:30",
+      "tipoExame": "Radiológico",
+      "laboratorio": "Lab Radiologia",
+      "urlDocumento": "http://exemplo.com/exames/4.pdf"
+    },
+    {
+      "id": "5",
+      "nomeExame": "Ultrassonografia obstétrica",
+      "dataExame": "2024-05-10",
+      "horarioExame": "08:00",
+      "tipoExame": "Ultrassonografia",
+      "laboratorio": "Lab Ultrassom",
+      "urlDocumento": "http://exemplo.com/exames/5.pdf"
+    }
+  ]
+}
