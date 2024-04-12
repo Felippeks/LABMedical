@@ -4,29 +4,52 @@
     <toolbar class="w-full"></toolbar>
     <div class="flex flex-col p-4 overflow-auto">
       <div class="mb-4">
-        <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()" placeholder="Buscar pacientes..." class="w-full p-2">
-        <select class="w-full p-2 mt-2" [(ngModel)]="searchField" (ngModelChange)="onSearchTermChange()">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchTermChange()"
+          placeholder="Buscar pacientes..."
+          class="w-full p-2"
+        />
+        <select
+          class="w-full p-2 mt-2"
+          [(ngModel)]="searchField"
+          (ngModelChange)="onSearchTermChange()"
+        >
           <option value="nome">Nome</option>
           <option value="telefone">Telefone</option>
           <option value="email">E-mail</option>
         </select>
       </div>
       <div class="grid grid-cols-3 gap-4 mb-4">
-        <div class="p-4 bg-gray-200">Pacientes cadastrados: {{filteredPacientes.length}} </div>
-        <div class="p-4 bg-gray-200">Consultas cadastradas: {{consultas.length}} </div>
-        <div class="p-4 bg-gray-200">Exames: {{exames.length}} </div>
+        <div class="p-4 bg-gray-200">
+          Pacientes cadastrados: {{ filteredPacientes.length }}
+        </div>
+        <div class="p-4 bg-gray-200">
+          Consultas cadastradas: {{ consultas.length }}
+        </div>
+        <div class="p-4 bg-gray-200">Exames: {{ exames.length }}</div>
       </div>
       <div class="grid grid-cols-1 gap-4">
-        <div *ngFor="let paciente of filteredPacientes">
-          <img src="icon" alt="icon" class="w-6 h-6">
-          <p>nome: {{paciente.nome}} </p>
-          <p>idade: {{paciente.idade}}</p>
-          <p>telefone: {{paciente.telefone}}</p>
-          <p>email: {{paciente.email}}</p>
-          <p>Plano de saude: {{paciente.convenio}}</p>
-          <button>Mais informações</button>
+        <div
+          *ngFor="
+            let paciente of filteredPacientes.slice(
+              pageIndex * pageSize,
+              (pageIndex + 1) * pageSize
+            )
+          "
+        >
+          <img src="./assets/icon_user.png" alt="icon" class="w-6 h-6" />
+          <p>nome: {{ paciente.nome }}</p>
+          <p>idade: {{ paciente.idade }}</p>
+          <p>telefone: {{ paciente.telefone }}</p>
+          <p>email: {{ paciente.email }}</p>
+          <p>Plano de saude: {{ paciente.convenio }}</p>
+          <button (click)="More()">Mais informações</button>
         </div>
       </div>
+      <button (click)="previousPage()">Página anterior</button>
+      <button (click)="nextPage()">Próxima página</button>
     </div>
   </div>
 </div>

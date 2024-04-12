@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgeService } from '../../services/ageservice.service';
 import { Paciente, Consulta, Exame } from './medical.interfaces';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,6 +17,9 @@ import { Paciente, Consulta, Exame } from './medical.interfaces';
   imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
 })
 export class HomeComponent implements OnInit {
+  pageSize: number = 3; 
+  pageIndex: number = 0; 
+
   pacientes: Paciente[] = [];
   consultas: Consulta[] = [];
   exames: Exame[] = [];
@@ -24,7 +28,7 @@ export class HomeComponent implements OnInit {
   searchField: string = 'nome';
   filteredPacientes: Paciente[] = [];
 
-  constructor(private httpClient: HttpClient, private ageService: AgeService) {}
+  constructor(private httpClient: HttpClient, private ageService: AgeService, private router: Router) {}
 
   ngOnInit(){
     this.httpClient.get<Paciente[]>('http://localhost:3000/pacientes').subscribe((pacientes) => {
@@ -52,5 +56,19 @@ export class HomeComponent implements OnInit {
     } else {
       this.filteredPacientes = this.pacientes;
     }
+    this.pageIndex = 0;
   }
+  nextPage() {
+    this.pageIndex++;
+  }
+  
+  previousPage() {
+    if (this.pageIndex > 0) {
+      this.pageIndex--;
+    }
+  }
+
+  More(): void {
+    this.router.navigate(['/patientRegistration']);
+}
 }
