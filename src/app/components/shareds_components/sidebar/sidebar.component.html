@@ -6,7 +6,6 @@
   }"
   class="md:max-w-64 max-w-40 text-white h-screen bg-[#014c8b] shadow-md overflow-hidden font-roboto"
   [@sidebarAnimation]="{value: (isOpen$ | async) ? 'open' : 'closed', params: {sidebarWidth: sidebarWidth}}"
-
 >
   <section class="flex flex-col justify-start items-start pt-4">
     <button (click)="toggleSidebar()" class="self-center w-8 h-8">
@@ -45,5 +44,6 @@
         >
       </button>
     </div>
+    <button (click)="logout()" class="w-full text-center block  py-2 text-lg hover:text-[#FFD700] hover:bg-blue-900 ">Sair</button>
   </section>
 </aside>

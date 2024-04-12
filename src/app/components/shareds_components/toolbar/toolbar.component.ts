@@ -22,7 +22,7 @@ export class ToolbarComponent implements OnInit {
     '/appointments': 'Cadastro de Consultas',
     '/exam': 'Cadastro de Exames',
     '/medicalListing': 'Listagem de Prontuários',
-    '/patientListing': 'Prontuários de Pacientes',
+    '/medicalListing/patientListing': 'Prontuário do Paciente',
     '/patientRegistration': 'Cadastro de Pacientes',
   };
 

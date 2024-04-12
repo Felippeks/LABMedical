@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ScreenSizeService } from '../../services/screen-size-service.service';
+import { ScreenSizeService } from '../../../services/screen-size-service.service';
 import {
   Router,
   ActivatedRoute,
@@ -8,9 +8,15 @@ import {
   RouterModule,
 } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { SidebarService } from '../../services/sidebar-service.service';
+import { SidebarService } from '../../../services/sidebar-service.service';
 import { Observable } from 'rxjs';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -19,17 +25,22 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrl: './sidebar.component.scss',
   animations: [
     trigger('sidebarAnimation', [
-      state('open', style({
-        width: '256px',
-      })),
-      state('closed', style({
-        width: '{{sidebarWidth}}',
-      }), {params: {sidebarWidth: '160px'}}),
-      transition('open <=> closed', [
-        animate('0.7s')
-      ]),
+      state(
+        'open',
+        style({
+          width: '256px',
+        }),
+      ),
+      state(
+        'closed',
+        style({
+          width: '{{sidebarWidth}}',
+        }),
+        { params: { sidebarWidth: '160px' } },
+      ),
+      transition('open <=> closed', [animate('0.7s')]),
     ]),
-  ]
+  ],
 })
 export class SidebarComponent implements OnInit {
   sidebarWidth = '160px';
@@ -66,22 +77,21 @@ export class SidebarComponent implements OnInit {
       icon: 'assets/medicalListing-icon.svg',
       selected: false,
     },
-    { route: '/login', text: 'Sair', icon: 'assets/logout-icon.svg' },
   ];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private sidebarService: SidebarService,
-    private screenSizeService: ScreenSizeService
+    private screenSizeService: ScreenSizeService,
   ) {}
 
   ngOnInit(): void {
-    this.screenSizeService.isDesktop.subscribe(isDesktop => {
+    this.screenSizeService.isDesktop.subscribe((isDesktop) => {
       this.sidebarWidth = isDesktop ? '160px' : '80px';
     });
     this.isOpen$ = this.sidebarService.isOpen$;
-    this.isClosed$ = this.isOpen$.pipe(map(isOpen => !isOpen));
+    this.isClosed$ = this.isOpen$.pipe(map((isOpen) => !isOpen));
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -100,11 +110,9 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-  navigate(route: string): void {
-    if (route === '/login') {
-      localStorage.setItem('isLoggedIn', 'false');
-    }
-    this.router.navigate([route]);
+  logout(): void {
+    localStorage.setItem('isLoggedIn', 'false');
+    this.router.navigate(['/login']);
   }
 
   toggleSidebar(): void {

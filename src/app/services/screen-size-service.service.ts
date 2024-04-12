@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScreenSizeService {
   public isDesktop = new BehaviorSubject<boolean>(window.innerWidth > 960);
