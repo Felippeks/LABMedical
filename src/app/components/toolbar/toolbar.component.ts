@@ -17,6 +17,15 @@ export class ToolbarComponent implements OnInit {
   userIcon: string | undefined = './assets/user-icon.png';
   showMenu = false;
 
+  routeNames: { [key: string]: string } = {
+    '/home': 'Estatísticas e Informações',
+    '/appointments': 'Cadastro de Consultas',
+    '/exam': 'Cadastro de Exames',
+    '/medicalListing': 'Listagem de Prontuários',
+    '/patientListing': 'Prontuários de Pacientes',
+    '/patientRegistration': 'Cadastro de Pacientes',
+  };
+
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
@@ -29,6 +38,10 @@ export class ToolbarComponent implements OnInit {
       this.userEmail = userData.email;
     }
     this.document.addEventListener('click', this.closeMenu.bind(this));
+  }
+
+  get currentRouteName() {
+    return this.routeNames[this.router.url];
   }
 
   toggleMenu(event: Event): void {
