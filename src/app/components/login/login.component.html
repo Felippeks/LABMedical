@@ -56,15 +56,14 @@
         type="submit"
         (click)="onLogin()"
         value="Entrar no portal"
-        class="mt-4 mb-2 bg-[#064c8c] text-white rounded-3xl p-2 uppercase font-medium hover:bg-[#064d8fe4]"
+        class="mt-4 mb-2 bg-[#064c8c] text-white rounded-3xl p-2 uppercase font-medium hover:bg-[#064d8fe4] cursor-pointer"
       />
       <button
         type="button"
         (click)="onRegister()"
         class="mb-2 border-[1px] border-[#064c8c] rounded-3xl p-2 text-[#064c8c] uppercase font-medium hover:bg-gray-200 hover:text-black hover:border-[#FFD700]"
       >
-        <span *ngIf="!loading">Quero me cadastrar</span>
-        <div *ngIf="loading" class="loading-spinner"></div>
+      <span>Quero me cadastrar</span>
       </button>
       <button
         type="button"

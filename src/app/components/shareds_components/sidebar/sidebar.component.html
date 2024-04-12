@@ -1,10 +1,11 @@
 <aside
   [ngClass]="{
     sidebar: true,
-    open: (isOpen$ | async),
-    closed: !(isOpen$ | async)
+    open: isOpen$ | async,
+    closed: isClosed$ | async
   }"
-  class="md:max-w-64 max-w-40 text-white h-screen bg-[#014c8b] shadow-md transition-width duration-1000 overflow-hidden"
+  class="md:max-w-64 max-w-40 text-white h-screen bg-[#014c8b] shadow-md overflow-hidden font-roboto"
+  [@sidebarAnimation]="{value: (isOpen$ | async) ? 'open' : 'closed', params: {sidebarWidth: sidebarWidth}}"
 >
   <section class="flex flex-col justify-start items-start pt-4">
     <button (click)="toggleSidebar()" class="self-center w-8 h-8">
@@ -34,10 +35,15 @@
       >
         <img src="{{ item.icon }}" alt="icon" class="md:w-6 w-4 mx-2" />
         <span
-          class="menu-text md:text-lg text-[10px] mt-0.5 transition-opacity duration-500 md:min-w-[100px] min-w-[80px] mx-1 text-start"
+          class="menu-text md:text-base text-[10px] mt-0.5 transition-opacity duration-500 md:min-w-[100px] min-w-[80px] mx-1 text-start overflow-hidden whitespace-nowrap"
+          [style.opacity]="(isOpen$ | async) ? '1' : '1'"
+          [style.transition]="'opacity 1s'"
+          [style.whiteSpace]="(isOpen$ | async) ? 'nowrap' : 'normal'"
+          [style.wordBreak]="(isOpen$ | async) ? 'normal' : 'break'"
           >{{ item.text }}</span
         >
       </button>
     </div>
+    <button (click)="logout()" class="w-full text-center block  py-2 text-lg hover:text-[#FFD700] hover:bg-blue-900 ">Sair</button>
   </section>
 </aside>

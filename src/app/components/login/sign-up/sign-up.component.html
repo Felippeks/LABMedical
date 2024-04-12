@@ -79,27 +79,6 @@
         Preenchimento obrigatório
       </div>
     </div>
-      <label for="date" class="mb-2 text-[#014c8b] font-light "
-        >Data de nascimento:</label
-      >
-      <input
-        type="date"
-        id="date"
-        formControlName="date"
-        class="mb-2 p-1 rounded-lg border-[1px] text-[#014c8b] w-full bg-white"
-      />
-      <div
-      *ngIf="
-        SignUpForm.controls.date.invalid &&
-        (SignUpForm.controls.date.dirty || SignUpForm.controls.date.touched)
-      "
-      class="text-red-900 font-extralight text-xs mb-2"
-    >
-      <div *ngIf="SignUpForm.controls.date.errors.required">
-        Preenchimento obrigatório
-      </div>
-    </div>
-
       <label for="password" class="mb-2 text-[#014c8b] font-light"
         >Senha:</label
       >

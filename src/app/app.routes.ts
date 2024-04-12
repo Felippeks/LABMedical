@@ -5,9 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuardRouter } from './guardsRoutes/guards.guard';
 import { AppointmentRegistrationComponent } from './components/appointment-registration/appointment-registration.component';
 import { ExamRegistrationComponent } from './components/exam-registration/exam-registration.component';
-import { MedicalRecordListingComponent } from './components/medical-listing/medical-listing.component';
-import { PatientMedicalListingComponent } from './components/patient-listing/patient-listing.component';
 import { PatientRegistrationComponent } from './components/patient-registration/patient-registration.component';
+import { authChildGuard } from './guardsRoutes/auth-child-guard.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,13 +25,11 @@ export const routes: Routes = [
   },
   {
     path: 'medicalListing',
-    component: MedicalRecordListingComponent,
-    canActivate: [AuthGuardRouter],
-  },
-  {
-    path: 'patientListing',
-    component: PatientMedicalListingComponent,
-    canActivate: [AuthGuardRouter],
+    loadChildren: () =>
+      import('./components/medical-listing/medical-listing.module').then(
+        (m) => m.medicalListingModule,
+      ),
+    canActivateChild: [authChildGuard],
   },
   {
     path: 'patientRegistration',
