@@ -1,44 +1,56 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ToolbarComponent } from '../shareds_components/toolbar/toolbar.component';
 import { SidebarComponent } from '../shareds_components/sidebar/sidebar.component';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AgeService } from '../../services/ageservice.service';
+import { Paciente, Consulta, Exame } from './medical.interfaces';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [ToolbarComponent, SidebarComponent, CommonModule],
+  imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
 })
-export class HomeComponent {
-  pacientes: any[] = [];
-  consultas: any[] = [];
-  exames: any[] = [];
+export class HomeComponent implements OnInit {
+  pacientes: Paciente[] = [];
+  consultas: Consulta[] = [];
+  exames: Exame[] = [];
 
-  totalPacientes: number = 0;
-  totalConsultas: number = 0;
-  totalExames: number = 0;
+  searchTerm: string = '';
+  searchField: string = 'nome';
+  filteredPacientes: Paciente[] = [];
 
-  httpClient = inject(HttpClient);
+  constructor(private httpClient: HttpClient, private ageService: AgeService) {}
+
   ngOnInit(){
-    this.httpClient.get<any>('http://localhost:3000/pacientes').subscribe((pacientes) => {
-      this.pacientes = pacientes;
-    });
-    this.httpClient.get<any>('http://localhost:3000/pacientes').subscribe((pacientes) => {
-      this.pacientes = pacientes;
-      this.totalPacientes = pacientes.length;
+    this.httpClient.get<Paciente[]>('http://localhost:3000/pacientes').subscribe((pacientes) => {
+      this.pacientes = pacientes.map((paciente) => ({
+        ...paciente,
+        idade: this.ageService.calculateAge(paciente.dataNascimento)
+      }));
+      this.filteredPacientes = [...this.pacientes];
     });
 
-    this.httpClient.get<any>('http://localhost:3000/consultas').subscribe((consultas) => {
+    this.httpClient.get<Consulta[]>('http://localhost:3000/consultas').subscribe((consultas) => {
       this.consultas = consultas;
-      this.totalConsultas = consultas.length;
     });
 
-    this.httpClient.get<any>('http://localhost:3000/exames').subscribe((exames) => {
+    this.httpClient.get<Exame[]>('http://localhost:3000/exames').subscribe((exames) => {
       this.exames = exames;
-      this.totalExames = exames.length;
     });
   }
 
+  onSearchTermChange() {
+    if (this.searchTerm) {
+      this.filteredPacientes = this.pacientes.filter(paciente =>
+        paciente[this.searchField].toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredPacientes = this.pacientes;
+    }
+  }
 }
