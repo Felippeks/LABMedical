@@ -4,46 +4,57 @@
     open: isOpen$ | async,
     closed: isClosed$ | async
   }"
-  class="md:max-w-64 max-w-40 text-white h-screen bg-[#014c8b] shadow-md overflow-hidden font-roboto"
-  [@sidebarAnimation]="{value: (isOpen$ | async) ? 'open' : 'closed', params: {sidebarWidth: sidebarWidth}}"
+  class="md:max-w-64 max-w-40 text-white bg-[#014c8b] shadow-md overflow-hidden font-roboto"
+  [@sidebarAnimation]="{
+    value: (isOpen$ | async) ? 'open' : 'closed',
+    params: { sidebarWidth: sidebarWidth }
+  }"
+  style="height: calc(100vh - 64px)"
 >
-  <section class="flex flex-col justify-start items-start pt-4">
-    <button (click)="toggleSidebar()" class="self-center w-8 h-8">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-8 h-8"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-        />
-      </svg>
-    </button>
-    <div
-      *ngFor="let item of menuItems"
-      class="my-2 flex w-full items-center justify-start transition-colors duration-700"
-    >
-      <button
-        [routerLink]="item.route"
-        routerLinkActive="bg-blue-900 text-[#ffd900e6] "
-        class="flex w-full items-center justify-start md:py-3 py-1"
-      >
-        <img src="{{ item.icon }}" alt="icon" class="md:w-6 w-4 mx-2" />
-        <span
-          class="menu-text md:text-base text-[10px] mt-0.5 transition-opacity duration-500 md:min-w-[100px] min-w-[80px] mx-1 text-start overflow-hidden whitespace-nowrap"
-          [style.opacity]="(isOpen$ | async) ? '1' : '1'"
-          [style.transition]="'opacity 1s'"
-          [style.whiteSpace]="(isOpen$ | async) ? 'nowrap' : 'normal'"
-          [style.wordBreak]="(isOpen$ | async) ? 'normal' : 'break'"
-          >{{ item.text }}</span
+  <section class="flex flex-col justify-between items-center pt-4 h-full">
+    <div class="flex justify-center flex-col items-center">
+      <button (click)="toggleSidebar()" class="self-center w-8 h-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-8 h-8"
         >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
       </button>
+      <div
+        *ngFor="let item of menuItems"
+        class="my-2 flex w-full items-center transition-colors duration-700"
+      >
+        <button
+          [routerLink]="item.route"
+          routerLinkActive="bg-blue-900 text-[#ffd900e6] "
+          class="flex w-full items-center justify-center md:py-3 py-1"
+        >
+          <img src="{{ item.icon }}" alt="icon" class="md:w-6 w-4 mx-2" />
+          <span
+            class="menu-text md:text-base text-[10px] mt-0.5 transition-opacity duration-500 md:min-w-[100px] min-w-[80px] mx-1 text-start overflow-hidden whitespace-nowrap"
+            [style.opacity]="(isOpen$ | async) ? '1' : '1'"
+            [style.transition]="'opacity 1s'"
+            [style.whiteSpace]="(isOpen$ | async) ? 'nowrap' : 'normal'"
+            [style.wordBreak]="(isOpen$ | async) ? 'normal' : 'break'"
+            >{{ item.text }}</span
+          >
+        </button>
+      </div>
     </div>
-    <button (click)="logout()" class="w-full text-center block  py-2 text-lg hover:text-[#FFD700] hover:bg-blue-900 ">Sair</button>
+    <button
+      (click)="logout()"
+      class="w-full text-center block py-2 mb-10 text-lg hover:text-[#FFD700] hover:bg-blue-900"
+    >
+      Sair
+    </button>
   </section>
 </aside>
