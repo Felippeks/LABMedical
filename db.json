@@ -2,7 +2,7 @@
   "pacientes": [
     {
       "id": "1",
-      "nomeCompleto": "João Silva",
+      "nome": "João Silva",
       "genero": "Masculino",
       "dataNascimento": "1980-01-01",
       "cpf": "123.456.789-00",
@@ -22,7 +22,7 @@
     },
     {
       "id": "2",
-      "nomeCompleto": "Ana Santos",
+      "nome": "Ana Santos",
       "genero": "Feminino",
       "dataNascimento": "1985-06-15",
       "cpf": "987.654.321-00",
@@ -42,7 +42,7 @@
     },
     {
       "id": "3",
-      "nomeCompleto": "Maria Oliveira",
+      "nome": "Maria Oliveira",
       "genero": "Feminino",
       "dataNascimento": "1976-08-22",
       "cpf": "654.321.987-00",
@@ -62,7 +62,7 @@
     },
     {
       "id": "4",
-      "nomeCompleto": "Pedro Almeida",
+      "nome": "Pedro Almeida",
       "genero": "Masculino",
       "dataNascimento": "1992-03-10",
       "cpf": "876.543.210-00",
@@ -82,7 +82,7 @@
     },
     {
       "id": "5",
-      "nomeCompleto": "Mariana Costa",
+      "nome": "Mariana Costa",
       "genero": "Feminino",
       "dataNascimento": "1988-07-25",
       "cpf": "234.567.890-00",
