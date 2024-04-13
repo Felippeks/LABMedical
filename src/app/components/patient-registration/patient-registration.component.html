@@ -2,9 +2,9 @@
     <app-sidebar class="max-w-64"></app-sidebar>
     <div class="flex flex-col w-full">
       <toolbar class="w-full"></toolbar>
-      <aside>
-        <form>
-            <fieldset>
+      <aside >
+        <form class="flex" [formGroup]="formPatient" (ngSubmit)="onSubmit()">
+            <fieldset class="flex flex-col">
                 <legend>Informações Pessoais</legend>
                 <label for="nome">Nome Completo:</label>
                 <input type="text" id="nome" formControlName="nome">
@@ -42,7 +42,7 @@
                 <label for="validadeConvenio">Validade do Convênio:</label>
                 <input type="date" id="validadeConvenio" formControlName="validadeConvenio">
             </fieldset>
-            <fieldset>
+            <fieldset class="flex flex-col">
                 <legend>Endereço</legend>
                 <label for="cep">CEP:</label>
                 <input type="text" id="cep" formControlName="cep" (change)="onCepChange()">
