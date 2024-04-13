@@ -4,7 +4,7 @@ import { SidebarComponent } from '../shareds_components/sidebar/sidebar.componen
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AgeService } from '../../services/ageservice.service';
+import { AgeService } from '../../services/age/age.service';
 import { Paciente, Consulta, Exame } from './medical.interfaces';
 import { Router } from '@angular/router';
 

@@ -9,9 +9,9 @@ import {
   ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
-import { CepService } from '../../services/cep.service';
-import { ApiService } from '../../services/api.service';
-import { FormatService } from '../../services/format.service';
+import { CepService } from '../../services/cep/cep.service';
+import { ApiService } from '../../services/api/api.service';
+import { FormatService } from '../../services/format/format.service';
 import { CommonModule } from '@angular/common';
 
 function dateValidator(): ValidatorFn {

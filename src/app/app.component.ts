@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { SpinnerComponent } from './components/shareds_components/spinner/spinner.component';
-import { LoadingService } from './services/loading.service';
+import { LoadingService } from './services/loading/loading.service';
 
 @Component({
   selector: 'app-root',

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ScreenSizeService } from '../../../services/screen-size-service.service';
+import { ScreenSizeService } from '../../../services/Screen-size/screen-size.service';
 import {
   Router,
   ActivatedRoute,
@@ -8,7 +8,7 @@ import {
   RouterModule,
 } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { SidebarService } from '../../../services/sidebar-service.service';
+import { SidebarService } from '../../../services/siderBar/sidebar.service';
 import { Observable } from 'rxjs';
 import {
   animate,

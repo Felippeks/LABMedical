@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SidebarService } from './sidebar-service.service';
+import { AgeService } from './age.service';
 
-describe('SidebarServiceService', () => {
-  let service: SidebarService;
+describe('AgeserviceService', () => {
+  let service: AgeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SidebarService);
+    service = TestBed.inject(AgeService);
   });
 
   it('should be created', () => {
