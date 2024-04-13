@@ -1,2 +1,126 @@
-<toolbar></toolbar>
-<app-sidebar></app-sidebar>
+<main class="flex h-screen bg-gray-200">
+  <app-sidebar class="max-w-64"></app-sidebar>
+  <div class="flex flex-col w-full">
+    <toolbar class="w-full"></toolbar>
+    <aside
+      class="flex flex-col items-stretch p-4 overflow-auto bg-white md:my-8 md:mx-8 h-screen md:rounded-2xl shadow-md shadow-slate-500 font-roboto"
+    >
+      <section
+        class="search mt-4 bg-white border-2 border-gray-200 rounded-2xl md:w-96 w-52 flex flex-row justify-center items-center mx-auto px-2 shadow-md shadow-slate-500"
+      >
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchTermChange()"
+          placeholder="Buscar pacientes..."
+          class="w-full p-2 outline-none md:text-base text-xs"
+        />
+        <select
+          class="md:w-36 w-20 md:py-2 py-1 outline-none text-textColor bg-background rounded-2xl md:px-4 px-1 md:text-base text-[8px]"
+          [(ngModel)]="searchField"
+          (ngModelChange)="onSearchTermChange()"
+        >
+          <option value="nome">Nome</option>
+          <option value="telefone">Telefone</option>
+          <option value="email">E-mail</option>
+        </select>
+      </section>
+      <section class="statistics grid md:grid-cols-3 grid-rows-1 md:gap-12 gap-4 md:my-12 my-6 md:max-w-7xl max-w-44 mx-auto">
+        <div
+          class="p-4 bg-blue-950 text-textColor flex flex-col shadow-2xl shadow-slate-500 justify-center items-center md:text-5xl rounded-2xl"
+        >
+          Pacientes
+          <div class="flex justify-center items-center gap-2 mt-4">
+            <img
+              src="./assets/registerUser-icon.svg"
+              alt="pacientes icon"
+              class="md:w-20 md:h-20 w-8 h-8 md:hover:animate-bounce"
+            /><span class="md:text-7xl text-sm">{{ filteredPacientes.length }}</span>
+          </div>
+        </div>
+        <div
+          class="p-4 bg-blue-950 text-textColor flex flex-col shadow-md shadow-slate-500 justify-center items-center md:text-5xl rounded-2xl"
+        >
+          Consultas
+          <div class="flex justify-center items-center gap-2 mt-4">
+            <img
+              src="./assets/appointments-icon.svg"
+              alt="consultas icon"
+              class="md:w-20 md:h-20 w-8 h-8 md:hover:animate-bounce"
+            /><span class="md:text-7xl text-sm">
+              {{ consultas.length }}
+            </span>
+          </div>
+        </div>
+        <div
+          class="p-4 bg-blue-950 text-textColor flex flex-col shadow-md shadow-slate-500 justify-center items-center md:text-5xl rounded-2xl"
+        >
+          Exames
+          <div class="flex justify-center items-center gap-2 mt-4">
+            <img
+              src="./assets/patientListing-icon.svg"
+              alt="exames icon"
+              class="md:w-20 md:h-20 w-8 h-8 md:hover:animate-bounce"
+            />
+            <span class="md:text-7xl text-sm">
+              {{ exames.length }}
+            </span>
+          </div>
+        </div>
+      </section>
+        <section
+          class="patient flex md:w-full w-44 md:mx-0 mx-auto flex-row justify-around md:gap-4 border-2 md:p-4 p-2 rounded-2xl bg-shadow shadow-md shadow-slate-500"
+        >
+          <div
+            class="bg-background md:w-80 w-40 p-2 flex flex-col justify-start items-center rounded-2xl text-white"
+            *ngFor="
+              let paciente of filteredPacientes.slice(
+                pageIndex * pageSize,
+                (pageIndex + 1) * pageSize
+              )
+            "
+          >
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="md:w-12 md:h-12 w-8 h-8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </div>
+            <div class="self-start my-4 bg-blue-950 md:w-full p-2 rounded-2xl md:text-xs text-[8px]">
+              <p class="text-textColor">
+                nome: <span class="text-white">{{ paciente.nome }}</span>
+              </p>
+              <p class="text-textColor">
+                idade: <span class="text-white">{{ paciente.idade }} anos</span>
+              </p>
+              <p class="text-textColor">
+                telefone: <span class="text-white">{{ paciente.telefone }}</span>
+              </p>
+              <p class="text-textColor">
+                email: <span class="text-white">{{ paciente.email }}</span>
+              </p>
+              <p class="text-textColor">
+                Plano de saude:
+                <span class="text-white">{{ paciente.convenio }}</span>
+              </p>
+            </div>
+            <button class="bg-blue-950 py-2 px-4 m-2 rounded-3xl border-2 border-textColor shadow-md shadow-slate-500 hover:bg-gray-200 hover:text-blueColor hover:border-textColor uppercase md:text-base text-xs"  (click)="More()">Ver mais</button>
+          </div>
+        </section>
+      <div class="flex md:flex-row flex-col md:w-full w-36 md:mx-0 mx-auto md:justify-between md:mt-auto md:px-16 px-2 mt-2 text-xs md:text-base">
+        <button class="mb-2 border-2 bg-background text-textColor border-textColor rounded-3xl p-2 hover:text-blueColor uppercase font-medium hover:bg-gray-200 hover:border-textColor" (click)="previousPage()">Página anterior</button>
+        <button class="mb-2 border-2 bg-background text-textColor border-textColor rounded-3xl p-2 hover:text-blueColor uppercase font-medium hover:bg-gray-200 hover:border-textColor" (click)="nextPage()">Próxima página</button>
+      </div>
+    </aside>
+  </div>
+</main>
