@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
 import { SidebarComponent } from '../shareds_components/sidebar/sidebar.component';
 import { ToolbarComponent } from '../shareds_components/toolbar/toolbar.component';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CepService } from '../../services/cep.service';
 import { ApiService } from '../../services/api.service';
+import { FormatService } from '../../services/format.service';
 
 @Component({
   selector: 'app-patient-registration',
@@ -13,7 +19,7 @@ import { ApiService } from '../../services/api.service';
   imports: [SidebarComponent, ToolbarComponent, ReactiveFormsModule],
 })
 export class PatientRegistrationComponent {
-  formPatient = new FormGroup({
+  formPatient: FormGroup = new FormGroup({
     nome: new FormControl('', Validators.required),
     genero: new FormControl('', Validators.required),
     nascimento: new FormControl('', Validators.required),
@@ -38,11 +44,32 @@ export class PatientRegistrationComponent {
     bairro: new FormControl('', Validators.required),
     referencia: new FormControl(''),
   });
-
   constructor(
     private cepService: CepService,
     private ApiService: ApiService,
-  ) {}
+    private formatService: FormatService,
+  ) {
+    if (this.formPatient) {
+      this.setupValueChanges();
+    }
+  }
+  
+  setupValueChanges() {
+    this.setupFormatOnValueChange('cpf', this.formatService.formatCPF);
+    this.setupFormatOnValueChange('telefone', this.formatService.formatPhone);
+    this.setupFormatOnValueChange('contatoEmergencia', this.formatService.formatPhone);
+    this.setupFormatOnValueChange('cep', this.formatService.formatCEP);
+  }
+  
+  setupFormatOnValueChange(field: string, formatFunction: (value: any) => any) {
+    this.formPatient.get(field)!.valueChanges.subscribe((valor) => {
+      this.formPatient!.get(field)!.setValue(
+        formatFunction(valor),
+        { emitEvent: false },
+      );
+    });
+  }
+  
   onCepChange() {
     const cepControl = this.formPatient.get('cep');
     if (cepControl && cepControl.value && cepControl.value.length === 8) {
@@ -58,21 +85,29 @@ export class PatientRegistrationComponent {
       });
     }
   }
+  
   onSubmit() {
-    console.log(this.formPatient.value)
     if (this.formPatient.valid) {
-      console.log('Dados do paciente aqui:', this.formPatient.value);
-      this.ApiService.create('pacientes', this.formPatient.value).subscribe(
+      const dadosParaEnviar = { ...this.formPatient.value };
+      this.removeFormats(dadosParaEnviar);
+  
+      this.ApiService.create('pacientes', dadosParaEnviar).subscribe(
         (data) => {
-          console.log('Paciente criado com sucesso!', data);
           alert('Paciente criado com sucesso!');
         },
         (error) => {
-          console.log('Erro ao criar paciente:', error);
+          alert('Erro ao criar paciente: ' + error);
         },
       );
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
   }
-}
+  
+  removeFormats(data: any) {
+    const fieldsToFormat = ['cpf', 'telefone', 'contatoEmergencia', 'cep', 'numeroConvenio', 'rg'];
+    fieldsToFormat.forEach(field => {
+      data[field] = this.formatService.removeFormat(data[field]);
+    });
+  }
+}  
