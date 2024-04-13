@@ -14,6 +14,7 @@
             <option value="feminino">Feminino</option>
             <option value="masculino">Masculino</option>
             <option value="outro">Outro</option>
+            <option value="outro">Prefiro não informar</option>
           </select>
           <label for="nascimento">Data de Nascimento:</label>
           <input type="date" id="nascimento" formControlName="nascimento" />
@@ -22,7 +23,14 @@
           <label for="rg">RG:</label>
           <input type="text" id="rg" formControlName="rg" />
           <label for="estadoCivil">Estado Civil:</label>
-          <input type="text" id="estadoCivil" formControlName="estadoCivil" />
+          <select id="estadoCivil" formControlName="estadoCivil">
+            <option value="">Selecione</option>
+            <option value="feminino">Solteiro(a)</option>
+            <option value="masculino">Casado(a)</option>
+            <option value="outro">Viuvo(a)</option>
+            <option value="outro">Divorciado(a)</option>
+            <option value="outro">União Estável</option>
+          </select>
           <label for="telefone">Telefone:</label>
           <input type="tel" id="telefone" formControlName="telefone" />
           <label for="email">E-mail:</label>

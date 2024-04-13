@@ -6,11 +6,20 @@ import {
   FormControl,
   Validators,
   ReactiveFormsModule,
+  ValidatorFn,
+  AbstractControl,
 } from '@angular/forms';
 import { CepService } from '../../services/cep.service';
 import { ApiService } from '../../services/api.service';
 import { FormatService } from '../../services/format.service';
 
+function dateValidator(): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    const date = new Date(control.value);
+    const isValid = !isNaN(date.getTime());
+    return isValid ? null : { 'invalidDate': { value: control.value } };
+  };
+}
 @Component({
   selector: 'app-patient-registration',
   standalone: true,
@@ -18,23 +27,24 @@ import { FormatService } from '../../services/format.service';
   styleUrl: './patient-registration.component.scss',
   imports: [SidebarComponent, ToolbarComponent, ReactiveFormsModule],
 })
+
 export class PatientRegistrationComponent {
   formPatient: FormGroup = new FormGroup({
-    nome: new FormControl('', Validators.required),
+    nome: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
     genero: new FormControl('', Validators.required),
-    nascimento: new FormControl('', Validators.required),
+    nascimento: new FormControl('', [Validators.required, dateValidator()]),
     cpf: new FormControl('', Validators.required),
-    rg: new FormControl('', Validators.required),
+    rg: new FormControl('', [Validators.required, Validators.maxLength(20)]),
     estadoCivil: new FormControl('', Validators.required),
     telefone: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    naturalidade: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.email]),
+    naturalidade: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
     contatoEmergencia: new FormControl('', Validators.required),
     alergias: new FormControl(''),
     cuidados: new FormControl(''),
-    convenio: new FormControl('', Validators.required),
-    numeroConvenio: new FormControl('', Validators.required),
-    validadeConvenio: new FormControl('', Validators.required),
+    convenio: new FormControl(''),
+    numeroConvenio: new FormControl(''),
+    validadeConvenio: new FormControl(''),
     cep: new FormControl('', Validators.required),
     cidade: new FormControl('', Validators.required),
     estado: new FormControl('', Validators.required),
