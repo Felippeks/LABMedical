@@ -7,6 +7,12 @@ module.exports = {
         roboto: ['Roboto', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
       },
+      colors: {
+        background: "#014c8b",
+        textColor: "#FFD700",
+        shadow:"#d1d5db",
+        blueColor:"#064c8c"
+      },
     },
     screens: {
       'sm': '640px',

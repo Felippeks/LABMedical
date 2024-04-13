@@ -4,7 +4,7 @@
     open: isOpen$ | async,
     closed: isClosed$ | async
   }"
-  class="md:max-w-64 max-w-40 text-white h-screen bg-[#014c8b] overflow-hidden font-roboto"
+  class="md:max-w-64 max-w-40 text-white h-screen bg-background overflow-hidden font-roboto"
   [@sidebarAnimation]="{
     value: (isOpen$ | async) ? 'open' : 'closed',
     params: { sidebarWidth: sidebarWidth }
@@ -51,7 +51,7 @@
     </div>
     <button
       (click)="logout()"
-      class="w-full text-center block py-2 mb-10 text-lg hover:text-[#FFD700] hover:bg-blue-900"
+      class="w-full text-center block py-2 mb-10 text-lg hover:text-textColor hover:bg-blue-900"
     >
       Sair
     </button>

@@ -1,6 +1,6 @@
 <main class="flex min-h-screen relative font-roboto">
   <section
-    class="w-1/2 bg-[#014c8b] flex items-center justify-center text-white px-4 relative"
+    class="w-1/2 bg-background flex items-center justify-center text-white px-4 relative"
   >
     <div
       class="absolute top-0 left-0 flex items-center lg:px-4 md:px-2 pt-2 uppercase"
@@ -42,7 +42,7 @@
       class="flex flex-col bg-white shadow-2xl p-4 rounded-3xl w-[360px] px-10"
     >
       <h3 class="text-center text-xl font-light p-6">Cadastro</h3>
-      <label for="name" class="mb-2 text-[#014c8b] font-light">Nome:</label>
+      <label for="name" class="mb-2 text-background font-light">Nome:</label>
       <input
         type="text"
         id="name"
@@ -60,7 +60,7 @@
         Preenchimento obrigatório
       </div>
     </div>
-      <label for="email" class="mb-2 text-[#014c8b] font-light">Email:</label>
+      <label for="email" class="mb-2 text-background font-light">Email:</label>
       <input
         type="text"
         id="email"
@@ -79,7 +79,7 @@
         Preenchimento obrigatório
       </div>
     </div>
-      <label for="password" class="mb-2 text-[#014c8b] font-light"
+      <label for="password" class="mb-2 text-background font-light"
         >Senha:</label
       >
       <input
@@ -103,7 +103,7 @@
         A senha deve conter ao menos 8 caracteres
       </div>
     </div>
-      <label for="password-forgot" class="mb-2 text-[#014c8b] font-light"
+      <label for="password-forgot" class="mb-2 text-background font-light"
         >Confirmar Senha:</label
       >
       <input
@@ -130,14 +130,14 @@
       <button
         type="button"
         (click)="SignUp()"
-        class="mb-2 border-[1px] border-[#064c8c] rounded-3xl p-2 text-[#064c8c] uppercase font-medium hover:bg-gray-200 hover:text-black hover:border-[#FFD700]"
+        class="mb-2 border-[1px] border-blueColor rounded-3xl p-2 text-blueColor uppercase font-medium hover:bg-gray-200 hover:text-black hover:border-textColor"
       >
         <span>cadastrar</span>
       </button>
       <button
         type="button"
         (click)="onLogin()"
-        class="p-2 uppercase text-[#064c8c] font-medium mb-4 hover:bg-gray-100 hover:text-[#FFD700] rounded-3xl"
+        class="p-2 uppercase text-blueColor font-medium mb-4 hover:bg-gray-100 hover:text-textColor rounded-3xl"
       >
         Voltar ao login
       </button>
