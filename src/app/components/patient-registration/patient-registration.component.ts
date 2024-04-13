@@ -12,12 +12,13 @@ import {
 import { CepService } from '../../services/cep.service';
 import { ApiService } from '../../services/api.service';
 import { FormatService } from '../../services/format.service';
+import { CommonModule } from '@angular/common';
 
 function dateValidator(): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
+  return (control: AbstractControl): { [key: string]: any } | null => {
     const date = new Date(control.value);
     const isValid = !isNaN(date.getTime());
-    return isValid ? null : { 'invalidDate': { value: control.value } };
+    return isValid ? null : { invalidDate: { value: control.value } };
   };
 }
 @Component({
@@ -25,61 +26,80 @@ function dateValidator(): ValidatorFn {
   standalone: true,
   templateUrl: './patient-registration.component.html',
   styleUrl: './patient-registration.component.scss',
-  imports: [SidebarComponent, ToolbarComponent, ReactiveFormsModule],
+  imports: [
+    SidebarComponent,
+    ToolbarComponent,
+    ReactiveFormsModule,
+    CommonModule,
+  ],
 })
-
 export class PatientRegistrationComponent {
-  formPatient: FormGroup = new FormGroup({
-    nome: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
-    genero: new FormControl('', Validators.required),
-    nascimento: new FormControl('', [Validators.required, dateValidator()]),
-    cpf: new FormControl('', Validators.required),
-    rg: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    estadoCivil: new FormControl('', Validators.required),
-    telefone: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.email]),
-    naturalidade: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
-    contatoEmergencia: new FormControl('', Validators.required),
-    alergias: new FormControl(''),
-    cuidados: new FormControl(''),
-    convenio: new FormControl(''),
-    numeroConvenio: new FormControl(''),
-    validadeConvenio: new FormControl(''),
-    cep: new FormControl('', Validators.required),
-    cidade: new FormControl('', Validators.required),
-    estado: new FormControl('', Validators.required),
-    logradouro: new FormControl('', Validators.required),
-    numero: new FormControl('', Validators.required),
-    complemento: new FormControl(''),
-    bairro: new FormControl('', Validators.required),
-    referencia: new FormControl(''),
-  });
+  formPatient: FormGroup | any;
+
+  isEditing: boolean = false;
+
   constructor(
     private cepService: CepService,
     private ApiService: ApiService,
     private formatService: FormatService,
   ) {
+    this.formPatient = new FormGroup({
+      nome: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(64),
+      ]),
+      genero: new FormControl('', Validators.required),
+      nascimento: new FormControl('', [Validators.required, dateValidator()]),
+      cpf: new FormControl('', Validators.required),
+      rg: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      estadoCivil: new FormControl('', Validators.required),
+      telefone: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.email]),
+      naturalidade: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(64),
+      ]),
+      contatoEmergencia: new FormControl('', Validators.required),
+      alergias: new FormControl(''),
+      cuidados: new FormControl(''),
+      convenio: new FormControl(''),
+      numeroConvenio: new FormControl('', [Validators.maxLength(20)]),
+      validadeConvenio: new FormControl(''),
+      cep: new FormControl('', Validators.required),
+      cidade: new FormControl('', Validators.required),
+      estado: new FormControl('', Validators.required),
+      logradouro: new FormControl('', Validators.required),
+      numero: new FormControl('', Validators.required),
+      complemento: new FormControl(''),
+      bairro: new FormControl('', Validators.required),
+      referencia: new FormControl(''),
+    });
+
     if (this.formPatient) {
       this.setupValueChanges();
     }
   }
-  
+
   setupValueChanges() {
     this.setupFormatOnValueChange('cpf', this.formatService.formatCPF);
     this.setupFormatOnValueChange('telefone', this.formatService.formatPhone);
-    this.setupFormatOnValueChange('contatoEmergencia', this.formatService.formatPhone);
+    this.setupFormatOnValueChange(
+      'contatoEmergencia',
+      this.formatService.formatPhone,
+    );
     this.setupFormatOnValueChange('cep', this.formatService.formatCEP);
   }
-  
+
   setupFormatOnValueChange(field: string, formatFunction: (value: any) => any) {
-    this.formPatient.get(field)!.valueChanges.subscribe((valor) => {
-      this.formPatient!.get(field)!.setValue(
-        formatFunction(valor),
-        { emitEvent: false },
-      );
+    this.formPatient.get(field)!.valueChanges.subscribe((valor: any) => {
+      this.formPatient!.get(field)!.setValue(formatFunction(valor), {
+        emitEvent: false,
+      });
     });
   }
-  
+
   onCepChange() {
     const cepControl = this.formPatient.get('cep');
     if (cepControl && cepControl.value && cepControl.value.length === 8) {
@@ -95,15 +115,17 @@ export class PatientRegistrationComponent {
       });
     }
   }
-  
+
   onSubmit() {
     if (this.formPatient.valid) {
       const dadosParaEnviar = { ...this.formPatient.value };
       this.removeFormats(dadosParaEnviar);
-  
+
       this.ApiService.create('pacientes', dadosParaEnviar).subscribe(
         (data) => {
           alert('Paciente criado com sucesso!');
+          // Se o paciente foi criado com sucesso, permita a edição
+          this.isEditing = true;
         },
         (error) => {
           alert('Erro ao criar paciente: ' + error);
@@ -113,11 +135,18 @@ export class PatientRegistrationComponent {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
   }
-  
+
   removeFormats(data: any) {
-    const fieldsToFormat = ['cpf', 'telefone', 'contatoEmergencia', 'cep', 'numeroConvenio', 'rg'];
-    fieldsToFormat.forEach(field => {
+    const fieldsToFormat = [
+      'cpf',
+      'telefone',
+      'contatoEmergencia',
+      'cep',
+      'numeroConvenio',
+      'rg',
+    ];
+    fieldsToFormat.forEach((field) => {
       data[field] = this.formatService.removeFormat(data[field]);
     });
   }
-}  
+}

@@ -8,41 +8,160 @@
           <legend>Informações Pessoais</legend>
           <label for="nome">Nome Completo:</label>
           <input type="text" id="nome" formControlName="nome" />
+          <div
+            *ngIf="
+              formPatient.controls.nome.invalid &&
+              (formPatient.controls.nome.dirty ||
+                formPatient.controls.nome.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.nome.errors.required">
+              Preenchimento obrigatório
+            </div>
+            <div *ngIf="formPatient.controls.nome.errors.minlength">
+              Deve ter no mínimo 8 caracteres
+            </div>
+            <div *ngIf="formPatient.controls.nome.errors.maxlength">
+              Deve ter no maximo 64 caracteres
+            </div>
+          </div>
           <label for="genero">Gênero:</label>
           <select id="genero" formControlName="genero">
             <option value="">Selecione</option>
             <option value="feminino">Feminino</option>
             <option value="masculino">Masculino</option>
             <option value="outro">Outro</option>
-            <option value="outro">Prefiro não informar</option>
+            <option value="nao_informar">Prefiro não informar</option>
           </select>
+          <div
+            *ngIf="
+              formPatient.controls.genero.invalid &&
+              (formPatient.controls.genero.dirty ||
+                formPatient.controls.genero.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.genero.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
           <label for="nascimento">Data de Nascimento:</label>
           <input type="date" id="nascimento" formControlName="nascimento" />
+          <div
+            *ngIf="
+              formPatient.controls.nascimento.invalid &&
+              (formPatient.controls.nascimento.dirty ||
+                formPatient.controls.nascimento.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.nascimento.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
           <label for="cpf">CPF:</label>
           <input type="text" id="cpf" formControlName="cpf" />
+          <div
+            *ngIf="
+              formPatient.controls.cpf.invalid &&
+              (formPatient.controls.cpf.dirty ||
+                formPatient.controls.cpf.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.cpf.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
           <label for="rg">RG:</label>
           <input type="text" id="rg" formControlName="rg" />
+          <div
+            *ngIf="
+              formPatient.controls.rg.invalid &&
+              (formPatient.controls.rg.dirty || formPatient.controls.rg.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.rg.errors.maxlength">
+              Deve ter no maximo 20 caracteres
+            </div>
+          </div>
           <label for="estadoCivil">Estado Civil:</label>
           <select id="estadoCivil" formControlName="estadoCivil">
             <option value="">Selecione</option>
             <option value="feminino">Solteiro(a)</option>
             <option value="masculino">Casado(a)</option>
-            <option value="outro">Viuvo(a)</option>
-            <option value="outro">Divorciado(a)</option>
-            <option value="outro">União Estável</option>
+            <option value="viuvo">Viuvo(a)</option>
+            <option value="divorciado">Divorciado(a)</option>
+            <option value="uniao_estavel">União Estável</option>
           </select>
+          <div
+            *ngIf="
+              formPatient.controls.estadoCivil.invalid &&
+              (formPatient.controls.estadoCivil.dirty ||
+                formPatient.controls.estadoCivil.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.estadoCivil.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
           <label for="telefone">Telefone:</label>
           <input type="tel" id="telefone" formControlName="telefone" />
+          <div
+            *ngIf="
+              formPatient.controls.telefone.invalid &&
+              (formPatient.controls.telefone.dirty ||
+                formPatient.controls.telefone.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.telefone.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
           <label for="email">E-mail:</label>
           <input type="email" id="email" formControlName="email" />
           <label for="naturalidade">Naturalidade:</label>
           <input type="text" id="naturalidade" formControlName="naturalidade" />
+          <div
+            *ngIf="
+              formPatient.controls.naturalidade.invalid &&
+              (formPatient.controls.naturalidade.dirty ||
+                formPatient.controls.naturalidade.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.naturalidade.errors.required">
+              Preenchimento obrigatório
+            </div>
+            <div *ngIf="formPatient.controls.naturalidade.errors.minlength">
+              Deve ter no mínimo 8 caracteres
+            </div>
+            <div *ngIf="formPatient.controls.naturalidade.errors.maxlength">
+              Deve ter no maximo 64 caracteres
+            </div>
+          </div>
           <label for="contatoEmergencia">Contato de Emergência:</label>
           <input
             type="tel"
             id="contatoEmergencia"
             formControlName="contatoEmergencia"
           />
+          <div
+            *ngIf="
+              formPatient.controls.contatoEmergencia.invalid &&
+              (formPatient.controls.contatoEmergencia.dirty ||
+                formPatient.controls.contatoEmergencia.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.contatoEmergencia.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
           <label for="alergias">Lista de Alergias:</label>
           <textarea id="alergias" formControlName="alergias"></textarea>
           <label for="cuidados">Lista de Cuidados Específicos:</label>
@@ -55,6 +174,18 @@
             id="numeroConvenio"
             formControlName="numeroConvenio"
           />
+          <div
+            *ngIf="
+              formPatient.controls.numeroConvenio.invalid &&
+              (formPatient.controls.numeroConvenio.dirty ||
+                formPatient.controls.numeroConvenio.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.numeroConvenio.errors.maxlength">
+              O numero do convenio deve ter no maximo 20 caracteres
+            </div>
+          </div>
           <label for="validadeConvenio">Validade do Convênio:</label>
           <input
             type="date"
@@ -71,6 +202,19 @@
             formControlName="cep"
             (change)="onCepChange()"
           />
+          <div
+            *ngIf="
+              formPatient.controls.cep.invalid &&
+              (formPatient.controls.cep.dirty ||
+                formPatient.controls.cep.touched)
+            "
+            class="text-red-900 font-semibold"
+          >
+            <div *ngIf="formPatient.controls.cep.errors.required">
+              Preenchimento obrigatório
+            </div>
+          </div>
+
           <label for="cidade">Cidade:</label>
           <input type="text" id="cidade" formControlName="cidade" />
           <label for="estado">Estado:</label>
@@ -86,7 +230,11 @@
           <label for="referencia">Ponto de Referência:</label>
           <input type="text" id="referencia" formControlName="referencia" />
         </fieldset>
-        <input type="submit" value="Enviar" />
+        <input type="submit" value="Salvar" />
+        <div>
+          <button [disabled]="!isEditing">Editar</button>
+          <button [disabled]="!isEditing">Deletar</button>
+        </div>
       </form>
     </aside>
   </div>
