@@ -2,7 +2,7 @@
   "pacientes": [
     {
       "nome": "Felippe Sant Ana",
-      "genero": "Feminino",
+      "genero": "Masculino",
       "dataNascimento": "1980-01-01",
       "cpf": "12345678900",
       "rg": "203456789",

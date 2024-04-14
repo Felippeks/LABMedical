@@ -16,9 +16,8 @@ import { filter } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
-})
-export class HomeComponent implements OnInit {
-  pageSize: number = window.matchMedia('(max-width: 600px)').matches ? 1 : 4;
+})export class HomeComponent implements OnInit {
+  pageSize: number = 4; 
   pageIndex: number = 0;
 
   pacientes: Paciente[] = [];
@@ -34,15 +33,22 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private stateManagementService: StateManagementService,
-  ) {}
+  ) {
+    window.addEventListener('resize', this.updatePageSize);
+  }
 
   ngOnInit() {
+    this.updatePageSize();
     this.fetchData();
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.fetchData();
     });
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.updatePageSize);
   }
   
   fetchData() {
@@ -62,7 +68,10 @@ export class HomeComponent implements OnInit {
       this.exames = exames;
     });
   }
-  
+
+  updatePageSize = () => {
+    this.pageSize = window.matchMedia('(max-width: 600px)').matches ? 1 : 4;
+  }
 
   onSearchTermChange() {
     if (this.searchTerm) {

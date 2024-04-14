@@ -69,8 +69,12 @@ export class AppointmentRegistrationComponent {
       this.filteredPacientes = this.pacientes.filter(
         (paciente) =>
           paciente &&
-          paciente.nome &&
-          paciente.nome.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()),
+          (paciente.nome &&
+            paciente.nome.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase())) ||
+          (paciente.telefone &&
+            paciente.telefone.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase())) ||
+          (paciente.email &&
+            paciente.email.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()))
       );
       this.selectedPaciente = this.filteredPacientes[0]; 
     } else {
@@ -79,6 +83,7 @@ export class AppointmentRegistrationComponent {
     }
     this.cdr.detectChanges();
   }
+  
   
   onSelectPaciente(paciente: any) {
     this.selectedPaciente = paciente;
