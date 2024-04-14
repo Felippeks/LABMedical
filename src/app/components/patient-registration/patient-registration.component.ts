@@ -62,6 +62,7 @@ export class PatientRegistrationComponent {
       ]),
       cpf: new FormControl('', Validators.required),
       rg: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      orgaoExpedidor: new FormControl('', [Validators.required, Validators.maxLength(20)]), 
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.email]),
@@ -105,15 +106,24 @@ export class PatientRegistrationComponent {
     }
     this.formPatient.get('cep').valueChanges.subscribe((cep: string) => {
       if (cep && cep.length === 8) {
-        this.cepService.getCepData(cep).subscribe((data) => {
-          this.formPatient.patchValue({
-            logradouro: data.logradouro,
-            complemento: data.complemento,
-            bairro: data.bairro,
-            cidade: data.localidade,
-            estado: data.uf,
-          });
-        });
+        this.cepService.getCepData(cep).subscribe(
+          (data) => {
+            if (data.erro) {
+              alert('CEP inválido!');
+            } else {
+              this.formPatient.patchValue({
+                logradouro: data.logradouro,
+                complemento: data.complemento,
+                bairro: data.bairro,
+                cidade: data.localidade,
+                estado: data.uf,
+              });
+            }
+          },
+          (error) => {
+            alert('Erro ao buscar dados do CEP: ' + error);
+          }
+        );
       }
     });
   
