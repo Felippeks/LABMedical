@@ -302,16 +302,6 @@
       "descricaoProblema": "Dor de cabeça constante por 3 dias",
       "medicacaoReceitada": "Paracetamol",
       "dosagemPrecaucoes": "500mg a cada 6 horas"
-    },
-    {
-      "id": "7a08",
-      "pacienteId": "13b2",
-      "motivoConsulta": "dores fortes",
-      "dataConsulta": "2045-04-20",
-      "horarioConsulta": "19:00",
-      "descricaoProblema": "uhaudhasd audshuah",
-      "medicacaoReceitada": "suahuhduasdu",
-      "dosagemPrecaucoes": "suhduahsduasd"
     }
   ],
   "exames": [
