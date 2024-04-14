@@ -29,10 +29,10 @@
           <label for="genero">Gênero:</label>
           <select id="genero" formControlName="genero">
             <option value="">Selecione</option>
-            <option value="feminino">Feminino</option>
-            <option value="masculino">Masculino</option>
-            <option value="outro">Outro</option>
-            <option value="nao_informar">Prefiro não informar</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Outro">Outro</option>
+            <option value="Prefiro não informar">Prefiro não informar</option>
           </select>
           <div
             *ngIf="
@@ -47,16 +47,16 @@
             </div>
           </div>
           <label for="nascimento">Data de Nascimento:</label>
-          <input type="date" id="nascimento" formControlName="nascimento" />
+          <input type="date" id="nascimento" formControlName="dataNascimento" />
           <div
             *ngIf="
-              formPatient.controls.nascimento.invalid &&
-              (formPatient.controls.nascimento.dirty ||
-                formPatient.controls.nascimento.touched)
+              formPatient.controls.dataNascimento.invalid &&
+              (formPatient.controls.dataNascimento.dirty ||
+                formPatient.controls.dataNascimento.touched)
             "
             class="text-red-900 font-semibold"
           >
-            <div *ngIf="formPatient.controls.nascimento.errors.required">
+            <div *ngIf="formPatient.controls.dataNascimento.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
@@ -90,11 +90,11 @@
           <label for="estadoCivil">Estado Civil:</label>
           <select id="estadoCivil" formControlName="estadoCivil">
             <option value="">Selecione</option>
-            <option value="feminino">Solteiro(a)</option>
-            <option value="masculino">Casado(a)</option>
-            <option value="viuvo">Viuvo(a)</option>
-            <option value="divorciado">Divorciado(a)</option>
-            <option value="uniao_estavel">União Estável</option>
+            <option value="Solteiro(a)">Solteiro(a)</option>
+            <option value="Casado(a)">Casado(a)</option>
+            <option value="Viuvo(a)">Viuvo(a)</option>
+            <option value="Divorciado(a)">Divorciado(a)</option>
+            <option value="União Estável">União Estável</option>
           </select>
           <div
             *ngIf="
@@ -163,9 +163,12 @@
             </div>
           </div>
           <label for="alergias">Lista de Alergias:</label>
-          <textarea id="alergias" formControlName="alergias"></textarea>
+          <textarea id="alergias" formControlName="listaAlergias"></textarea>
           <label for="cuidados">Lista de Cuidados Específicos:</label>
-          <textarea id="cuidados" formControlName="cuidados"></textarea>
+          <textarea
+            id="cuidados"
+            formControlName="listaCuidadosEspecificos"
+          ></textarea>
           <label for="convenio">Convênio:</label>
           <input type="text" id="convenio" formControlName="convenio" />
           <label for="numeroConvenio">Número do Convênio:</label>
@@ -233,7 +236,7 @@
         <input type="submit" value="Salvar" />
         <div>
           <button [disabled]="!isEditing">Editar</button>
-          <button [disabled]="!isEditing">Deletar</button>
+          <button [disabled]="!isEditing || isDeleting" (click)="deletePatient()"> Deletar </button>
         </div>
       </form>
     </aside>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NavigationEnd,
   NavigationStart,
@@ -8,6 +8,9 @@ import {
 import { LoginComponent } from './components/login/login.component';
 import { SpinnerComponent } from './components/shareds_components/spinner/spinner.component';
 import { LoadingService } from './services/loading/loading.service';
+import { ApiService } from './services/api/api.service';
+import { StateManagementService } from './services/StateManagementService/state-management.service';
+import { Paciente } from './components/home/medical.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -16,11 +19,13 @@ import { LoadingService } from './services/loading/loading.service';
   styleUrl: './app.component.scss',
   imports: [RouterOutlet, LoginComponent, SpinnerComponent],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'LabMedical';
   constructor(
     private router: Router,
     private loadingService: LoadingService,
+    private apiService: ApiService,
+    private stateManagementService: StateManagementService,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -30,6 +35,12 @@ export class AppComponent {
           this.loadingService.setLoading(false);
         }, 1000);
       }
+    });
+  }
+
+  ngOnInit() {
+    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+      this.stateManagementService.setPacientes(pacientes);
     });
   }
 }
