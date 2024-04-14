@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ToolbarComponent } from '../shareds_components/toolbar/toolbar.component';
 import { SidebarComponent } from '../shareds_components/sidebar/sidebar.component';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgeService } from '../../services/age/age.service';

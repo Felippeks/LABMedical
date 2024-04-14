@@ -1,4 +1,66 @@
-<toolbar></toolbar>
-<app-sidebar></app-sidebar>
+<main class="flex h-screen bg-gray-200">
+  <app-sidebar class="max-w-64"></app-sidebar>
+  <div class="flex flex-col flex-grow">
+    <toolbar class="w-full"></toolbar>
+    <aside>
+      <section>
+        <input
+          type="text"
+          placeholder="Buscar pacientes..."
+          [(ngModel)]="searchTerm"
+          (keydown.enter)="onSearchTermChange()"
+        />
+        <button (click)="onSearchTermChange()">Buscar</button>
+      </section>
+      <section>
+        <p>Consulta de: {{ selectedPaciente?.nome }}</p>
 
-<p>Consultas</p>
+        <form [formGroup]="formAppointment">
+          <fieldset>
+            <label for="motivoConsulta">Motivo da consulta</label>
+            <input
+              type="text"
+              id="motivoConsulta"
+              formControlName="motivoConsulta"
+            />
+            <label for="dataConsulta">Data da Consulta</label>
+            <input
+              type="date"
+              id="dataConsulta"
+              formControlName="dataConsulta"
+            />
+
+            <label for="horarioConsulta">Horário da Consulta</label>
+            <input
+              type="time"
+              id="horarioConsulta"
+              formControlName="horarioConsulta"
+            />
+
+            <label for="descricaoProblema">Descrição do Problema:</label>
+            <textarea
+              id="descricaoProblema"
+              formControlName="descricaoProblema"
+            >
+            </textarea>
+            <label for="medicacaoReceitada">Medicação Receitada</label>
+            <input
+              type="text"
+              id="medicacaoReceitada"
+              formControlName="medicacaoReceitada"
+            />
+
+            <label for="dosagemPrecaucoes">Dosagem e Precauções</label>
+            <textarea id="time" formControlName="dosagemPrecaucoes"> </textarea>
+          </fieldset>
+        </form>
+      </section>
+
+      <div>
+        <button class="salvar">Cadastrar</button>
+        <button [disabled]="!isEditing">Editar</button>
+        <button [disabled]="!isEditing || isDeleting">Deletar</button>
+      </div>
+    </aside>
+  </div>
+</main>
