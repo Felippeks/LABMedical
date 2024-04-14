@@ -1,11 +1,17 @@
 <main class="flex h-screen bg-gray-200">
   <app-sidebar class="max-w-64"></app-sidebar>
-  <div class="flex flex-col w-full">
+  <div class="flex flex-col flex-grow">
     <toolbar class="w-full"></toolbar>
-    <aside>
-      <form class="flex" [formGroup]="formPatient" (ngSubmit)="onSubmit()">
-        <fieldset class="flex flex-col">
+    <aside
+      class="flex flex-col items-stretch md:p-4 p-1 overflow-auto bg-white md:mx-8 h-screen shadow-md shadow-slate-500 font-roboto"
+    >
+      <form
+        class="flex justify-around flex-wrap md:w-full  md:bg-background bg-blue-800 md:h-screen md:rounded-2xl rounded-md md:px-4 px-1 text-xl text-shadow"
+        [formGroup]="formPatient"
+      >
+        <fieldset>
           <legend>Informações Pessoais</legend>
+
           <label for="nome">Nome Completo:</label>
           <input type="text" id="nome" formControlName="nome" />
           <div
@@ -14,7 +20,7 @@
               (formPatient.controls.nome.dirty ||
                 formPatient.controls.nome.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.nome.errors.required">
               Preenchimento obrigatório
@@ -26,6 +32,7 @@
               Deve ter no maximo 64 caracteres
             </div>
           </div>
+
           <label for="genero">Gênero:</label>
           <select id="genero" formControlName="genero">
             <option value="">Selecione</option>
@@ -40,12 +47,13 @@
               (formPatient.controls.genero.dirty ||
                 formPatient.controls.genero.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.genero.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
+
           <label for="nascimento">Data de Nascimento:</label>
           <input type="date" id="nascimento" formControlName="dataNascimento" />
           <div
@@ -54,12 +62,13 @@
               (formPatient.controls.dataNascimento.dirty ||
                 formPatient.controls.dataNascimento.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.dataNascimento.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
+
           <label for="cpf">CPF:</label>
           <input type="text" id="cpf" formControlName="cpf" />
           <div
@@ -68,12 +77,13 @@
               (formPatient.controls.cpf.dirty ||
                 formPatient.controls.cpf.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.cpf.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
+
           <label for="rg">RG:</label>
           <input type="text" id="rg" formControlName="rg" />
           <div
@@ -81,12 +91,13 @@
               formPatient.controls.rg.invalid &&
               (formPatient.controls.rg.dirty || formPatient.controls.rg.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.rg.errors.maxlength">
               Deve ter no maximo 20 caracteres
             </div>
           </div>
+
           <label for="estadoCivil">Estado Civil:</label>
           <select id="estadoCivil" formControlName="estadoCivil">
             <option value="">Selecione</option>
@@ -102,12 +113,13 @@
               (formPatient.controls.estadoCivil.dirty ||
                 formPatient.controls.estadoCivil.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.estadoCivil.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
+
           <label for="telefone">Telefone:</label>
           <input type="tel" id="telefone" formControlName="telefone" />
           <div
@@ -116,14 +128,16 @@
               (formPatient.controls.telefone.dirty ||
                 formPatient.controls.telefone.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.telefone.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
+
           <label for="email">E-mail:</label>
           <input type="email" id="email" formControlName="email" />
+
           <label for="naturalidade">Naturalidade:</label>
           <input type="text" id="naturalidade" formControlName="naturalidade" />
           <div
@@ -132,7 +146,7 @@
               (formPatient.controls.naturalidade.dirty ||
                 formPatient.controls.naturalidade.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.naturalidade.errors.required">
               Preenchimento obrigatório
@@ -144,6 +158,10 @@
               Deve ter no maximo 64 caracteres
             </div>
           </div>
+        </fieldset>
+        <fieldset>
+          <legend>Informações Complementares</legend>
+
           <label for="contatoEmergencia">Contato de Emergência:</label>
           <input
             type="tel"
@@ -156,21 +174,15 @@
               (formPatient.controls.contatoEmergencia.dirty ||
                 formPatient.controls.contatoEmergencia.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.contatoEmergencia.errors.required">
               Preenchimento obrigatório
             </div>
           </div>
-          <label for="alergias">Lista de Alergias:</label>
-          <textarea id="alergias" formControlName="listaAlergias"></textarea>
-          <label for="cuidados">Lista de Cuidados Específicos:</label>
-          <textarea
-            id="cuidados"
-            formControlName="listaCuidadosEspecificos"
-          ></textarea>
           <label for="convenio">Convênio:</label>
           <input type="text" id="convenio" formControlName="convenio" />
+
           <label for="numeroConvenio">Número do Convênio:</label>
           <input
             type="text"
@@ -183,34 +195,38 @@
               (formPatient.controls.numeroConvenio.dirty ||
                 formPatient.controls.numeroConvenio.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.numeroConvenio.errors.maxlength">
               O numero do convenio deve ter no maximo 20 caracteres
             </div>
           </div>
+
           <label for="validadeConvenio">Validade do Convênio:</label>
           <input
             type="date"
             id="validadeConvenio"
             formControlName="validadeConvenio"
           />
+          <label for="alergias">Lista de Alergias:</label>
+          <textarea id="alergias" formControlName="listaAlergias"></textarea>
+          <label for="cuidados">Lista de Cuidados Específicos:</label>
+          <textarea
+            id="cuidados"
+            formControlName="listaCuidadosEspecificos"
+          ></textarea>
         </fieldset>
-        <fieldset class="flex flex-col">
-          <legend>Endereço</legend>
-          <label for="cep">CEP:</label>
-          <input
-            type="text"
-            id="cep"
-            formControlName="cep"
-          />
+        <fieldset>
+          <legend>Informações de endereço</legend>
+            <label for="cep">CEP:</label>
+          <input type="text" id="cep" formControlName="cep" />
           <div
             *ngIf="
               formPatient.controls.cep.invalid &&
               (formPatient.controls.cep.dirty ||
                 formPatient.controls.cep.touched)
             "
-            class="text-red-900 font-semibold"
+            class="error-message"
           >
             <div *ngIf="formPatient.controls.cep.errors.required">
               Preenchimento obrigatório
@@ -232,12 +248,14 @@
           <label for="referencia">Ponto de Referência:</label>
           <input type="text" id="referencia" formControlName="referencia" />
         </fieldset>
-        <input type="submit" value="Salvar" />
-        <div>
-          <button [disabled]="!isEditing">Editar</button>
-          <button [disabled]="!isEditing || isDeleting" (click)="deletePatient()"> Deletar </button>
-        </div>
       </form>
+      <div class="flex md:flex-row flex-col md:justify-between items-center">
+        <button class="salvar" (click)="onSubmit()">Cadastrar</button>
+        <button [disabled]="!isEditing" (click)="onSubmit()">Editar</button>
+        <button [disabled]="!isEditing || isDeleting" (click)="deletePatient()">
+          Deletar
+        </button>
+      </div>
     </aside>
   </div>
 </main>
