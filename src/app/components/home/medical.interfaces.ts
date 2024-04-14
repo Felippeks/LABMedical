@@ -18,6 +18,14 @@ export interface Paciente {
   numeroConvenio: string;
   validadeConvenio: string;
   endereco: string;
+  cep: string;
+  cidade: string;
+  estado: string;
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  referencia: string;
   [key: string]: any;
 }
 

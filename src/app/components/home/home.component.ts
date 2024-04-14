@@ -4,9 +4,12 @@ import { SidebarComponent } from '../shareds_components/sidebar/sidebar.componen
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AgeService } from '../../services/ageservice.service';
+import { AgeService } from '../../services/age/age.service';
 import { Paciente, Consulta, Exame } from './medical.interfaces';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { ApiService } from '../../services/api/api.service';
+import { StateManagementService } from '../../services/StateManagementService/state-management.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,34 +31,39 @@ export class HomeComponent implements OnInit {
   filteredPacientes: Paciente[] = [];
 
   constructor(
-    private httpClient: HttpClient,
     private ageService: AgeService,
     private router: Router,
+    private apiService: ApiService,
+    private stateManagementService: StateManagementService,
   ) {}
 
   ngOnInit() {
-    this.httpClient
-      .get<Paciente[]>('http://localhost:3000/pacientes')
-      .subscribe((pacientes) => {
+    this.fetchData();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.fetchData();
+    });
+  }
+  
+  fetchData() {
+    this.apiService.getAll('pacientes').subscribe(
+      (pacientes: Paciente[]) => {
         this.pacientes = pacientes.map((paciente) => ({
           ...paciente,
           idade: this.ageService.calculateAge(paciente.dataNascimento),
         }));
         this.filteredPacientes = [...this.pacientes];
-      });
-
-    this.httpClient
-      .get<Consulta[]>('http://localhost:3000/consultas')
-      .subscribe((consultas) => {
-        this.consultas = consultas;
-      });
-
-    this.httpClient
-      .get<Exame[]>('http://localhost:3000/exames')
-      .subscribe((exames) => {
-        this.exames = exames;
-      });
+      },
+    );
+    this.apiService.getAll('consultas').subscribe((consultas: Consulta[]) => {
+      this.consultas = consultas;
+    });
+    this.apiService.getAll('exames').subscribe((exames: Exame[]) => {
+      this.exames = exames;
+    });
   }
+  
 
   onSearchTermChange() {
     if (this.searchTerm) {
@@ -81,7 +89,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  More(): void {
-    this.router.navigate(['/patientRegistration']);
+  More(id: string): void {
+    this.router.navigate(['/patientRegistration', id]);
   }
 }
