@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {  Component } from '@angular/core';
 import { SidebarComponent } from '../shareds_components/sidebar/sidebar.component';
 import { ToolbarComponent } from '../shareds_components/toolbar/toolbar.component';
 import { ApiService } from '../../services/api/api.service';
-import { StateManagementService } from '../../services/StateManagementService/state-management.service';
 import {
   FormControl,
   FormGroup,
@@ -11,7 +10,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-appointment-registration',
@@ -27,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   ],
 })
 export class AppointmentRegistrationComponent {
+  pacienteId: string | null = null;
   isDeleting: boolean = false;
   isEditing: boolean = false;
   searchTerm: string | any;
@@ -35,16 +34,9 @@ export class AppointmentRegistrationComponent {
   selectedPaciente: any;
 
   formAppointment: FormGroup;
-
-  constructor(
-    private apiService: ApiService,
-    private stateManagementService: StateManagementService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-  ) {
+  constructor(private apiService: ApiService) {
     this.formAppointment = new FormGroup({
-      pacienteId: new FormControl('', Validators.required),
+      pacienteId: new FormControl(''),
       motivoConsulta: new FormControl('', Validators.required),
       dataConsulta: new FormControl(new Date(), Validators.required),
       horarioConsulta: new FormControl(
@@ -64,30 +56,48 @@ export class AppointmentRegistrationComponent {
       this.filteredPacientes = data;
     });
   }
+
   onSearchTermChange() {
     if (this.searchTerm) {
       this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
-        this.selectedPaciente = pacientes.find(paciente =>
-          paciente.nome.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
-          paciente.cpf.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
-          paciente.email.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+        this.selectedPaciente = pacientes.find(
+          (paciente) =>
+            paciente.nome
+              .trim()
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()) ||
+            paciente.cpf
+              .trim()
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()) ||
+            paciente.email
+              .trim()
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()),
         );
-  
+
         if (this.selectedPaciente) {
+          this.pacienteId = this.selectedPaciente.id;
           this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
-            const consultaDoPaciente = consultas.find(consulta => consulta.pacienteId === this.selectedPaciente.id);
+            const consultaDoPaciente = consultas.find(
+              (consulta) => consulta.pacienteId === this.selectedPaciente.id,
+            );
             if (consultaDoPaciente) {
               this.formAppointment.patchValue({
                 motivoConsulta: consultaDoPaciente.motivoConsulta,
                 dataConsulta: new Date(consultaDoPaciente.dataConsulta),
-                horarioConsulta: new Date(consultaDoPaciente.horarioConsulta).getTime(),
+                horarioConsulta: new Date(
+                  consultaDoPaciente.horarioConsulta,
+                ).getTime(),
                 descricaoProblema: consultaDoPaciente.descricaoProblema,
                 medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
                 dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
               });
             } else {
               alert('Cliente não possui consultas');
+              const pacienteId = this.formAppointment.get('pacienteId')?.value;
               this.formAppointment.reset();
+              this.formAppointment.patchValue({ pacienteId });
             }
           });
         } else {
@@ -96,17 +106,22 @@ export class AppointmentRegistrationComponent {
       });
     }
   }
-      
+
   onSelectPaciente(paciente: any) {
     this.selectedPaciente = paciente;
+    this.pacienteId = paciente?.id;
     this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
     this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
-      const consultaDoPaciente = consultas.find(consulta => consulta.pacienteId === paciente.id);
+      const consultaDoPaciente = consultas.find(
+        (consulta) => consulta.pacienteId === paciente.id,
+      );
       if (consultaDoPaciente) {
         this.formAppointment.patchValue({
           motivoConsulta: consultaDoPaciente.motivoConsulta,
           dataConsulta: new Date(consultaDoPaciente.dataConsulta),
-          horarioConsulta: new Date(consultaDoPaciente.horarioConsulta).getTime(),
+          horarioConsulta: new Date(
+            consultaDoPaciente.horarioConsulta,
+          ).getTime(),
           descricaoProblema: consultaDoPaciente.descricaoProblema,
           medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
           dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
@@ -115,5 +130,24 @@ export class AppointmentRegistrationComponent {
         alert('Cliente não possui consultas');
       }
     });
+  }
+
+  onSubmit() {
+    if (this.formAppointment.valid) {
+      this.formAppointment.get('pacienteId')?.setValue(this.pacienteId);
+      this.apiService.create('consultas', this.formAppointment.value).subscribe(
+        () => {
+          alert('Consulta cadastrada com sucesso!');
+          const pacienteId = this.formAppointment.get('pacienteId')?.value;
+          this.formAppointment.reset();
+          this.formAppointment.patchValue({ pacienteId });
+        },
+        (error) => {
+          console.error('Erro ao cadastrar consulta:', error);
+        },
+      );
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios do formulário.');
+    }
   }
 }

@@ -63,7 +63,7 @@
       </section>
 
       <div>
-        <button class="salvar">Cadastrar</button>
+        <button class="salvar" (click)="onSubmit()">Cadastrar</button>
         <button [disabled]="!isEditing">Editar</button>
         <button [disabled]="!isEditing || isDeleting">Deletar</button>
       </div>
