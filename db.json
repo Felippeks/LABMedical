@@ -295,6 +295,7 @@
   "consultas": [
     {
       "id": "1",
+      "pacienteId": "12d0",
       "motivoConsulta": "Dor de cabeça persistente",
       "dataConsulta": "2024-04-15",
       "horarioConsulta": "14:00",

@@ -66,28 +66,54 @@ export class AppointmentRegistrationComponent {
   }
   onSearchTermChange() {
     if (this.searchTerm) {
-      this.filteredPacientes = this.pacientes.filter(
-        (paciente) =>
-          paciente &&
-          (paciente.nome &&
-            paciente.nome.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase())) ||
-          (paciente.telefone &&
-            paciente.telefone.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase())) ||
-          (paciente.email &&
-            paciente.email.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()))
-      );
-      this.selectedPaciente = this.filteredPacientes[0]; 
-    } else {
-      this.filteredPacientes = this.pacientes;
-      this.selectedPaciente = this.pacientes[0]; 
+      this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
+        this.selectedPaciente = pacientes.find(paciente =>
+          paciente.nome.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
+          paciente.cpf.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
+          paciente.email.trim().toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+        );
+  
+        if (this.selectedPaciente) {
+          this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
+            const consultaDoPaciente = consultas.find(consulta => consulta.pacienteId === this.selectedPaciente.id);
+            if (consultaDoPaciente) {
+              this.formAppointment.patchValue({
+                motivoConsulta: consultaDoPaciente.motivoConsulta,
+                dataConsulta: new Date(consultaDoPaciente.dataConsulta),
+                horarioConsulta: new Date(consultaDoPaciente.horarioConsulta).getTime(),
+                descricaoProblema: consultaDoPaciente.descricaoProblema,
+                medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
+                dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+              });
+            } else {
+              alert('Cliente não possui consultas');
+              this.formAppointment.reset();
+            }
+          });
+        } else {
+          alert('Paciente não encontrado');
+        }
+      });
     }
-    this.cdr.detectChanges();
   }
-  
-  
+      
   onSelectPaciente(paciente: any) {
     this.selectedPaciente = paciente;
     this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
-    console.log('Paciente selecionado:', this.selectedPaciente); 
+    this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
+      const consultaDoPaciente = consultas.find(consulta => consulta.pacienteId === paciente.id);
+      if (consultaDoPaciente) {
+        this.formAppointment.patchValue({
+          motivoConsulta: consultaDoPaciente.motivoConsulta,
+          dataConsulta: new Date(consultaDoPaciente.dataConsulta),
+          horarioConsulta: new Date(consultaDoPaciente.horarioConsulta).getTime(),
+          descricaoProblema: consultaDoPaciente.descricaoProblema,
+          medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
+          dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+        });
+      } else {
+        alert('Cliente não possui consultas');
+      }
+    });
   }
-}  
+}

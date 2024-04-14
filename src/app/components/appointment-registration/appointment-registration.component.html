@@ -11,6 +11,12 @@
           (keydown.enter)="onSearchTermChange()"
         />
         <button (click)="onSearchTermChange()">Buscar</button>
+        <!-- TODO: list patient search results here -->
+        <!-- <ul>
+          <li *ngFor="let paciente of filteredPacientes" (click)="onSelectPaciente(paciente)">
+            {{ paciente.nome }}
+          </li>
+        </ul> -->
       </section>
       <section>
         <p>Consulta de: {{ selectedPaciente?.nome }}</p>
