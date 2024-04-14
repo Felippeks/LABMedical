@@ -103,6 +103,20 @@ export class PatientRegistrationComponent {
         },
       );
     }
+    this.formPatient.get('cep').valueChanges.subscribe((cep: string) => {
+      if (cep && cep.length === 8) {
+        this.cepService.getCepData(cep).subscribe((data) => {
+          this.formPatient.patchValue({
+            logradouro: data.logradouro,
+            complemento: data.complemento,
+            bairro: data.bairro,
+            cidade: data.localidade,
+            estado: data.uf,
+          });
+        });
+      }
+    });
+  
   }
   setupValueChanges() {
     this.setupFormatOnValueChange('cpf', this.formatService.formatCPF);
@@ -120,22 +134,6 @@ export class PatientRegistrationComponent {
         emitEvent: false,
       });
     });
-  }
-
-  onCepChange() {
-    const cepControl = this.formPatient.get('cep');
-    if (cepControl && cepControl.value && cepControl.value.length === 8) {
-      const cep = cepControl.value;
-      this.cepService.getCepData(cep).subscribe((data) => {
-        this.formPatient.patchValue({
-          logradouro: data.logradouro,
-          complemento: data.complemento,
-          bairro: data.bairro,
-          cidade: data.localidade,
-          estado: data.uf,
-        });
-      });
-    }
   }
 
   onSubmit() {
