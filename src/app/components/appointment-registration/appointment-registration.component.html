@@ -64,8 +64,8 @@
 
       <div>
         <button class="salvar" (click)="onSubmit()">Cadastrar</button>
-        <button  (click)="onUpdate()">Editar</button>
-        <button  (click)="onDelete()">Deletar</button>
+        <button [disabled]="!consultaId" (click)="onUpdate()">Editar</button>
+        <button [disabled]="!consultaId"  (click)="onDelete()">Deletar</button>
       </div>
     </aside>
   </div>

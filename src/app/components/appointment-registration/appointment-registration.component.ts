@@ -36,9 +36,15 @@ export class AppointmentRegistrationComponent {
     this.formAppointment = new FormGroup({
       pacienteId: new FormControl(''),
       motivoConsulta: new FormControl('', Validators.required),
-      dataConsulta: new FormControl(new Date(), Validators.required),
+      dataConsulta: new FormControl(
+        new Date().toLocaleDateString('pt-BR'),
+        Validators.required,
+      ),
       horarioConsulta: new FormControl(
-        new Date().getTime(),
+        new Date().toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
         Validators.required,
       ),
       descricaoProblema: new FormControl('', Validators.required),
@@ -55,123 +61,125 @@ export class AppointmentRegistrationComponent {
     });
   }
 
-    onSearchTermChange() {
-      if (this.searchTerm) {
-        this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
-          this.selectedPaciente = pacientes.find(
-            (paciente) =>
-              paciente.nome
-                .trim()
-                .toLowerCase()
-                .includes(this.searchTerm.trim().toLowerCase()) ||
-              paciente.cpf
-                .trim()
-                .toLowerCase()
-                .includes(this.searchTerm.trim().toLowerCase()) ||
-              paciente.email
-                .trim()
-                .toLowerCase()
-                .includes(this.searchTerm.trim().toLowerCase()),
-          );
-    
-          if (this.selectedPaciente) {
-            this.pacienteId = this.selectedPaciente.id;
-            this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
-              const consultaDoPaciente = consultas.find(
-                (consulta) => consulta.pacienteId === this.selectedPaciente.id,
-              );
-              if (consultaDoPaciente) {
-                this.consultaId = consultaDoPaciente.id;
-                this.formAppointment.patchValue({
-                  motivoConsulta: consultaDoPaciente.motivoConsulta,
-                  dataConsulta: new Date(consultaDoPaciente.dataConsulta),
-                  horarioConsulta: new Date(
-                    consultaDoPaciente.horarioConsulta,
-                  ).getTime(),
-                  descricaoProblema: consultaDoPaciente.descricaoProblema,
-                  medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
-                  dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
-                });
-              } else {
-                const pacienteId = this.formAppointment.get('pacienteId')?.value;
-                this.formAppointment.reset();
-                this.formAppointment.patchValue({ pacienteId });
-              }
-            });
-          } else {
-            alert('Paciente não encontrado');
-          }
-        });
-      }
-    }
-
-    onSelectPaciente(paciente: any) {
-      this.selectedPaciente = paciente;
-      this.pacienteId = paciente?.id;
-      this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
-      this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
-        const consultaDoPaciente = consultas.find(
-          (consulta) => consulta.pacienteId === paciente.id,
+  onSearchTermChange() {
+    if (this.searchTerm) {
+      this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
+        this.selectedPaciente = pacientes.find(
+          (paciente) =>
+            paciente.nome
+              .trim()
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()) ||
+            paciente.cpf
+              .trim()
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()) ||
+            paciente.email
+              .trim()
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()),
         );
-        if (consultaDoPaciente) {
-          this.consultaId = consultaDoPaciente.id;
-          this.formAppointment.patchValue({
-            motivoConsulta: consultaDoPaciente.motivoConsulta,
-            dataConsulta: new Date(consultaDoPaciente.dataConsulta),
-            horarioConsulta: new Date(
-              consultaDoPaciente.horarioConsulta,
-            ).getTime(),
-            descricaoProblema: consultaDoPaciente.descricaoProblema,
-            medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
-            dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+
+        if (this.selectedPaciente) {
+          this.pacienteId = this.selectedPaciente.id;
+          this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
+            const consultaDoPaciente = consultas.find(
+              (consulta) => consulta.pacienteId === this.selectedPaciente.id,
+            );
+            if (consultaDoPaciente) {
+              this.consultaId = consultaDoPaciente.id;
+              this.formAppointment.patchValue({
+                motivoConsulta: consultaDoPaciente.motivoConsulta,
+                dataConsulta: new Date(consultaDoPaciente.dataConsulta),
+                horarioConsulta: new Date(
+                  consultaDoPaciente.horarioConsulta,
+                ).getTime(),
+                descricaoProblema: consultaDoPaciente.descricaoProblema,
+                medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
+                dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+              });
+            } else {
+              const pacienteId = this.formAppointment.get('pacienteId')?.value;
+              this.formAppointment.reset();
+              this.formAppointment.patchValue({ pacienteId });
+            }
           });
         } else {
-          alert('Cliente não possui consultas');
+          alert('Paciente não encontrado');
         }
       });
     }
-    onSubmit() {
-      if (this.formAppointment.valid && this.selectedPaciente ) {
-        this.apiService.create('consultas', this.formAppointment.value).subscribe(
-          () => {
-            alert('Consulta cadastrada com sucesso!');
-            const pacienteId = this.formAppointment.get('pacienteId')?.value;
-            this.formAppointment.reset();
-            this.formAppointment.patchValue({ pacienteId });
-          },
-          (error) => {
-            console.error('Erro ao cadastrar consulta:', error);
-          },
-        );
+  }
+
+  onSelectPaciente(paciente: any) {
+    this.selectedPaciente = paciente;
+    this.pacienteId = paciente?.id;
+    this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
+    this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
+      const consultaDoPaciente = consultas.find(
+        (consulta) => consulta.pacienteId === paciente.id,
+      );
+      if (consultaDoPaciente) {
+        this.consultaId = consultaDoPaciente.id;
+        this.formAppointment.patchValue({
+          motivoConsulta: consultaDoPaciente.motivoConsulta,
+          dataConsulta: new Date(consultaDoPaciente.dataConsulta),
+          horarioConsulta: new Date(
+            consultaDoPaciente.horarioConsulta,
+          ).getTime(),
+          descricaoProblema: consultaDoPaciente.descricaoProblema,
+          medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
+          dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+        });
       } else {
-        alert('Por favor, preencha todos os campos obrigatórios do formulário.');
+        alert('Cliente não possui consultas');
       }
+    });
+  }
+  onSubmit() {
+    if (this.formAppointment.valid && this.selectedPaciente) {
+      this.apiService.create('consultas', this.formAppointment.value).subscribe(
+        () => {
+          alert('Consulta cadastrada com sucesso!');
+          const pacienteId = this.formAppointment.get('pacienteId')?.value;
+          this.formAppointment.reset();
+          this.formAppointment.patchValue({ pacienteId });
+        },
+        (error) => {
+          console.error('Erro ao cadastrar consulta:', error);
+        },
+      );
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios do formulário.');
     }
-    
-    onDelete() {
-      if (this.formAppointment.valid && this.consultaId) {
-        this.apiService.delete('consultas', this.consultaId).subscribe(
-          () => {
-            alert('Consulta deletada com sucesso!');
-            this.formAppointment.reset();
-          },
-          (error) => {
-            console.error('Erro ao deletar consulta:', error);
-          },
-        );
-      } else {
-        alert('Por favor, selecione uma consulta para deletar.');
-      }
+  }
+
+  onDelete() {
+    if (this.formAppointment.valid && this.consultaId) {
+      this.apiService.delete('consultas', this.consultaId).subscribe(
+        () => {
+          alert('Consulta deletada com sucesso!');
+          this.formAppointment.reset();
+        },
+        (error) => {
+          console.error('Erro ao deletar consulta:', error);
+        },
+      );
+    } else {
+      alert('Por favor, selecione uma consulta para deletar.');
     }
-    
-    onUpdate() {
-      if (this.formAppointment.valid && this.selectedPaciente) {
-        if (this.consultaId !== null) {
-          const updatedConsultation = {
-            ...this.formAppointment.value,
-            pacienteId: this.selectedPaciente.id,
-          };
-          this.apiService.update('consultas', this.consultaId, updatedConsultation).subscribe(
+  }
+
+  onUpdate() {
+    if (this.formAppointment.valid && this.selectedPaciente) {
+      if (this.consultaId !== null) {
+        const updatedConsultation = {
+          ...this.formAppointment.value,
+          pacienteId: this.selectedPaciente.id,
+        };
+        this.apiService
+          .update('consultas', this.consultaId, updatedConsultation)
+          .subscribe(
             () => {
               alert('Consulta atualizada com sucesso!');
             },
@@ -179,13 +187,13 @@ export class AppointmentRegistrationComponent {
               console.error('Erro ao atualizar consulta:', error);
             },
           );
-        } else {
-          console.error('Erro: consultaId é null');
-        }
       } else {
-        alert('Por favor, preencha todos os campos obrigatórios para atualização.');
+        console.error('Erro: consultaId é null');
       }
+    } else {
+      alert(
+        'Por favor, preencha todos os campos obrigatórios para atualização.',
+      );
     }
-  
-  
+  }
 }
