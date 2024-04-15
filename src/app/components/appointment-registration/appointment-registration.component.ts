@@ -32,7 +32,7 @@ export class AppointmentRegistrationComponent {
   filteredPacientes: any[] = [];
   selectedPaciente: any;
   consultaId: string | null = null;
-  formAppointment: FormGroup;
+  formAppointment: FormGroup | any;
   constructor(
     private apiService: ApiService,
     private dateService: DateService,
@@ -40,7 +40,7 @@ export class AppointmentRegistrationComponent {
   ) {
     this.formAppointment = new FormGroup({
       pacienteId: new FormControl(''),
-      motivoConsulta: new FormControl('', Validators.required),
+      motivoConsulta: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
       dataConsulta: new FormControl(
         this.dateService.formatDate(new Date()),
         Validators.required,
@@ -49,11 +49,10 @@ export class AppointmentRegistrationComponent {
         this.dateService.formatTime(new Date()),
         Validators.required,
       ),
-      descricaoProblema: new FormControl('', Validators.required),
+      descricaoProblema: new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(1024)]),
       medicacaoReceitada: new FormControl(''),
-      dosagemPrecaucoes: new FormControl('', Validators.required),
+      dosagemPrecaucoes: new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(256)]),
     });
-    this.getAllPacientes();
   }
 
   getAllPacientes() {

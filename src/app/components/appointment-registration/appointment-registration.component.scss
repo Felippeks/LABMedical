@@ -1,24 +1,9 @@
-fieldset {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    @media (min-width: 768px) {
-      width: 33.333333%;
-    }
-    margin-top: 1rem;
-    font-style: italic;
-    font-size: 1rem;
-    align-items: center;
-  }
-  
-  legend {
-    margin: 0 auto;
-    color: #ffd700;
-  }
-  
+ 
   label {
-    margin-top: 0.3rem;
+    margin-top: 2rem;
     font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
   }
   
   input {
@@ -26,8 +11,8 @@ fieldset {
     outline: none;
     border-radius: 50px;
     width: 24rem;
-    padding: 0.1rem 0.9rem;
-    margin: 0.1rem 0;
+    padding: 1rem 0.9rem;
+
   }
   select {
     color: black;
@@ -43,13 +28,12 @@ fieldset {
     outline: none;
     border-radius: 50px;
     width: 24rem;
-    padding: 0.25rem 2rem;
     margin: 0.25rem 0;
   }
   .error-message {
     color: #c53030;
     font-weight: 600;
-    font-size: 0.65rem;
+    font-size: 0.9rem;
   }
   
   button {

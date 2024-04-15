@@ -2,67 +2,187 @@
   <app-sidebar class="max-w-64"></app-sidebar>
   <div class="flex flex-col flex-grow">
     <toolbar class="w-full"></toolbar>
-    <aside class="flex flex-col items-stretch md:p-4 my-4 rounded-3xl overflow-auto bg-white md:mx-8 h-screen shadow-md shadow-slate-500 font-roboto">
-      <section  class="mt-2 bg-white border-2 px-4 py-2 border-gray-200 rounded-2xl flex flex-row justify-center items-center mx-auto  shadow-md shadow-slate-500">
-        <input
-          type="text"
-          placeholder="Buscar pacientes..."
-          [(ngModel)]="searchTerm"
-          (keydown.enter)="onSearchTermChange()"
-        />
+    <aside class="flex flex-col justify-center md:w-7xl md:items-stretch  md:my-4 md:mx-8 md:rounded-3xl overflow-auto bg-white shadow-md shadow-slate-500 font-roboto p-2 md:p-4">
+      <section class="md:my-2 border-2 md:px-4 mt-52 py-2 mx-auto md:w-96 w-72 rounded-2xl flex flex-row justify-center items-center shadow-md shadow-slate-500">
+        <input type="text" placeholder="Buscar pacientes..." [(ngModel)]="searchTerm" (keydown.enter)="onSearchTermChange()" />
         <button (click)="onSearchTermChange()">Buscar</button>
       </section>
-      <section>
-        <div class="bg-background my-4 max-w-2xl p-2 rounded-3xl px-4 text-textColor border-2 border-textColor">
+      <section class="my-4 p-2 md:max-w-2xl rounded-3xl px-4 border-2 border-textColor bg-background text-textColor">
+        <div>
           <p>Consulta de: <span class="text-white">{{ selectedPaciente?.nome }}</span></p>
           <p>CPF: <span class="text-white">{{ selectedPaciente?.cpf }}</span></p>
         </div>
-        
-        <form [formGroup]="formAppointment" class="flex justify-around py-4 flex-wrap md:w-full md:bg-background bg-blue-800 md:rounded-2xl rounded-md text-xl text-shadow">
-          <fieldset>
-            <label for="motivoConsulta">Motivo da consulta</label>
-            <input
-              type="text"
-              id="motivoConsulta"
-              formControlName="motivoConsulta"
-            />
-            <label for="dataConsulta">Data da Consulta</label>
-            <input
-              type="date"
-              id="dataConsulta"
-              formControlName="dataConsulta"
-            />
+      </section>
+      <section>
+        <form [formGroup]="formAppointment" class="py-4 md:w-full md:gap-2 bg-blue-800 md:bg-background rounded-md md:rounded-2xl  text-shadow justify-center flex md:flex-col flex-row items-stretch">
+          <fieldset class="justify-around mb-10 flex flex-col md:flex-row">
+            <legend class="text-center md:text-2xl text-xs text-textColor">Cadastro de Consultas</legend>
+            <div class="flex flex-col">
+              <label for="motivoConsulta">Motivo da consulta</label>
+              <input
+                type="text"
+                id="motivoConsulta"
+                formControlName="motivoConsulta"
+              />
+              <div
+                *ngIf="
+                  formAppointment.controls.motivoConsulta.invalid &&
+                  (formAppointment.controls.motivoConsulta.dirty ||
+                    formAppointment.controls.motivoConsulta.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formAppointment.controls.motivoConsulta.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formAppointment.controls.motivoConsulta.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 8 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formAppointment.controls.motivoConsulta.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 64 caracteres
+                </div>
+              </div>
+              <label for="dataConsulta">Data da Consulta</label>
+              <input
+                type="date"
+                id="dataConsulta"
+                formControlName="dataConsulta"
+              />
+              <div
+                *ngIf="
+                  formAppointment.controls.dataConsulta.invalid &&
+                  (formAppointment.controls.dataConsulta.dirty ||
+                    formAppointment.controls.dataConsulta.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="formAppointment.controls.dataConsulta.errors.required"
+                >
+                  Preenchimento obrigatório
+                </div>
+              </div>
+              <label for="horarioConsulta">Horário da Consulta</label>
+              <input
+                type="time"
+                id="horarioConsulta"
+                formControlName="horarioConsulta"
+              />
+              <div
+                *ngIf="
+                  formAppointment.controls.horarioConsulta.invalid &&
+                  (formAppointment.controls.horarioConsulta.dirty ||
+                    formAppointment.controls.horarioConsulta.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formAppointment.controls.horarioConsulta.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <label for="descricaoProblema">Descrição do Problema:</label>
+              <textarea
+                id="descricaoProblema"
+                formControlName="descricaoProblema"
+              >
+              </textarea>
+              <div
+                *ngIf="
+                  formAppointment.controls.descricaoProblema.invalid &&
+                  (formAppointment.controls.descricaoProblema.dirty ||
+                    formAppointment.controls.descricaoProblema.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formAppointment.controls.descricaoProblema.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formAppointment.controls.descricaoProblema.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 16 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formAppointment.controls.descricaoProblema.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 1024 caracteres
+                </div>
+              </div>
+              <label for="medicacaoReceitada">Medicação Receitada</label>
+              <input
+                type="text"
+                id="medicacaoReceitada"
+                formControlName="medicacaoReceitada"
+              />
 
-            <label for="horarioConsulta">Horário da Consulta</label>
-            <input
-              type="time"
-              id="horarioConsulta"
-              formControlName="horarioConsulta"
-            />
-
-            <label for="descricaoProblema">Descrição do Problema:</label>
-            <textarea
-              id="descricaoProblema"
-              formControlName="descricaoProblema"
-            >
-            </textarea>
-            <label for="medicacaoReceitada">Medicação Receitada</label>
-            <input
-              type="text"
-              id="medicacaoReceitada"
-              formControlName="medicacaoReceitada"
-            />
-
-            <label for="dosagemPrecaucoes">Dosagem e Precauções</label>
-            <textarea id="time" formControlName="dosagemPrecaucoes"> </textarea>
+              <label for="dosagemPrecaucoes">Dosagem e Precauções</label>
+              <textarea id="time" formControlName="dosagemPrecaucoes">
+              </textarea>
+              <div
+                *ngIf="
+                  formAppointment.controls.dosagemPrecaucoes.invalid &&
+                  (formAppointment.controls.dosagemPrecaucoes.dirty ||
+                    formAppointment.controls.dosagemPrecaucoes.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formAppointment.controls.dosagemPrecaucoes.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formAppointment.controls.dosagemPrecaucoes.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 16 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formAppointment.controls.dosagemPrecaucoes.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 256 caracteres
+                </div>
+              </div>
+            </div>
           </fieldset>
         </form>
       </section>
 
-      <div class="mt-6 flex md:flex-row flex-col justify-around">
+      <div class="mt-4 flex md:flex-row flex-col justify-around">
         <button class="salvar" (click)="onSubmit()">Cadastrar</button>
         <button [disabled]="!consultaId" (click)="onUpdate()">Editar</button>
-        <button [disabled]="!consultaId"  (click)="onDelete()">Deletar</button>
+        <button [disabled]="!consultaId" (click)="onDelete()">Deletar</button>
       </div>
     </aside>
   </div>
