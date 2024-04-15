@@ -89,6 +89,9 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.screenSizeService.isDesktop.subscribe((isDesktop) => {
       this.sidebarWidth = isDesktop ? '160px' : '80px';
+      if (!isDesktop) {
+        this.sidebarService.closeSidebar(); 
+      }
     });
     this.isOpen$ = this.sidebarService.isOpen$;
     this.isClosed$ = this.isOpen$.pipe(map((isOpen) => !isOpen));
@@ -116,6 +119,10 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleSidebar(): void {
-    this.sidebarService.toggleSidebar();
+    this.screenSizeService.isDesktop.subscribe((isDesktop) => {
+      if (isDesktop) {
+        this.sidebarService.toggleSidebar();
+      }
+    });
   }
 }

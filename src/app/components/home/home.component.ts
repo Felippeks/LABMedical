@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ToolbarComponent } from '../shareds_components/toolbar/toolbar.component';
 import { SidebarComponent } from '../shareds_components/sidebar/sidebar.component';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgeService } from '../../services/age/age.service';
@@ -19,9 +18,9 @@ import { filter } from 'rxjs';
   imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
 })
 export class HomeComponent implements OnInit {
-  pageSize: number = window.matchMedia('(max-width: 600px)').matches ? 1 : 4;
+  pageSize: number = 4;
   pageIndex: number = 0;
-
+  totalPacientes: number = 0
   pacientes: Paciente[] = [];
   consultas: Consulta[] = [];
   exames: Exame[] = [];
@@ -35,27 +34,33 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private stateManagementService: StateManagementService,
-  ) {}
+  ) {
+    window.addEventListener('resize', this.updatePageSize);
+  }
 
   ngOnInit() {
+    this.updatePageSize();
     this.fetchData();
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.fetchData();
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.fetchData();
+      });
   }
-  
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.updatePageSize);
+  }
+
   fetchData() {
-    this.apiService.getAll('pacientes').subscribe(
-      (pacientes: Paciente[]) => {
-        this.pacientes = pacientes.map((paciente) => ({
-          ...paciente,
-          idade: this.ageService.calculateAge(paciente.dataNascimento),
-        }));
-        this.filteredPacientes = [...this.pacientes];
-      },
-    );
+    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+      this.pacientes = pacientes.map((paciente) => ({
+        ...paciente,
+        idade: this.ageService.calculateAge(paciente.dataNascimento),
+      }));
+      this.filteredPacientes = [...this.pacientes];
+      this.totalPacientes = this.pacientes.length;
+    });
     this.apiService.getAll('consultas').subscribe((consultas: Consulta[]) => {
       this.consultas = consultas;
     });
@@ -63,7 +68,10 @@ export class HomeComponent implements OnInit {
       this.exames = exames;
     });
   }
-  
+
+  updatePageSize = () => {
+    this.pageSize = window.matchMedia('(max-width: 600px)').matches ? 1 : 4;
+  };
 
   onSearchTermChange() {
     if (this.searchTerm) {

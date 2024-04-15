@@ -13,12 +13,19 @@ export class ApiService {
   };
 
   constructor(private http: HttpClient) {}
+
   getAll(endpoint: string): Observable<any> {
     return this.http.get(`${this.baseUrls[endpoint]}`);
   }
 
   get(endpoint: string, id: string): Observable<any> {
     return this.http.get(`${this.baseUrls[endpoint]}/${id}`);
+  }
+
+  getConsultasByPacienteId(pacienteId: string): Observable<any> {
+    return this.http.get(
+      `${this.baseUrls['consultas']}?pacienteId=${pacienteId}`,
+    );
   }
 
   create(endpoint: string, data: Object): Observable<Object> {

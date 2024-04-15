@@ -11,5 +11,7 @@ export class ScreenSizeService {
     window.onresize = () => {
       this.isDesktop.next(window.innerWidth > 960);
     };
+    
   }
+
 }

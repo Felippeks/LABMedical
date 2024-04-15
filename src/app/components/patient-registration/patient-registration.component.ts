@@ -62,7 +62,10 @@ export class PatientRegistrationComponent {
       ]),
       cpf: new FormControl('', Validators.required),
       rg: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      orgaoExpedidor: new FormControl('', [Validators.required, Validators.maxLength(20)]), 
+      orgaoExpedidor: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(20),
+      ]),
       estadoCivil: new FormControl('', Validators.required),
       telefone: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.email]),
@@ -122,11 +125,10 @@ export class PatientRegistrationComponent {
           },
           (error) => {
             alert('Erro ao buscar dados do CEP: ' + error);
-          }
+          },
         );
       }
     });
-  
   }
   setupValueChanges() {
     this.setupFormatOnValueChange('cpf', this.formatService.formatCPF);
@@ -188,7 +190,7 @@ export class PatientRegistrationComponent {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
   }
-  
+
   deletePatient() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -206,7 +208,6 @@ export class PatientRegistrationComponent {
       );
     }
   }
-  
 
   removeFormats(data: any) {
     const fieldsToFormat = [
