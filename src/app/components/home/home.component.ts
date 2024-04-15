@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
 export class HomeComponent implements OnInit {
   pageSize: number = 4;
   pageIndex: number = 0;
-
+  totalPacientes: number = 0
   pacientes: Paciente[] = [];
   consultas: Consulta[] = [];
   exames: Exame[] = [];
@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
         idade: this.ageService.calculateAge(paciente.dataNascimento),
       }));
       this.filteredPacientes = [...this.pacientes];
+      this.totalPacientes = this.pacientes.length;
     });
     this.apiService.getAll('consultas').subscribe((consultas: Consulta[]) => {
       this.consultas = consultas;
