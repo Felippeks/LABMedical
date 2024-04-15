@@ -7,12 +7,13 @@ export class DateService {
   constructor() {}
 
   formatDate(date: Date): string {
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    const day = utcDate.getUTCDate();
+    const month = utcDate.getUTCMonth() + 1;
+    const year = utcDate.getUTCFullYear();
     const formattedDay = day < 10 ? `0${day}` : day;
     const formattedMonth = month < 10 ? `0${month}` : month;
-
+  
     return `${year}-${formattedMonth}-${formattedDay}`;
   }
 
@@ -21,8 +22,9 @@ export class DateService {
   }
 
   parseDate(dateString: string): Date {
-    const [day, month, year] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day);
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date;
   }
 
   parseTime(timeString: string): Date {
