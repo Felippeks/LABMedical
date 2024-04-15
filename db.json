@@ -296,12 +296,22 @@
     {
       "pacienteId": "12d0",
       "motivoConsulta": "Dor de cabeça persistente",
-      "dataExame": "2024-04-16",
-      "horarioExame": "08:00",
+      "dataConsulta": "2024-04-16",
+      "horarioConsulta": "08:00",
       "descricaoProblema": "Dor de cabeça constante por 3 dias",
       "medicacaoReceitada": "Paracetamol",
       "dosagemPrecaucoes": "500mg a cada 6 horas",
       "id": "14c5"
+    },
+    {
+      "pacienteId": "2",
+      "motivoConsulta": "aushduahsudha",
+      "dataConsulta": "2024-11-10",
+      "horarioConsulta": "11:11",
+      "descricaoProblema": "adushduahsd",
+      "medicacaoReceitada": "auhudhshdu",
+      "dosagemPrecaucoes": "Dores de barriga",
+      "id": "b45f"
     }
   ],
   "exames": [

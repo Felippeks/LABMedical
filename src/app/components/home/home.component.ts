@@ -16,8 +16,9 @@ import { filter } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
-})export class HomeComponent implements OnInit {
-  pageSize: number = 4; 
+})
+export class HomeComponent implements OnInit {
+  pageSize: number = 4;
   pageIndex: number = 0;
 
   pacientes: Paciente[] = [];
@@ -40,27 +41,25 @@ import { filter } from 'rxjs';
   ngOnInit() {
     this.updatePageSize();
     this.fetchData();
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.fetchData();
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.fetchData();
+      });
   }
 
   ngOnDestroy() {
     window.removeEventListener('resize', this.updatePageSize);
   }
-  
+
   fetchData() {
-    this.apiService.getAll('pacientes').subscribe(
-      (pacientes: Paciente[]) => {
-        this.pacientes = pacientes.map((paciente) => ({
-          ...paciente,
-          idade: this.ageService.calculateAge(paciente.dataNascimento),
-        }));
-        this.filteredPacientes = [...this.pacientes];
-      },
-    );
+    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+      this.pacientes = pacientes.map((paciente) => ({
+        ...paciente,
+        idade: this.ageService.calculateAge(paciente.dataNascimento),
+      }));
+      this.filteredPacientes = [...this.pacientes];
+    });
     this.apiService.getAll('consultas').subscribe((consultas: Consulta[]) => {
       this.consultas = consultas;
     });
@@ -71,7 +70,7 @@ import { filter } from 'rxjs';
 
   updatePageSize = () => {
     this.pageSize = window.matchMedia('(max-width: 600px)').matches ? 1 : 4;
-  }
+  };
 
   onSearchTermChange() {
     if (this.searchTerm) {

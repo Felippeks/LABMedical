@@ -11,7 +11,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DateService } from '../../services/DataFormat/date.service';
-
+import { NgZone } from '@angular/core';
 @Component({
   selector: 'app-appointment-registration',
   standalone: true,
@@ -36,6 +36,7 @@ export class AppointmentRegistrationComponent {
   constructor(
     private apiService: ApiService,
     private dateService: DateService,
+    private ngZone: NgZone,
   ) {
     this.formAppointment = new FormGroup({
       pacienteId: new FormControl(''),
@@ -82,28 +83,43 @@ export class AppointmentRegistrationComponent {
   
         if (this.selectedPaciente) {
           this.pacienteId = this.selectedPaciente.id;
-          this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
-            const consultaDoPaciente = consultas.find(
-              (consulta) => consulta.pacienteId === this.selectedPaciente.id,
-            );
-            if (consultaDoPaciente) {
-              this.consultaId = consultaDoPaciente.id;
-              const dataConsulta = this.dateService.formatDate(this.dateService.parseDate(consultaDoPaciente.dataExame));
-              // const horarioConsulta = this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame));
-              this.formAppointment.patchValue({
-                motivoConsulta: consultaDoPaciente.motivoConsulta,
-                dataConsulta: this.dateService.formatDate(new Date(consultaDoPaciente.dataExame)),
-                horarioConsulta: this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame)),
-                descricaoProblema: consultaDoPaciente.descricaoProblema,
-                medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
-                dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
-              });
-            } else {
-              const pacienteId = this.formAppointment.get('pacienteId')?.value;
-              this.formAppointment.reset();
-              this.formAppointment.patchValue({ pacienteId });
-            }
-          });
+          console.log('ID do Paciente:', this.pacienteId);
+          this.formAppointment.controls['pacienteId'].setValue(this.pacienteId); 
+  
+          if (this.pacienteId) {  
+            this.apiService.getConsultasByPacienteId(this.pacienteId).subscribe((consultas: any[]) => {
+              console.log('Dados recebidos da API metodo Search:', consultas);
+              const consultaDoPaciente = consultas[0];
+              if (consultaDoPaciente) {
+                this.consultaId = consultaDoPaciente.id;
+                const dataConsulta = this.dateService.formatDate(
+                  this.dateService.parseDate(consultaDoPaciente.dataConsulta),
+                );
+                // Use NgZone.run() aqui
+                this.ngZone.run(() => {
+                  this.formAppointment.patchValue({
+                    motivoConsulta: consultaDoPaciente.motivoConsulta,
+                    dataConsulta: this.dateService.formatDate(
+                      new Date(consultaDoPaciente.dataConsulta),
+                    ),
+                    horarioConsulta: this.dateService.formatTime(
+                      this.dateService.parseTime(consultaDoPaciente.horarioConsulta),
+                    ),
+                    descricaoProblema: consultaDoPaciente.descricaoProblema,
+                    medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
+                    dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+                  });
+                });
+                console.log(
+                  'Valores do FormGroup:',
+                  this.formAppointment.value,
+                );
+              } else {
+                alert('Cliente não possui consultas');
+                return;
+              }
+            });
+          }
         } else {
           alert('Paciente não encontrado');
         }
@@ -115,35 +131,49 @@ export class AppointmentRegistrationComponent {
     this.selectedPaciente = paciente;
     this.pacienteId = paciente?.id;
     this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
-    this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
-      const consultaDoPaciente = consultas.find(
-        (consulta) => consulta.pacienteId === paciente.id,
-      );
-      if (consultaDoPaciente) {
-        this.consultaId = consultaDoPaciente.id;
-        const dataConsulta = this.dateService.formatDate(this.dateService.parseDate(consultaDoPaciente.dataExame));
-        // const horarioConsulta = this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame));
-        this.formAppointment.patchValue({
-          motivoConsulta: consultaDoPaciente.motivoConsulta,
-          dataConsulta: this.dateService.formatDate(new Date(consultaDoPaciente.dataExame)),
-          horarioConsulta: this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame)),
-          descricaoProblema: consultaDoPaciente.descricaoProblema,
-          medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
-          dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+
+    if (this.pacienteId) {
+      this.apiService
+        .getConsultasByPacienteId(this.pacienteId)
+        .subscribe((consultas: any[]) => {
+          console.log(
+            'Dados recebidos da API metodo selectPaciente:',
+            consultas,
+          );
+          const consultaDoPaciente = consultas[0];
+          if (consultaDoPaciente) {
+            this.consultaId = consultaDoPaciente.id;
+            const dataConsulta = this.dateService.formatDate(
+              this.dateService.parseDate(consultaDoPaciente.dataConsulta),
+            );
+            this.formAppointment.patchValue({
+              motivoConsulta: consultaDoPaciente.motivoConsulta,
+              dataConsulta: this.dateService.formatDate(
+                new Date(consultaDoPaciente.dataConsulta),
+              ),
+              horarioConsulta: this.dateService.formatTime(
+                this.dateService.parseTime(consultaDoPaciente.horarioConsulta),
+              ),
+              descricaoProblema: consultaDoPaciente.descricaoProblema,
+              medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
+              dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
+            });
+          } else {
+            alert('Cliente não possui consultas');
+          }
         });
-      } else {
-        alert('Cliente não possui consultas');
-      }
-    });
+    }
   }
   onSubmit() {
     if (this.formAppointment.valid && this.selectedPaciente) {
+      console.log('Dados enviados para a API:', this.formAppointment.value);
+      const tempPacienteId = this.formAppointment.get('pacienteId')?.value;
       this.apiService.create('consultas', this.formAppointment.value).subscribe(
         () => {
           alert('Consulta cadastrada com sucesso!');
           const pacienteId = this.formAppointment.get('pacienteId')?.value;
           this.formAppointment.reset();
-          this.formAppointment.patchValue({ pacienteId });
+          this.formAppointment.patchValue({ pacienteId: tempPacienteId });
         },
         (error) => {
           console.error('Erro ao cadastrar consulta:', error);
