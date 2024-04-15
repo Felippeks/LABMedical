@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DateService } from '../../services/DataFormat/date.service';
 
 @Component({
   selector: 'app-appointment-registration',
@@ -32,19 +33,19 @@ export class AppointmentRegistrationComponent {
   selectedPaciente: any;
   consultaId: string | null = null;
   formAppointment: FormGroup;
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private dateService: DateService,
+  ) {
     this.formAppointment = new FormGroup({
       pacienteId: new FormControl(''),
       motivoConsulta: new FormControl('', Validators.required),
       dataConsulta: new FormControl(
-        new Date().toLocaleDateString('pt-BR'),
+        this.dateService.formatDate(new Date()),
         Validators.required,
       ),
       horarioConsulta: new FormControl(
-        new Date().toLocaleTimeString('pt-BR', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
+        this.dateService.formatTime(new Date()),
         Validators.required,
       ),
       descricaoProblema: new FormControl('', Validators.required),
@@ -60,7 +61,6 @@ export class AppointmentRegistrationComponent {
       this.filteredPacientes = data;
     });
   }
-
   onSearchTermChange() {
     if (this.searchTerm) {
       this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
@@ -79,7 +79,7 @@ export class AppointmentRegistrationComponent {
               .toLowerCase()
               .includes(this.searchTerm.trim().toLowerCase()),
         );
-
+  
         if (this.selectedPaciente) {
           this.pacienteId = this.selectedPaciente.id;
           this.apiService.getAll('consultas').subscribe((consultas: any[]) => {
@@ -88,12 +88,12 @@ export class AppointmentRegistrationComponent {
             );
             if (consultaDoPaciente) {
               this.consultaId = consultaDoPaciente.id;
+              const dataConsulta = this.dateService.formatDate(this.dateService.parseDate(consultaDoPaciente.dataExame));
+              // const horarioConsulta = this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame));
               this.formAppointment.patchValue({
                 motivoConsulta: consultaDoPaciente.motivoConsulta,
-                dataConsulta: new Date(consultaDoPaciente.dataConsulta),
-                horarioConsulta: new Date(
-                  consultaDoPaciente.horarioConsulta,
-                ).getTime(),
+                dataConsulta: this.dateService.formatDate(new Date(consultaDoPaciente.dataExame)),
+                horarioConsulta: this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame)),
                 descricaoProblema: consultaDoPaciente.descricaoProblema,
                 medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
                 dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,
@@ -121,12 +121,12 @@ export class AppointmentRegistrationComponent {
       );
       if (consultaDoPaciente) {
         this.consultaId = consultaDoPaciente.id;
+        const dataConsulta = this.dateService.formatDate(this.dateService.parseDate(consultaDoPaciente.dataExame));
+        // const horarioConsulta = this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame));
         this.formAppointment.patchValue({
           motivoConsulta: consultaDoPaciente.motivoConsulta,
-          dataConsulta: new Date(consultaDoPaciente.dataConsulta),
-          horarioConsulta: new Date(
-            consultaDoPaciente.horarioConsulta,
-          ).getTime(),
+          dataConsulta: this.dateService.formatDate(new Date(consultaDoPaciente.dataExame)),
+          horarioConsulta: this.dateService.formatTime(this.dateService.parseTime(consultaDoPaciente.horarioExame)),
           descricaoProblema: consultaDoPaciente.descricaoProblema,
           medicacaoReceitada: consultaDoPaciente.medicacaoReceitada,
           dosagemPrecaucoes: consultaDoPaciente.dosagemPrecaucoes,

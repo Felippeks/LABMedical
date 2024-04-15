@@ -296,8 +296,8 @@
     {
       "pacienteId": "12d0",
       "motivoConsulta": "Dor de cabeça persistente",
-      "dataConsulta": null,
-      "horarioConsulta": null,
+      "dataExame": "2024-04-16",
+      "horarioExame": "08:00",
       "descricaoProblema": "Dor de cabeça constante por 3 dias",
       "medicacaoReceitada": "Paracetamol",
       "dosagemPrecaucoes": "500mg a cada 6 horas",
