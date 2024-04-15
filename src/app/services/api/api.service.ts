@@ -27,7 +27,11 @@ export class ApiService {
       `${this.baseUrls['consultas']}?pacienteId=${pacienteId}`,
     );
   }
-
+  getExamesByPacienteId(pacienteId: string): Observable<any> {
+    return this.http.get(
+      `${this.baseUrls['exames']}?pacienteId=${pacienteId}`,
+    );
+  }
   create(endpoint: string, data: Object): Observable<Object> {
     return this.http.post(`${this.baseUrls[endpoint]}`, data);
   }

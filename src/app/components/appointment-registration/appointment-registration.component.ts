@@ -63,7 +63,6 @@ export class AppointmentRegistrationComponent {
   }
   onSearchTermChange() {
   const tempPacienteId = this.formAppointment.get('pacienteId')?.value;
-
   const currentDate = this.dateService.formatDate(new Date());
   const currentTime = this.dateService.formatTime(new Date());
   this.formAppointment.reset();
@@ -159,6 +158,7 @@ export class AppointmentRegistrationComponent {
         });
     }
   }
+  
   onSubmit() {
     if (this.formAppointment.valid && this.selectedPaciente) {
       const tempPacienteId = this.formAppointment.get('pacienteId')?.value;

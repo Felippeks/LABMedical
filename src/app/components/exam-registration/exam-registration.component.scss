@@ -1,0 +1,79 @@
+ 
+  label {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  input {
+    color: black;
+    outline: none;
+    border-radius: 50px;
+    width: 24rem;
+    padding: 1rem 0.9rem;
+
+  }
+  select {
+    color: black;
+    outline: none;
+    border-radius: 50px;
+    width: 24rem;
+    padding: 0.25rem;
+    margin: 0.25rem 0;
+  }
+  
+  .error-message {
+    color: #c53030;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  button {
+   
+    border: 2px solid;
+    background-color: #014c8b;
+    color: #ffd700;
+    border-color: #ffd700;
+    border-radius: 9999px;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: 10rem;
+    cursor: pointer;
+  
+  
+    &:hover {
+      color: #064c8c;
+      background-color: #d1d5db;
+      border-color: #ffd700;
+    }
+  
+    &:disabled {
+      color: #a9a9a9;
+      background-color: #d3d3d3;
+      border-color: #a9a9a9;
+      cursor: not-allowed;
+    }
+  }
+  @media (max-width: 768px) {
+      input {
+        width: 14rem; 
+        padding: 0.01rem 0.5rem;
+      }
+      select{
+          width: 14rem; 
+        padding: 0.2rem;
+      }
+      textarea{
+          width: 14rem; 
+        padding: 0.01rem 0.5rem;
+      }
+      button{
+          width: 8rem;
+          margin-top: 0.5rem;
+          &:disabled{
+              padding: 0.3rem;
+          }
+      }
+    }
