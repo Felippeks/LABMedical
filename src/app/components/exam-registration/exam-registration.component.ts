@@ -29,10 +29,10 @@ export class ExamRegistrationComponent implements OnInit {
   pacienteId: string | null = null;
   searchTerm: string | any;
   exameId: string | null = null;
-  formExamRegistation: FormGroup | any;
   pacientes: any[] = [];
   filteredPacientes: any[] = [];
   selectedPaciente: any;
+  formExamRegistation: FormGroup | any;
 
   constructor(
     private apiService: ApiService,
@@ -89,8 +89,8 @@ export class ExamRegistrationComponent implements OnInit {
     this.formExamRegistation.reset();
     this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
     this.formExamRegistation.patchValue({
-      dataConsulta: currentDate,
-      horarioConsulta: currentTime,
+      dataExame: currentDate,
+      horarioExame: currentTime,
     });
     if (this.searchTerm) {
       this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
