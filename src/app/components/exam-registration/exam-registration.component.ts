@@ -25,7 +25,7 @@ import { NgZone } from '@angular/core';
     FormsModule,
   ],
 })
-export class ExamRegistrationComponent implements OnInit {
+export class ExamRegistrationComponent {
   pacienteId: string | null = null;
   searchTerm: string | any;
   exameId: string | null = null;
@@ -70,9 +70,6 @@ export class ExamRegistrationComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.getAllPacientes();
-  }
 
   getAllPacientes() {
     this.apiService.getAll('pacientes').subscribe((data: any[]) => {
@@ -83,7 +80,6 @@ export class ExamRegistrationComponent implements OnInit {
 
   onSearchTermChange() {
     const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
-
     const currentDate = this.dateService.formatDate(new Date());
     const currentTime = this.dateService.formatTime(new Date());
     this.formExamRegistation.reset();
@@ -113,8 +109,7 @@ export class ExamRegistrationComponent implements OnInit {
         if (this.selectedPaciente) {
           this.pacienteId = this.selectedPaciente.id;
           this.formExamRegistation.controls['pacienteId'].setValue(
-            this.pacienteId,
-          );
+            this.pacienteId);
 
           if (this.pacienteId) {
             this.apiService
@@ -132,7 +127,9 @@ export class ExamRegistrationComponent implements OnInit {
                       dataExame: this.dateService.formatDate(
                         new Date(exameDoPaciente.dataExame),
                       ),
-                      horarioExame: exameDoPaciente.horarioExame,
+                      horarioExame: this.dateService.formatTime(
+                        this.dateService.parseTime(exameDoPaciente.horarioExame),
+                      ),
                       tipoExame: exameDoPaciente.tipoExame,
                       laboratorio: exameDoPaciente.laboratorio,
                       urlDocumento: exameDoPaciente.urlDocumento,
@@ -171,7 +168,9 @@ export class ExamRegistrationComponent implements OnInit {
               dataExame: this.dateService.formatDate(
                 new Date(exameDoPaciente.dataExame),
               ),
-              horarioExame: exameDoPaciente.horarioExame,
+              horarioExame: this.dateService.formatTime(
+                this.dateService.parseTime(exameDoPaciente.horarioExame),
+              ),
               tipoExame: exameDoPaciente.tipoExame,
               laboratorio: exameDoPaciente.laboratorio,
               urlDocumento: exameDoPaciente.urlDocumento,
@@ -188,13 +187,10 @@ export class ExamRegistrationComponent implements OnInit {
   onSubmit() {
     if (this.formExamRegistation.valid && this.selectedPaciente) {
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
-      this.apiService
-        .create('exames', this.formExamRegistation.value)
-        .subscribe(
+      this.apiService.create('exames', this.formExamRegistation.value).subscribe(
           () => {
             alert('Exame cadastrado com sucesso!');
-            const pacienteId =
-              this.formExamRegistation.get('pacienteId')?.value;
+            const pacienteId = this.formExamRegistation.get('pacienteId')?.value;
             this.formExamRegistation.reset();
             this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
           },

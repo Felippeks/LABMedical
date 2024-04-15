@@ -177,18 +177,32 @@
                 <input id="time" formControlName="resultadoExame"/>
                 <div
                   *ngIf="
-                    formExamRegistation.controls.urlDocumento.invalid &&
-                    (formExamRegistation.controls.urlDocumento.dirty ||
-                      formExamRegistation.controls.urlDocumento.touched)
+                    formExamRegistation.controls.resultadoExame.invalid &&
+                    (formExamRegistation.controls.resultadoExame.dirty ||
+                      formExamRegistation.controls.resultadoExame.touched)
                   "
                   class="error-message"
                 >
                   <div
                     *ngIf="
-                      formExamRegistation.controls.urlDocumento.errors.required
+                      formExamRegistation.controls.resultadoExame.errors.required
                     "
                   >
                     Preenchimento obrigatório
+                  </div>
+                  <div
+                    *ngIf="
+                      formExamRegistation.controls.resultadoExame.errors.minlength
+                    "
+                  >
+                    Deve ter no mínimo 16 caracteres
+                  </div>
+                  <div
+                    *ngIf="
+                      formExamRegistation.controls.resultadoExame.errors.maxlength
+                    "
+                  >
+                    Deve ter no maximo 1024 caracteres
                   </div>
                   <div
                     *ngIf="

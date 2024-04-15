@@ -312,6 +312,16 @@
       "medicacaoReceitada": "Dipiora",
       "dosagemPrecaucoes": "8 ml em 6 em 6 hrs",
       "id": "b45f"
+    },
+    {
+      "id": "3948",
+      "pacienteId": "13b2",
+      "motivoConsulta": "dores fortes",
+      "dataConsulta": "2024-04-16",
+      "horarioConsulta": "20:21",
+      "descricaoProblema": "muitas dores localizadas no abdome",
+      "medicacaoReceitada": "paracetamol",
+      "dosagemPrecaucoes": "tomar 50 gostas em 8 em 8 horas"
     }
   ],
   "exames": [
