@@ -2,8 +2,8 @@
   <app-sidebar class="max-w-64"></app-sidebar>
   <div class="flex flex-col flex-grow">
     <toolbar class="w-full"></toolbar>
-    <aside>
-      <section>
+    <aside class="flex flex-col items-stretch md:p-4 my-4 rounded-3xl overflow-auto bg-white md:mx-8 h-screen shadow-md shadow-slate-500 font-roboto">
+      <section  class="mt-2 bg-white border-2 px-4 py-2 border-gray-200 rounded-2xl flex flex-row justify-center items-center mx-auto  shadow-md shadow-slate-500">
         <input
           type="text"
           placeholder="Buscar pacientes..."
@@ -13,9 +13,12 @@
         <button (click)="onSearchTermChange()">Buscar</button>
       </section>
       <section>
-        <p>Consulta de: {{ selectedPaciente?.nome }}</p>
-        <p>CPF: {{ selectedPaciente?.cpf }}</p>
-        <form [formGroup]="formAppointment">
+        <div class="bg-background my-4 max-w-2xl p-2 rounded-3xl px-4 text-textColor border-2 border-textColor">
+          <p>Consulta de: <span class="text-white">{{ selectedPaciente?.nome }}</span></p>
+          <p>CPF: <span class="text-white">{{ selectedPaciente?.cpf }}</span></p>
+        </div>
+        
+        <form [formGroup]="formAppointment" class="flex justify-around py-4 flex-wrap md:w-full md:bg-background bg-blue-800 md:rounded-2xl rounded-md text-xl text-shadow">
           <fieldset>
             <label for="motivoConsulta">Motivo da consulta</label>
             <input
@@ -56,7 +59,7 @@
         </form>
       </section>
 
-      <div>
+      <div class="mt-6 flex md:flex-row flex-col justify-around">
         <button class="salvar" (click)="onSubmit()">Cadastrar</button>
         <button [disabled]="!consultaId" (click)="onUpdate()">Editar</button>
         <button [disabled]="!consultaId"  (click)="onDelete()">Deletar</button>
