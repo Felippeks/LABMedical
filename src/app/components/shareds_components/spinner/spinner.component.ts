@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation  } from '@angular/core';
-import { LoadingService } from '../../../services/loading.service';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { LoadingService } from '../../../services/loading/loading.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',
-  encapsulation: ViewEncapsulation.ShadowDom
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class SpinnerComponent {
-  constructor(public loader: LoadingService) { }
+  constructor(public loader: LoadingService) {}
 }

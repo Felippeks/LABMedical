@@ -33,7 +33,10 @@ export const routes: Routes = [
   },
   {
     path: 'patientRegistration',
-    component: PatientRegistrationComponent,
     canActivate: [AuthGuardRouter],
+    children: [
+      { path: '', component: PatientRegistrationComponent },
+      { path: ':id', component: PatientRegistrationComponent },
+    ],
   },
 ];

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ScreenSizeService } from '../../../services/screen-size-service.service';
+import { ScreenSizeService } from '../../../services/Screen-size/screen-size.service';
 import {
   Router,
   ActivatedRoute,
@@ -8,7 +8,7 @@ import {
   RouterModule,
 } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { SidebarService } from '../../../services/sidebar-service.service';
+import { SidebarService } from '../../../services/siderBar/sidebar.service';
 import { Observable } from 'rxjs';
 import {
   animate,
@@ -89,6 +89,9 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.screenSizeService.isDesktop.subscribe((isDesktop) => {
       this.sidebarWidth = isDesktop ? '160px' : '80px';
+      if (!isDesktop) {
+        this.sidebarService.closeSidebar(); 
+      }
     });
     this.isOpen$ = this.sidebarService.isOpen$;
     this.isClosed$ = this.isOpen$.pipe(map((isOpen) => !isOpen));
@@ -116,6 +119,10 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleSidebar(): void {
-    this.sidebarService.toggleSidebar();
+    this.screenSizeService.isDesktop.subscribe((isDesktop) => {
+      if (isDesktop) {
+        this.sidebarService.toggleSidebar();
+      }
+    });
   }
 }

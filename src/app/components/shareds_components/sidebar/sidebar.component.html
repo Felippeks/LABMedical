@@ -4,14 +4,13 @@
     open: isOpen$ | async,
     closed: isClosed$ | async
   }"
-  class="md:max-w-64 max-w-40 text-white bg-[#014c8b] shadow-md overflow-hidden font-roboto"
+  class="md:max-w-64 max-w-40 text-white h-screen bg-background overflow-hidden font-roboto"
   [@sidebarAnimation]="{
     value: (isOpen$ | async) ? 'open' : 'closed',
     params: { sidebarWidth: sidebarWidth }
   }"
-  style="height: calc(100vh - 64px)"
 >
-  <section class="flex flex-col justify-between items-center pt-4 h-full">
+  <section class="flex flex-col justify-between items-center py-6 h-full">
     <div class="flex justify-center flex-col items-center">
       <button (click)="toggleSidebar()" class="self-center w-8 h-8">
         <svg
@@ -52,7 +51,7 @@
     </div>
     <button
       (click)="logout()"
-      class="w-full text-center block py-2 mb-10 text-lg hover:text-[#FFD700] hover:bg-blue-900"
+      class="w-full text-center block py-2 mb-10 text-lg hover:text-textColor hover:bg-blue-900"
     >
       Sair
     </button>

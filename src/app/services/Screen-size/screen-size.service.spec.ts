@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SidebarService } from './sidebar-service.service';
+import { ScreenSizeService } from './screen-size.service';
 
-describe('SidebarServiceService', () => {
-  let service: SidebarService;
+describe('ScreenSizeServiceService', () => {
+  let service: ScreenSizeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SidebarService);
+    service = TestBed.inject(ScreenSizeService);
   });
 
   it('should be created', () => {
