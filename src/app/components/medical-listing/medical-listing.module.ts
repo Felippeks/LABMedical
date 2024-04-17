@@ -6,9 +6,7 @@ import { MedicalRecordListingComponent } from './medical-listing.component';
 const medicalRecordRoutes: Routes = [
   {
     path: '',
-    children: [
-      { path: '', component: MedicalRecordListingComponent },
-    ],
+    children: [{ path: '', component: MedicalRecordListingComponent }],
   },
 ];
 

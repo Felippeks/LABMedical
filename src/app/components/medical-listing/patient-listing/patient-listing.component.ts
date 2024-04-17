@@ -22,7 +22,7 @@ export class PatientMedicalListingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -31,14 +31,22 @@ export class PatientMedicalListingComponent implements OnInit {
       this.apiService.get('pacientes', id).subscribe((paciente: Paciente) => {
         this.paciente = paciente;
       });
-      this.apiService.getConsultasByPacienteId(id).subscribe((consultas: Consulta[]) => {
-        this.consultas = consultas.sort((a: Consulta, b: Consulta) => new Date(a.dataConsulta).getTime() - new Date(b.dataConsulta).getTime());
-      });
+      this.apiService
+        .getConsultasByPacienteId(id)
+        .subscribe((consultas: Consulta[]) => {
+          this.consultas = consultas.sort(
+            (a: Consulta, b: Consulta) =>
+              new Date(a.dataConsulta).getTime() -
+              new Date(b.dataConsulta).getTime(),
+          );
+        });
       this.apiService.getExamesByPacienteId(id).subscribe((exames: Exame[]) => {
-        this.exames = exames.sort((a: Exame, b: Exame) => new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime());
+        this.exames = exames.sort(
+          (a: Exame, b: Exame) =>
+            new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime(),
+        );
       });
     }
-    
   }
 
   editAppoiment(id: string) {
@@ -48,8 +56,4 @@ export class PatientMedicalListingComponent implements OnInit {
   editExam(id: string) {
     this.router.navigate(['/exam', id]);
   }
-  
- 
-
- 
 }

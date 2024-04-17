@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StateManagementService } from '../../services/StateManagementService/state-management.service';
 import { Paciente } from '../home/medical.interfaces';
+import { forkJoin } from 'rxjs';
 
 function dateValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -195,20 +196,31 @@ export class PatientRegistrationComponent {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isDeleting = true;
-      this.ApiService.delete('pacientes', id).subscribe(
-        () => {
-          alert('Paciente deletado com sucesso!');
+      forkJoin([
+        this.ApiService.getConsultasByPacienteId(id),
+        this.ApiService.getExamesByPacienteId(id),
+      ]).subscribe(([consultas, exames]) => {
+        if (consultas.length > 0 || exames.length > 0) {
+          alert(
+            'O paciente tem consultas e/ou exames cadastrados. Não é possível excluir.',
+          );
           this.isDeleting = false;
-          this.router.navigate(['/home']);
-        },
-        (error) => {
-          alert('Erro ao deletar paciente: ' + JSON.stringify(error));
-          this.isDeleting = false;
-        },
-      );
+        } else {
+          this.ApiService.delete('pacientes', id).subscribe(
+            () => {
+              alert('Paciente deletado com sucesso!');
+              this.isDeleting = false;
+              this.router.navigate(['/home']);
+            },
+            (error) => {
+              alert('Erro ao deletar paciente: ' + JSON.stringify(error));
+              this.isDeleting = false;
+            },
+          );
+        }
+      });
     }
   }
-
   removeFormats(data: any) {
     const fieldsToFormat = [
       'cpf',

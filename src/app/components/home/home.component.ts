@@ -19,7 +19,7 @@ import { filter } from 'rxjs';
 export class HomeComponent implements OnInit {
   pageSize: number = 4;
   pageIndex: number = 0;
-  totalPacientes: number = 0
+  totalPacientes: number = 0;
   pacientes: Paciente[] = [];
   consultas: Consulta[] = [];
   exames: Exame[] = [];
@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
     private ageService: AgeService,
     private router: Router,
     private apiService: ApiService,
-
   ) {
     window.addEventListener('resize', this.updatePageSize);
   }
