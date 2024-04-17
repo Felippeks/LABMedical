@@ -7,6 +7,7 @@ import { AppointmentRegistrationComponent } from './components/appointment-regis
 import { ExamRegistrationComponent } from './components/exam-registration/exam-registration.component';
 import { PatientRegistrationComponent } from './components/patient-registration/patient-registration.component';
 import { authChildGuard } from './guardsRoutes/auth-child-guard.guard';
+import { PatientMedicalListingComponent } from './components/medical-listing/patient-listing/patient-listing.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,19 @@ export const routes: Routes = [
   {
     path: 'exam',
     component: ExamRegistrationComponent,
+    canActivate: [AuthGuardRouter],
+  },
+  {
+    path: 'patientListing',
+    loadChildren: () =>
+      import('./components/medical-listing/medical-listing.module').then(
+        (m) => m.medicalListingModule,
+      ),
+    canActivateChild: [authChildGuard],
+  },
+  {
+    path: 'patientListing/:id',
+    component: PatientMedicalListingComponent,
     canActivate: [AuthGuardRouter],
   },
   {

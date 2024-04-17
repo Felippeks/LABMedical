@@ -1,3 +1,231 @@
-<toolbar></toolbar>
-<app-sidebar></app-sidebar>
-<p>Exames</p>
+<main class="flex h-screen bg-gray-200">
+  <app-sidebar class="max-w-64"></app-sidebar>
+  <div class="flex flex-col flex-grow">
+    <toolbar class="w-full"></toolbar>
+    <aside
+      class="flex flex-col justify-center md:w-7xl md:items-stretch md:my-4 md:mx-8 md:rounded-3xl overflow-auto bg-white shadow-md shadow-slate-500 font-roboto p-2 md:p-4"
+    >
+      <section
+        class="md:my-2 border-2 md:px-4 mt-52 py-2 mx-auto md:w-96 w-72 rounded-2xl flex flex-row justify-center items-center shadow-md shadow-slate-500"
+      >
+        <input
+          type="text"
+          placeholder="Buscar pacientes..."
+          [(ngModel)]="searchTerm"
+          (keydown.enter)="onSearchTermChange()"
+        />
+        <button (click)="onSearchTermChange()">Buscar</button>
+      </section>
+      <section
+        class="my-4 p-2 md:max-w-2xl rounded-3xl px-4 border-2 border-textColor bg-background text-textColor"
+      >
+        <div>
+          <p>
+            Nome do Paciente:
+            <span class="text-white">{{ selectedPaciente?.nome }}</span>
+          </p>
+          <p>
+            CPF do Paciente:
+            <span class="text-white">{{ selectedPaciente?.cpf }}</span>
+          </p>
+        </div>
+      </section>
+      <section>
+        <form
+          [formGroup]="formExamRegistation"
+          class="py-4 md:w-full md:gap-2 bg-blue-800 md:bg-background rounded-md md:rounded-2xl text-shadow justify-center flex md:flex-col flex-row items-stretch"
+        >
+          <fieldset class="justify-around mb-10 flex flex-col md:flex-row">
+            <legend class="text-center md:text-2xl text-xs text-textColor">
+              Cadastro de Exames
+            </legend>
+            <div class="flex flex-col">
+              <label for="nomeExame">Nome do Exame</label>
+              <input type="text" id="nomeExame" formControlName="nomeExame" />
+              <div
+                *ngIf="
+                  formExamRegistation.controls.nomeExame.invalid &&
+                  (formExamRegistation.controls.nomeExame.dirty ||
+                    formExamRegistation.controls.nomeExame.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="formExamRegistation.controls.nomeExame.errors.required"
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.nomeExame.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 8 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.nomeExame.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 64 caracteres
+                </div>
+              </div>
+              <label for="dataExame">Data do Exame</label>
+              <input type="date" id="dataExame" formControlName="dataExame" />
+              <div
+                *ngIf="
+                  formExamRegistation.controls.dataExame.invalid &&
+                  (formExamRegistation.controls.dataExame.dirty ||
+                    formExamRegistation.controls.dataExame.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="formExamRegistation.controls.dataExame.errors.required"
+                >
+                  Preenchimento obrigatório
+                </div>
+              </div>
+              <label for="horarioExame">Horário do Exame</label>
+              <input
+                type="time"
+                id="horarioExame"
+                formControlName="horarioExame"
+              />
+              <div
+                *ngIf="
+                  formExamRegistation.controls.horarioExame.invalid &&
+                  (formExamRegistation.controls.horarioExame.dirty ||
+                    formExamRegistation.controls.horarioExame.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.horarioExame.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <label for="tipoExame">Tipo de exame</label>
+              <input id="tipoExame" formControlName="tipoExame" />
+              <div
+                *ngIf="
+                  formExamRegistation.controls.tipoExame.invalid &&
+                  (formExamRegistation.controls.tipoExame.dirty ||
+                    formExamRegistation.controls.tipoExame.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="formExamRegistation.controls.tipoExame.errors.required"
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.tipoExame.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 4 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.tipoExame.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 32 caracteres
+                </div>
+              </div>
+              <label for="laboratorio">Laboratorio</label>
+              <input
+                type="text"
+                id="laboratorio"
+                formControlName="laboratorio"
+              />
+              <div
+                *ngIf="
+                  formExamRegistation.controls.laboratorio.invalid &&
+                  (formExamRegistation.controls.laboratorio.dirty ||
+                    formExamRegistation.controls.laboratorio.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.laboratorio.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.laboratorio.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 4 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.laboratorio.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 32 caracteres
+                </div>
+              </div>
+              
+              <label for="resultadoExame">Resultado do Exame</label>
+              <input id="time" formControlName="resultadoExame" />
+              <div
+                *ngIf="
+                  formExamRegistation.controls.resultadoExame.invalid &&
+                  (formExamRegistation.controls.resultadoExame.dirty ||
+                    formExamRegistation.controls.resultadoExame.touched)
+                "
+                class="error-message"
+              >
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.resultadoExame.errors.required
+                  "
+                >
+                  Preenchimento obrigatório
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.resultadoExame.errors.minlength
+                  "
+                >
+                  Deve ter no mínimo 16 caracteres
+                </div>
+                <div
+                  *ngIf="
+                    formExamRegistation.controls.resultadoExame.errors.maxlength
+                  "
+                >
+                  Deve ter no maximo 1024 caracteres
+                </div>
+              </div>
+              <input
+              style="display: none"
+              type="file"
+              id="urlDocumento"
+              (change)="onFileSelected($event)"
+            />
+            <label for="urlDocumento" class="custom-file-upload">Anexo Documentos</label>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <div class="mt-4 flex md:flex-row flex-col justify-around items-center">
+        <button class="salvar" (click)="onSubmit()">Cadastrar</button>
+        <button [disabled]="!exameId" (click)="onUpdate()">Editar</button>
+        <button [disabled]="!exameId" (click)="onDelete()">Deletar</button>
+      </div>
+    </aside>
+  </div>
+</main>

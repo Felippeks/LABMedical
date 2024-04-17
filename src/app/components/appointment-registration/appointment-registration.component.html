@@ -9,8 +9,8 @@
       </section>
       <section class="my-4 p-2 md:max-w-2xl rounded-3xl px-4 border-2 border-textColor bg-background text-textColor">
         <div>
-          <p>Consulta de: <span class="text-white">{{ selectedPaciente?.nome }}</span></p>
-          <p>CPF: <span class="text-white">{{ selectedPaciente?.cpf }}</span></p>
+          <p>Nome do Paciente: <span class="text-white">{{ selectedPaciente?.nome }}</span></p>
+          <p>CPF do Paciente: <span class="text-white">{{ selectedPaciente?.cpf }}</span></p>
         </div>
       </section>
       <section>
@@ -99,11 +99,10 @@
             </div>
             <div class="flex flex-col">
               <label for="descricaoProblema">Descrição do Problema:</label>
-              <textarea
+              <input
                 id="descricaoProblema"
                 formControlName="descricaoProblema"
-              >
-              </textarea>
+              />
               <div
                 *ngIf="
                   formAppointment.controls.descricaoProblema.invalid &&
@@ -142,8 +141,7 @@
               />
 
               <label for="dosagemPrecaucoes">Dosagem e Precauções</label>
-              <textarea id="time" formControlName="dosagemPrecaucoes">
-              </textarea>
+              <input id="time" formControlName="dosagemPrecaucoes"/>
               <div
                 *ngIf="
                   formAppointment.controls.dosagemPrecaucoes.invalid &&

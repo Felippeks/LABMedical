@@ -1,3 +1,32 @@
-<toolbar></toolbar>
-<app-sidebar></app-sidebar>
-<p>Listagem de Prontuário</p>
+<main class="flex h-screen bg-gray-200">
+    <app-sidebar class="max-w-64"></app-sidebar>
+    <div class="flex flex-col w-full">
+      <toolbar class="w-full"></toolbar>
+      <aside class="font-roboto shadow-slate-500 shadow-md md:rounded-2xl md:mx-8 md:my-6 bg-white pt-4 overflow-auto h-screen md:items-stretch flex flex-col">
+        <section class="flex mt-2 mb-10 md:w-full md:justify-center mx-auto ">
+          <div class="relative">
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()" placeholder="Buscar pacientes..." class="w-full p-2 pl-10 outline-none md:text-base text-xs border-2 border-gray-200 rounded-2xl shadow-xl shadow-shadow" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </section>
+        <section class="grid gap-4 md:w-full justify-center ">
+          <div class="grid md:grid-cols-5 md:gap-4 md:p-4 p-1 md:text-2xl text-sm rounded-2xl shadow-md shadow-slate-500 text-center bg-blue-900 text-textColor">
+            <h2>Nome do paciente</h2>
+            <h2>CPF</h2>
+            <h2>Numero convenio</h2>
+            <h2>Convenio</h2>
+            <h2>Detalhes</h2>
+          </div>
+          <div *ngFor="let paciente of filteredPacientes" class="bg-gray-200 md:text-base text-sm text-blueColor italic grid md:grid-cols-5 md:gap-4 md:p-4 p-1 border-2 border-gray-200 rounded-2xl shadow-md shadow-slate-500 text-center">
+            <p>{{ paciente.nome }}</p>
+            <p>{{ paciente.cpf }}</p>
+            <p>{{ paciente.numeroConvenio }}</p>
+            <p>{{ paciente.convenio }}</p>
+            <button (click)="More(paciente.id)">Detalhes</button>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
