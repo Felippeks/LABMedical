@@ -5,7 +5,7 @@ import { ApiService } from '../../../services/api/api.service';
 import { Consulta, Exame, Paciente } from '../../home/medical.interfaces';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule,Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-patient-medical-listing',
@@ -22,7 +22,6 @@ export class PatientMedicalListingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private location: Location,
     private router: Router
   ) {}
 
@@ -50,9 +49,7 @@ export class PatientMedicalListingComponent implements OnInit {
     this.router.navigate(['/exam', id]);
   }
   
-  back(){
-    this.location.back();
-  }
+ 
 
  
 }
