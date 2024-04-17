@@ -25,16 +25,16 @@ export class PatientMedicalListingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('patientListing');
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.apiService.get('pacientes', id).subscribe((paciente) => {
+      this.apiService.get('pacientes', id).subscribe((paciente: Paciente) => {
         this.paciente = paciente;
       });
-      this.apiService.getConsultasByPacienteId(id).subscribe((consultas) => {
-        this.consultas = consultas;
+      this.apiService.getConsultasByPacienteId(id).subscribe((consultas: Consulta[]) => {
+        this.consultas = consultas.sort((a: Consulta, b: Consulta) => new Date(a.dataConsulta).getTime() - new Date(b.dataConsulta).getTime());
       });
-      this.apiService.getExamesByPacienteId(id).subscribe((exames) => {
-        this.exames = exames;
+      this.apiService.getExamesByPacienteId(id).subscribe((exames: Exame[]) => {
+        this.exames = exames.sort((a: Exame, b: Exame) => new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime());
       });
     }
   }

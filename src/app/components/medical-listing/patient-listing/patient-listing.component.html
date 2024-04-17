@@ -12,36 +12,65 @@
     <div *ngIf="paciente">
         <p>Nome do Paciente: {{ paciente.nome }}</p>
     </div>
-    <p>Convênio: </p>
-    <p>Contato de Emergência:</p>
-    <p>Lista de Alergias: </p>
-    <p>Lista de Cuidados Específicos:</p>
+    <p>Convênio: {{paciente.convenio}} </p>
+    <p>Contato de Emergência: {{paciente.contatoEmergencia}}</p>
+    <p>Lista de Alergias:{{paciente.listaAlergias}} </p>
+    <p>Lista de Cuidados Específicos: {{paciente.listaCuidadosEspecificos}}</p>
     </section>
-<section>
-    <h2>Histórico de Consultas</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Hora</th>
-                <th>Motivo</th>
-                <button>Editar</button>
-            </tr>
-        </thead>
-    </table>
-</section>
-
-<section>
-    <h2>Histórico de Exames</h2>
-    <table>
-        <thead>
-            <tr *ngFor="let consulta of consultas">
-                <td>{{ consulta.dataConsulta }}</td>
-                <td>{{ consulta.horarioConsulta }}</td>
-                <td>{{ consulta.motivoConsulta }}</td>
-                <td><button>Editar</button></td>
-              </tr>
-        </thead>
-    </table>
-</section>
-</aside>
+    <section>
+        <h2>Histórico de Consultas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <td>Motivo Consulta:</td>
+                    <td>Data Consulta:</td>
+                    <td>Horario Consulta:</td>
+                    <td>Descricao Problema:</td>
+                    <td>Medicacao Receitada:</td>
+                    <td>Dosagem Precaucoes:</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let consulta of consultas">
+                    <td><span>{{ consulta.motivoConsulta }}</span></td>
+                    <td><span>{{ consulta.dataConsulta }}</span></td>
+                    <td><span>{{ consulta.horarioConsulta }}</span></td>
+                    <td>{{ consulta.descricaoProblema }}</td>
+                    <td>{{ consulta.medicacaoReceitada }}</td>
+                    <td>{{ consulta.dosagemPrecaucoes }}</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section>
+        <h2>Histórico de Exames</h2>
+        <table>
+            <thead>
+                <tr>
+                    <td>Nome Exame:</td>
+                    <td>Data Exame:</td>
+                    <td>Horario Exame:</td>
+                    <td>Tipo Exame:</td>
+                    <td>Laboratorio:</td>
+                    <td>urlDocumento:</td>
+                    <td>Resultado Exames:</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exame of exames">
+                    <td><span>{{ exame.nomeExame }}</span></td>
+                    <td><span>{{ exame.dataExame }}</span></td>
+                    <td><span>{{ exame.horarioExame }}</span></td>
+                    <td>{{ exame.tipoExame }}</td>
+                    <td><span>{{ exame.laboratorio }}</span></td>
+                    <td><span>{{ exame.urlDocumento }}</span></td>
+                    <td>{{ exame.resultadoExames }}</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>

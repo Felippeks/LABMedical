@@ -267,7 +267,7 @@
   ],
   "consultas": [
     {
-      "pacienteId": "8",
+      "pacienteId": "13b2",
       "motivoConsulta": "Dor de cabeça persistente",
       "dataConsulta": "2024-04-16",
       "horarioConsulta": "08:00",
@@ -277,7 +277,7 @@
       "id": "14c5"
     },
     {
-      "pacienteId": "2",
+      "pacienteId": "13b2",
       "motivoConsulta": "Dores e febre",
       "dataConsulta": "2024-11-09",
       "horarioConsulta": "11:11",
@@ -340,7 +340,7 @@
   "exames": [
     {
       "id": "1",
-      "pacienteId": "8",
+      "pacienteId": "13b2",
       "nomeExame": "Hemograma completo",
       "dataExame": "2024-04-16",
       "horarioExame": "08:00",
