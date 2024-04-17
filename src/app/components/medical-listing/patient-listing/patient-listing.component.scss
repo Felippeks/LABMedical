@@ -1,11 +1,16 @@
+
+.info {
+  color: #ffd700;
+  background-color: #014c8b;
+}
+
 span {
   font-weight: 900;
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
+  background-color: #ffd700;
 }
-.info {
-  color: #ffd700;
-}
+
 
 p {
   color: white;
@@ -22,7 +27,7 @@ button {
   padding: 0.2rem;
   text-transform: uppercase;
   font-weight: 500;
-  width: 10rem;
+  width: 4rem;
   cursor: pointer;
 
   &:hover {

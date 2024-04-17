@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   private baseUrls: { [key: string]: string } = {
-    pacientes: 'http://localhost:3000/pacientes',
-    consultas: 'http://localhost:3000/consultas',
-    exames: 'http://localhost:3000/exames',
+    pacientes: 'https://661f7c6516358961cd94743c.mockapi.io/pacientes',
+    consultas: 'https://661f7c6516358961cd94743c.mockapi.io/consultas',
+    exames: 'https://661fcecd16358961cd958ce7.mockapi.io/exames',
   };
 
   constructor(private http: HttpClient) {}

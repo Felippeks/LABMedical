@@ -3,10 +3,10 @@
   <div class="flex flex-col w-full">
     <toolbar class="w-full"></toolbar>
     <aside
-      class="flex flex-col justify-center items-center w-full p-4 bg-white md:my-6 h-screen md:rounded-2xl shadow-md shadow-slate-500 font-roboto"
+      class="flex flex-col justify-center items-center p-4 bg-white md:my-6 h-screen md:rounded-2xl shadow-md shadow-slate-500 font-roboto md:mx-4"
     >
-    <div class="rounded-3xl px-8 border-2 border-textColor bg-background text-textColor flex items-center justify-center">
-      <p class="text-white md:text-2xl text-lg text-center md:pb-2">Estatisticas do sistema</p>
+    <div class="rounded-3xl px-8 border-2 border-textColor bg-background text-textColor flex items-center justify-center md:w-full">
+      <p class="text-white md:text-2xl text-lg text-center p-1">Estatisticas do sistema</p>
     </div>
       <section
         class="statistics grid md:grid-cols-3 grid-rows-1 md:gap-12 gap-4 my-6"
@@ -58,7 +58,10 @@
         
       </section>
       <section class="search flex flex-col justify-center w-full items-center gap-2 mb-2 ">
-        <div class="bg-white border-2 border-gray-200 rounded-2xl flex flex-row justify-center items-center px-2 shadow-md shadow-slate-500">
+        <div class="p-2 text-center rounded-3xl px-4 border-2 mt-4 border-textColor bg-background text-textColor flex-grow md:text-xl text-sm md:w-full">
+          <p>Informações dos <span class="text-white">Pacientes Cadastrados</span></p>
+        </div>
+        <div class="bg-white border-2 border-gray-200 rounded-2xl flex flex-row justify-center items-center px-2 shadow-md shadow-slate-500 mb-4 md:w-[600px]">
           <input
           type="text"
           [(ngModel)]="searchTerm"
@@ -77,9 +80,7 @@
         </select>
         
         </div>
-        <div class="p-2 text-center rounded-3xl px-4 border-2 border-textColor bg-background text-textColor flex-grow md:text-2xl text-sm">
-          <p>Informações dos <span class="text-white">Pacientes Cadastrados</span></p>
-        </div>
+        
       </section>
       <section
         class="patient flex md:w-full w-44 md:mx-0 mx-auto flex-row justify-around md:gap-4 border-2 md:p-4 p-2 rounded-2xl bg-shadow shadow-md shadow-slate-500"
@@ -142,7 +143,7 @@
         class="flex md:flex-row flex-col md:w-full w-36 md:mx-0 mx-auto md:justify-between md:px-16 px-2 mt-4 text-xs md:text-base"
       >
         <button
-          class="border-2 bg-background text-textColor border-textColor rounded-3xl p-2 hover:text-blueColor uppercase font-medium hover:bg-gray-200 hover:border-textColor"
+          class="border-2 bg-background md:mb-0 mb-4 text-textColor border-textColor rounded-3xl p-2 hover:text-blueColor uppercase font-medium hover:bg-gray-200 hover:border-textColor"
           (click)="previousPage()"
         >
           Página anterior
