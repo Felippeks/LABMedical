@@ -15,7 +15,6 @@ const medicalRecordRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
   imports: [CommonModule, RouterModule.forChild(medicalRecordRoutes)],
 })
 export class medicalListingModule {}
