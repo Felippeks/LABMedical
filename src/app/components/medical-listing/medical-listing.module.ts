@@ -9,7 +9,6 @@ const medicalRecordRoutes: Routes = [
     path: '',
     children: [
       { path: '', component: MedicalRecordListingComponent },
-      { path: ':patientListing', component: PatientMedicalListingComponent },
     ],
   },
 ];

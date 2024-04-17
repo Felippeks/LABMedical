@@ -1,3 +1,47 @@
-<toolbar></toolbar>
-<app-sidebar></app-sidebar>
-<p>Prontuário de Paciente</p>
+<main class="flex h-screen bg-gray-200">
+    <app-sidebar class="max-w-64"></app-sidebar>
+    <div class="flex flex-col w-full">
+      <toolbar class="w-full"></toolbar>
+      <aside class="font-roboto shadow-slate-500 shadow-md md:rounded-2xl md:mx-8 md:my-6 bg-white pt-4 overflow-auto h-screen md:items-stretch flex flex-col">
+<header>
+    <h1>Informações do Paciente</h1>
+</header>
+
+<section>
+    <h2>Dados Pessoais</h2>
+    <div *ngIf="paciente">
+        <p>Nome do Paciente: {{ paciente.nome }}</p>
+    </div>
+    <p>Convênio: </p>
+    <p>Contato de Emergência:</p>
+    <p>Lista de Alergias: </p>
+    <p>Lista de Cuidados Específicos:</p>
+    </section>
+<section>
+    <h2>Histórico de Consultas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Motivo</th>
+                <button>Editar</button>
+            </tr>
+        </thead>
+    </table>
+</section>
+
+<section>
+    <h2>Histórico de Exames</h2>
+    <table>
+        <thead>
+            <tr *ngFor="let consulta of consultas">
+                <td>{{ consulta.dataConsulta }}</td>
+                <td>{{ consulta.horarioConsulta }}</td>
+                <td>{{ consulta.motivoConsulta }}</td>
+                <td><button>Editar</button></td>
+              </tr>
+        </thead>
+    </table>
+</section>
+</aside>

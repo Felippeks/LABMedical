@@ -59,7 +59,7 @@ export class MedicalRecordListingComponent implements OnInit {
   }
 
   More(id: string): void {
-    this.router.navigate(['/patientRegistration', id]);
+    this.router.navigate(['/patientListing', id]);
   }
 
   

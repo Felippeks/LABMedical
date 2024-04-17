@@ -267,7 +267,7 @@
   ],
   "consultas": [
     {
-      "pacienteId": null,
+      "pacienteId": "8",
       "motivoConsulta": "Dor de cabeça persistente",
       "dataConsulta": "2024-04-16",
       "horarioConsulta": "08:00",
@@ -340,7 +340,7 @@
   "exames": [
     {
       "id": "1",
-      "pacienteId": null,
+      "pacienteId": "8",
       "nomeExame": "Hemograma completo",
       "dataExame": "2024-04-16",
       "horarioExame": "08:00",
