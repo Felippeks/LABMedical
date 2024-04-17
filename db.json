@@ -263,38 +263,11 @@
       "bairro": "Centro",
       "referencia": "Próximo ao shopping",
       "id": "8"
-    },
-    {
-      "nome": "testest tststts",
-      "genero": "Masculino",
-      "dataNascimento": "1987-04-13",
-      "cpf": "22222222222",
-      "rg": "22222333333",
-      "orgaoExpedidor": "2333333",
-      "estadoCivil": "Viuvo(a)",
-      "telefone": "11111111111",
-      "email": "",
-      "naturalidade": "dasd asdasd",
-      "contatoEmergencia": "88888888888",
-      "listaAlergias": "",
-      "listaCuidadosEspecificos": "",
-      "convenio": "",
-      "numeroConvenio": "",
-      "validadeConvenio": "",
-      "cep": "88113870",
-      "cidade": "São José",
-      "estado": "SC",
-      "logradouro": "Rua Pedro Antunes Ezequiel",
-      "numero": "157",
-      "complemento": "",
-      "bairro": "Areias",
-      "referencia": "",
-      "id": "12d0"
     }
   ],
   "consultas": [
     {
-      "pacienteId": "12d0",
+      "pacienteId": null,
       "motivoConsulta": "Dor de cabeça persistente",
       "dataConsulta": "2024-04-16",
       "horarioConsulta": "08:00",
@@ -322,12 +295,52 @@
       "descricaoProblema": "muitas dores localizadas no abdome",
       "medicacaoReceitada": "paracetamol",
       "dosagemPrecaucoes": "tomar 50 gostas em 8 em 8 horas"
+    },
+    {
+      "id": "1019",
+      "pacienteId": "13b2",
+      "motivoConsulta": "TESTES DE CADASTRO 1",
+      "dataConsulta": "2024-04-17",
+      "horarioConsulta": "22:25",
+      "descricaoProblema": "TESTES DE CADASTRO 1",
+      "medicacaoReceitada": "TESTES DE CADASTRO 1",
+      "dosagemPrecaucoes": "TESTES DE CADASTRO 1"
+    },
+    {
+      "id": "911a",
+      "pacienteId": "13b2",
+      "motivoConsulta": "TESTES DE CADASTRO 2",
+      "dataConsulta": "2024-04-16",
+      "horarioConsulta": "02:25",
+      "descricaoProblema": "TESTES DE CADASTRO 2",
+      "medicacaoReceitada": "TESTES DE CADASTRO 2",
+      "dosagemPrecaucoes": "TESTES DE CADASTRO 2"
+    },
+    {
+      "id": "8fd9",
+      "pacienteId": "13b2",
+      "motivoConsulta": "TESTES DE CADASTRO 3",
+      "dataConsulta": "2024-04-17",
+      "horarioConsulta": "22:26",
+      "descricaoProblema": "TESTES DE CADASTRO 3",
+      "medicacaoReceitada": "TESTES DE CADASTRO 3",
+      "dosagemPrecaucoes": "TESTES DE CADASTRO 3"
+    },
+    {
+      "id": "25cb",
+      "pacienteId": "13b2",
+      "motivoConsulta": "TESTES DE CADASTRO 5",
+      "dataConsulta": "2024-04-17",
+      "horarioConsulta": "22:31",
+      "descricaoProblema": "TESTES DE CADASTRO 5",
+      "medicacaoReceitada": "TESTES DE CADASTRO 5",
+      "dosagemPrecaucoes": "TESTES DE CADASTRO 5"
     }
   ],
   "exames": [
     {
       "id": "1",
-      "pacienteId": "12d0",
+      "pacienteId": null,
       "nomeExame": "Hemograma completo",
       "dataExame": "2024-04-16",
       "horarioExame": "08:00",
@@ -335,6 +348,50 @@
       "laboratorio": "Unimed Diagnósticos",
       "urlDocumento": "http://exemplo.com/exames/1.pdf",
       "resultadoExame": "Normal"
+    },
+    {
+      "id": "7caf",
+      "pacienteId": "13b2",
+      "nomeExame": "EMAXE teste 01",
+      "dataExame": "2024-04-17",
+      "horarioExame": "22:39",
+      "tipoExame": "EMAXE teste 01",
+      "laboratorio": "EMAXE teste 01",
+      "urlDocumento": "EMAXE teste 01",
+      "resultadoExame": "EMAXE teste 01 EMAXE teste 01"
+    },
+    {
+      "id": "a950",
+      "pacienteId": "13b2",
+      "nomeExame": "EMAXE teste 02",
+      "dataExame": "2024-04-16",
+      "horarioExame": "23:39",
+      "tipoExame": "EMAXE teste 02",
+      "laboratorio": "EMAXE teste 02",
+      "urlDocumento": "EMAXE teste 02",
+      "resultadoExame": "EMAXE teste 02 EMAXE teste 02"
+    },
+    {
+      "id": "2fb7",
+      "pacienteId": "13b2",
+      "nomeExame": "Hemograma 2",
+      "dataExame": "2024-04-17",
+      "horarioExame": "22:44",
+      "tipoExame": "Hemograma 2",
+      "laboratorio": "Hemograma 2",
+      "urlDocumento": "Hemograma 2",
+      "resultadoExame": "Hemograma 2Hemograma 2"
+    },
+    {
+      "id": "358d",
+      "pacienteId": "13b2",
+      "nomeExame": "Hemograma 3",
+      "dataExame": "2024-04-17",
+      "horarioExame": "22:44",
+      "tipoExame": "Hemograma 3",
+      "laboratorio": "Hemograma 3",
+      "urlDocumento": "Hemograma 3",
+      "resultadoExame": "Hemograma 3Hemograma 3"
     }
   ]
 }

@@ -7,7 +7,6 @@ import { AgeService } from '../../services/age/age.service';
 import { Paciente, Consulta, Exame } from './medical.interfaces';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
-import { StateManagementService } from '../../services/StateManagementService/state-management.service';
 import { filter } from 'rxjs';
 
 @Component({
@@ -33,7 +32,7 @@ export class HomeComponent implements OnInit {
     private ageService: AgeService,
     private router: Router,
     private apiService: ApiService,
-    private stateManagementService: StateManagementService,
+
   ) {
     window.addEventListener('resize', this.updatePageSize);
   }
