@@ -70,6 +70,18 @@ export class ExamRegistrationComponent {
     });
   }
 
+  onFileSelected(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      alert(`Arquivo ${file.name} selecionado com sucesso!`);
+      this.generateUrlDocumento();
+    }
+  }
+
+  generateUrlDocumento() {
+    const urlDocumento = 'http://exemplo.com/exames/' + Math.random().toString(36).substring(2, 15) + '.pdf';
+    this.formExamRegistation.controls['urlDocumento'].setValue(urlDocumento);
+  }
 
   nSelectPaciente(paciente: any) {
     this.selectedPaciente = paciente;
@@ -109,6 +121,7 @@ export class ExamRegistrationComponent {
 
   onSubmit() {
     if (this.formExamRegistation.valid && this.selectedPaciente) {
+      this.generateUrlDocumento();
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
       this.apiService.create('exames', this.formExamRegistation.value).subscribe(
           () => {

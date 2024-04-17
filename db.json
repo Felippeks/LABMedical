@@ -267,7 +267,7 @@
   ],
   "consultas": [
     {
-      "pacienteId": null,
+      "pacienteId": "8",
       "motivoConsulta": "Dor de cabeça persistente",
       "dataConsulta": "2024-04-16",
       "horarioConsulta": "08:00",
@@ -340,7 +340,7 @@
   "exames": [
     {
       "id": "1",
-      "pacienteId": null,
+      "pacienteId": "8",
       "nomeExame": "Hemograma completo",
       "dataExame": "2024-04-16",
       "horarioExame": "08:00",
@@ -392,6 +392,17 @@
       "laboratorio": "Hemograma 3",
       "urlDocumento": "Hemograma 3",
       "resultadoExame": "Hemograma 3Hemograma 3"
+    },
+    {
+      "id": "1daa",
+      "pacienteId": "13b2",
+      "nomeExame": "Hemograma teste",
+      "dataExame": "2024-04-17",
+      "horarioExame": "03:52",
+      "tipoExame": "TESTES DE CADASTRO 4",
+      "laboratorio": "lab Santa Luzia",
+      "urlDocumento": "http://exemplo.com/exames/18hgm3v108y.pdf",
+      "resultadoExame": "anexo teste layout"
     }
   ]
 }

@@ -22,6 +22,17 @@
     padding: 0.25rem;
     margin: 0.25rem 0;
   }
+  .custom-file-upload {
+    display: inline-block;
+    padding: 1.1rem;
+    cursor: pointer;
+    background-color: #fff; 
+    color: #064c8c; 
+    border-radius: 50px; 
+    margin-top: 2rem;
+    font-weight: 500;
+    font-size: 14px;
+  }
   
   .error-message {
     color: #c53030;
