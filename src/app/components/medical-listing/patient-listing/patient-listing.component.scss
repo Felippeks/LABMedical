@@ -1,0 +1,54 @@
+
+.info {
+  color: #ffd700;
+  background-color: #014c8b;
+}
+
+span {
+  font-weight: 900;
+  color: #000;
+  font-size: 14px;
+  background-color: #ffd700;
+}
+
+
+p {
+  color: white;
+  font-size: 12px;
+  text-align: start;
+}
+
+button {
+  border: 2px solid;
+  background-color: #014c8b;
+  color: #ffd700;
+  border-color: #ffd700;
+  border-radius: 9999px;
+  padding: 0.2rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  width: 4rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #064c8c;
+    background-color: #d1d5db;
+    border-color: #ffd700;
+  }
+
+  &:disabled {
+    color: #a9a9a9;
+    background-color: #d3d3d3;
+    border-color: #a9a9a9;
+    cursor: not-allowed;
+  }
+
+  th,
+  td {
+    width: 14.2857143%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  
+  }
+ 
+}

@@ -12,6 +12,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Exame } from '../home/medical.interfaces';
 @Component({
   selector: 'app-exam-registration',
   standalone: true,
@@ -38,6 +40,8 @@ export class ExamRegistrationComponent {
     private apiService: ApiService,
     private dateService: DateService,
     private ngZone: NgZone,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.formExamRegistation = new FormGroup({
       pacienteId: new FormControl(''),
@@ -69,6 +73,23 @@ export class ExamRegistrationComponent {
       ]),
     });
   }
+
+  ngOnInit(){
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id){
+      this.apiService.get('exames', id).subscribe((exame: Exame) => {
+        this.exameId = exame.id;
+        this.formExamRegistation.patchValue(exame);
+        this.formExamRegistation.controls['dataExame'].setValue(this.dateService.formatDate(new Date(exame.dataExame)));
+        this.formExamRegistation.controls['horarioExame'].setValue(exame.horarioExame);
+        this.pacienteId = exame['pacienteId'];
+        this.apiService.get('pacientes', exame['pacienteId']).subscribe((paciente: any) => {
+          this.selectedPaciente = paciente;
+        });
+      });
+    }
+  }
+
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {

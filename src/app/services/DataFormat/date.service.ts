@@ -18,9 +18,13 @@ export class DateService {
   }
 
   formatTime(date: Date): string {
-    return date.toTimeString().substring(0, 5);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let hoursString = hours < 10 ? '0' + hours : hours.toString();
+    let minutesString = minutes < 10 ? '0' + minutes : minutes.toString();
+    return hoursString + ':' + minutesString;
   }
-
+  
   parseDate(dateString: string): Date {
     const [year, month, day] = dateString.split('-').map(Number);
     const date = new Date(Date.UTC(year, month - 1, day));
