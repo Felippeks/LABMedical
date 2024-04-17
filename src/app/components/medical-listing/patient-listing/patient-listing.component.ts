@@ -4,8 +4,8 @@ import { ToolbarComponent } from '../../shareds_components/toolbar/toolbar.compo
 import { ApiService } from '../../../services/api/api.service';
 import { Consulta, Exame, Paciente } from '../../home/medical.interfaces';
 
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule,Location } from '@angular/common';
 
 @Component({
   selector: 'app-patient-medical-listing',
@@ -21,7 +21,9 @@ export class PatientMedicalListingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private location: Location,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,5 +39,20 @@ export class PatientMedicalListingComponent implements OnInit {
         this.exames = exames.sort((a: Exame, b: Exame) => new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime());
       });
     }
+    
   }
+
+  editAppoiment(id: string) {
+    this.router.navigate(['/appointments', id]);
+  }
+
+  editExam(id: string) {
+    this.router.navigate(['/exam', id]);
+  }
+  
+  back(){
+    this.location.back();
+  }
+
+ 
 }

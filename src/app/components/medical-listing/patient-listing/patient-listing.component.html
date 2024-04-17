@@ -6,7 +6,9 @@
 <header>
     <h1>Informações do Paciente</h1>
 </header>
-
+<button class="border-2 rounded-full w-10 bg-background">
+    <img (click)="back()" src="assets/back-icon.svg" alt="Voltar" width="40" height="40"  >
+</button>
 <section>
     <h2>Dados Pessoais</h2>
     <div *ngIf="paciente">
@@ -39,7 +41,7 @@
                     <td>{{ consulta.descricaoProblema }}</td>
                     <td>{{ consulta.medicacaoReceitada }}</td>
                     <td>{{ consulta.dosagemPrecaucoes }}</td>
-                    <td><button>Editar</button></td>
+                    <td><button (click)="editAppoiment(consulta.id)">Editar</button></td>
                 </tr>
             </tbody>
         </table>
@@ -69,8 +71,9 @@
                     <td><span>{{ exame.laboratorio }}</span></td>
                     <td><span>{{ exame.urlDocumento }}</span></td>
                     <td>{{ exame.resultadoExames }}</td>
-                    <td><button>Editar</button></td>
+                    <td><button (click)="editExam(exame.id)">Editar</button></td>
                 </tr>
             </tbody>
         </table>
     </section>
+    </aside>
