@@ -71,23 +71,13 @@ export class ExamRegistrationComponent {
   }
 
 
-  getAllPacientes() {
-    this.apiService.getAll('pacientes').subscribe((data: any[]) => {
-      this.pacientes = data;
-      this.filteredPacientes = data;
-    });
+  nSelectPaciente(paciente: any) {
+    this.selectedPaciente = paciente;
+    this.pacienteId = paciente?.id;
+    this.formExamRegistation.controls['pacienteId'].setValue(paciente?.id);
   }
 
   onSearchTermChange() {
-    const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
-    const currentDate = this.dateService.formatDate(new Date());
-    const currentTime = this.dateService.formatTime(new Date());
-    this.formExamRegistation.reset();
-    this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
-    this.formExamRegistation.patchValue({
-      dataExame: currentDate,
-      horarioExame: currentTime,
-    });
     if (this.searchTerm) {
       this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
         this.selectedPaciente = pacientes.find(
@@ -109,80 +99,15 @@ export class ExamRegistrationComponent {
         if (this.selectedPaciente) {
           this.pacienteId = this.selectedPaciente.id;
           this.formExamRegistation.controls['pacienteId'].setValue(
-            this.pacienteId);
-
-          if (this.pacienteId) {
-            this.apiService
-              .getExamesByPacienteId(this.pacienteId)
-              .subscribe((exames: any[]) => {
-                const exameDoPaciente = exames[0];
-                if (exameDoPaciente) {
-                  this.exameId = exameDoPaciente.id;
-                  const dataExame = this.dateService.formatDate(
-                    this.dateService.parseDate(exameDoPaciente.dataExame),
-                  );
-                  this.ngZone.run(() => {
-                    this.formExamRegistation.patchValue({
-                      nomeExame: exameDoPaciente.nomeExame,
-                      dataExame: this.dateService.formatDate(
-                        new Date(exameDoPaciente.dataExame),
-                      ),
-                      horarioExame: this.dateService.formatTime(
-                        this.dateService.parseTime(exameDoPaciente.horarioExame),
-                      ),
-                      tipoExame: exameDoPaciente.tipoExame,
-                      laboratorio: exameDoPaciente.laboratorio,
-                      urlDocumento: exameDoPaciente.urlDocumento,
-                      resultadoExame: exameDoPaciente.resultadoExame,
-                    });
-                  });
-                } else {
-                  alert('Nenhum exame encontrado para o paciente selecionado.');
-                  return;
-                }
-              });
-          }
+            this.pacienteId);                
         } else {
-          alert('Nenhum paciente encontrado.');
+          alert('Paciente não encontrado');
         }
       });
     }
   }
 
-  onSelectPaciente(paciente: any) {
-    this.selectedPaciente = paciente;
-    this.pacienteId = paciente?.id;
-    this.formExamRegistation.controls['pacienteId'].setValue(paciente?.id);
-    if (this.pacienteId) {
-      this.apiService
-        .getExamesByPacienteId(this.pacienteId)
-        .subscribe((exames: any[]) => {
-          const exameDoPaciente = exames[0];
-          if (exameDoPaciente) {
-            this.exameId = exameDoPaciente.id;
-            const dataExame = this.dateService.formatDate(
-              this.dateService.parseDate(exameDoPaciente.dataExame),
-            );
-            this.formExamRegistation.patchValue({
-              nomeExame: exameDoPaciente.nomeExame,
-              dataExame: this.dateService.formatDate(
-                new Date(exameDoPaciente.dataExame),
-              ),
-              horarioExame: this.dateService.formatTime(
-                this.dateService.parseTime(exameDoPaciente.horarioExame),
-              ),
-              tipoExame: exameDoPaciente.tipoExame,
-              laboratorio: exameDoPaciente.laboratorio,
-              urlDocumento: exameDoPaciente.urlDocumento,
-              resultadoExame: exameDoPaciente.resultadoExame,
-            });
-          } else {
-            alert('Nenhum exame encontrado para o paciente selecionado.');
-            return;
-          }
-        });
-    }
-  }
+  
 
   onSubmit() {
     if (this.formExamRegistation.valid && this.selectedPaciente) {
@@ -193,13 +118,15 @@ export class ExamRegistrationComponent {
             const pacienteId = this.formExamRegistation.get('pacienteId')?.value;
             this.formExamRegistation.reset();
             this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
+            this.formExamRegistation.control['dataExame'].setValue(this.dateService.formatDate(new Date()));
+            this.formExamRegistation.control['horarioExame'].setValue(this.dateService.formatTime(new Date()));
           },
           (error) => {
             console.error('Erro ao cadastrar exame:', error);
           },
         );
     } else {
-      alert('Preencha todos os campos obrigatorios do formulario.');
+      alert('Por favor, preencha todos os campos obrigatórios do formulário.');
     }
   }
 
@@ -239,7 +166,7 @@ export class ExamRegistrationComponent {
       }
     } else {
       alert(
-        'Por favor, preencha todos os campos obrigatórios do formulário para atualização.',
+        'Por favor, preencha todos os campos obrigatórios para atualização.',
       );
     }
   }
