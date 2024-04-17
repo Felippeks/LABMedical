@@ -263,38 +263,11 @@
       "bairro": "Centro",
       "referencia": "Próximo ao shopping",
       "id": "8"
-    },
-    {
-      "nome": "testest tststts",
-      "genero": "Masculino",
-      "dataNascimento": "1987-04-13",
-      "cpf": "22222222222",
-      "rg": "22222333333",
-      "orgaoExpedidor": "2333333",
-      "estadoCivil": "Viuvo(a)",
-      "telefone": "11111111111",
-      "email": "",
-      "naturalidade": "dasd asdasd",
-      "contatoEmergencia": "88888888888",
-      "listaAlergias": "",
-      "listaCuidadosEspecificos": "",
-      "convenio": "",
-      "numeroConvenio": "",
-      "validadeConvenio": "",
-      "cep": "88113870",
-      "cidade": "São José",
-      "estado": "SC",
-      "logradouro": "Rua Pedro Antunes Ezequiel",
-      "numero": "157",
-      "complemento": "",
-      "bairro": "Areias",
-      "referencia": "",
-      "id": "12d0"
     }
   ],
   "consultas": [
     {
-      "pacienteId": "12d0",
+      "pacienteId": null,
       "motivoConsulta": "Dor de cabeça persistente",
       "dataConsulta": "2024-04-16",
       "horarioConsulta": "08:00",
@@ -367,7 +340,7 @@
   "exames": [
     {
       "id": "1",
-      "pacienteId": "12d0",
+      "pacienteId": null,
       "nomeExame": "Hemograma completo",
       "dataExame": "2024-04-16",
       "horarioExame": "08:00",
