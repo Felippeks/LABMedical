@@ -107,8 +107,6 @@ export class ExamRegistrationComponent {
     }
   }
 
-  
-
   onSubmit() {
     if (this.formExamRegistation.valid && this.selectedPaciente) {
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
@@ -118,8 +116,8 @@ export class ExamRegistrationComponent {
             const pacienteId = this.formExamRegistation.get('pacienteId')?.value;
             this.formExamRegistation.reset();
             this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
-            this.formExamRegistation.control['dataExame'].setValue(this.dateService.formatDate(new Date()));
-            this.formExamRegistation.control['horarioExame'].setValue(this.dateService.formatTime(new Date()));
+            this.formExamRegistation.controls['dataExame'].setValue(this.dateService.formatDate(new Date()));
+            this.formExamRegistation.controls['horarioExame'].setValue(this.dateService.formatTime(new Date()));
           },
           (error) => {
             console.error('Erro ao cadastrar exame:', error);
