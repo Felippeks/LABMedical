@@ -16,13 +16,19 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardRouter] },
   {
     path: 'appointments',
-    component: AppointmentRegistrationComponent,
     canActivate: [AuthGuardRouter],
+    children: [
+      { path: '', component: AppointmentRegistrationComponent },
+      { path: ':id', component: AppointmentRegistrationComponent },
+    ],
   },
   {
     path: 'exam',
-    component: ExamRegistrationComponent,
     canActivate: [AuthGuardRouter],
+    children: [
+      { path: '', component: ExamRegistrationComponent },
+      { path: ':id', component: ExamRegistrationComponent },
+    ],
   },
   {
     path: 'patientListing',

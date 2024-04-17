@@ -12,6 +12,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Consulta } from '../home/medical.interfaces';
 @Component({
   selector: 'app-appointment-registration',
   standalone: true,
@@ -29,6 +31,7 @@ export class AppointmentRegistrationComponent {
   pacienteId: string | null = null;
   searchTerm: string | any;
   pacientes: any[] = [];
+  consultas: any[] = [];
   filteredPacientes: any[] = [];
   selectedPaciente: any;
   consultaId: string | null = null;
@@ -37,6 +40,8 @@ export class AppointmentRegistrationComponent {
     private apiService: ApiService,
     private dateService: DateService,
     private ngZone: NgZone,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.formAppointment = new FormGroup({
       pacienteId: new FormControl(''),
@@ -65,6 +70,22 @@ export class AppointmentRegistrationComponent {
         Validators.maxLength(256),
       ]),
     });
+  }
+
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.apiService.get('consultas', id).subscribe((consulta: Consulta) => {
+        this.consultaId = consulta.id;
+        this.formAppointment.patchValue(consulta);
+        this.formAppointment.controls['dataConsulta'].setValue(consulta.dataConsulta);
+        this.formAppointment.controls['horarioConsulta'].setValue(consulta.horarioConsulta);
+        this.pacienteId = consulta['pacienteId'];
+        this.apiService.get('pacientes', consulta['pacienteId']).subscribe((paciente: any) => {
+          this.selectedPaciente = paciente;
+        });
+      });
+    }
   }
 
   onSelectPaciente(paciente: any) {

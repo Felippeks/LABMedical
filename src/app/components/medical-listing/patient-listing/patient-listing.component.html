@@ -1,47 +1,116 @@
 <main class="flex h-screen bg-gray-200">
-    <app-sidebar class="max-w-64"></app-sidebar>
-    <div class="flex flex-col w-full">
-      <toolbar class="w-full"></toolbar>
-      <aside class="font-roboto shadow-slate-500 shadow-md md:rounded-2xl md:mx-8 md:my-6 bg-white pt-4 overflow-auto h-screen md:items-stretch flex flex-col">
-<header>
-    <h1>Informações do Paciente</h1>
-</header>
-
-<section>
-    <h2>Dados Pessoais</h2>
-    <div *ngIf="paciente">
-        <p>Nome do Paciente: {{ paciente.nome }}</p>
-    </div>
-    <p>Convênio: </p>
-    <p>Contato de Emergência:</p>
-    <p>Lista de Alergias: </p>
-    <p>Lista de Cuidados Específicos:</p>
-    </section>
-<section>
-    <h2>Histórico de Consultas</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Hora</th>
-                <th>Motivo</th>
-                <button>Editar</button>
+  <app-sidebar class="max-w-64"></app-sidebar>
+  <div class="flex flex-col w-full">
+    <toolbar class="w-full"></toolbar>
+    <aside
+      class="font-roboto shadow-slate-500 shadow-md md:rounded-2xl md:mx-8 md:my-6 bg-white pt-4 overflow-auto h-screen md:items-stretch flex flex-col gap-10"
+    >
+      <header
+        class="flex justify-center items-center bg-shadow mx-10 rounded-2xl text-blueColor text-4xl "
+      >
+        <h1>Informações do Paciente</h1>
+      </header>
+      <section
+        class="bg-background mx-10 border-2 border-textColor p-2 rounded-2xl text-center"
+      >
+        <h2 class="text-textColor text-2xl">Dados Pessoais</h2>
+        <div *ngIf="paciente">
+          <p>
+            Nome do Paciente: <span class="info"> {{ paciente.nome }}</span>
+          </p>
+          <p>
+            Convênio: <span class="info"> {{ paciente.convenio }}</span>
+          </p>
+          <p>
+            Contato de Emergência:
+            <span class="info"> {{ paciente.contatoEmergencia }}</span>
+          </p>
+          <p>
+            Lista de Alergias:<span class="info"> {{ paciente.listaAlergias }}</span>
+          </p>
+          <p>
+            Lista de Cuidados Específicos:<span class="info">
+              {{ paciente.listaCuidadosEspecificos }}</span
+            >
+          </p>
+        </div>
+      </section>
+      <section class="bg-gray-400 mx-10 border-2 border-textColor p-2 rounded-2xl text-center ">
+        <h2 class="text-background text-2xl mb-2">Histórico de Consultas</h2>
+        <table class="table-auto mx-auto w-full text-sm text-justify">
+          <thead >
+            <tr class="text-blueColor italic">
+              <th class="border-2 pl-2 border-white">Motivo Consulta:</th>
+              <th class="border-2 pl-2 border-white">Data Consulta:</th>
+              <th class="border-2 pl-2 border-white">Horario Consulta:</th>
+              <th class="border-2 pl-2 border-white">Descricao Problema:</th>
+              <th class="border-2 pl-2 border-white">Medicacao Receitada:</th>
+              <th class="border-2 pl-2 border-white">Dosagem Precaucoes:</th>
+              <th class="text-center pr-10">Editar</th>
             </tr>
-        </thead>
-    </table>
-</section>
-
-<section>
-    <h2>Histórico de Exames</h2>
-    <table>
-        <thead>
+          </thead>
+          <tbody>
             <tr *ngFor="let consulta of consultas">
-                <td>{{ consulta.dataConsulta }}</td>
-                <td>{{ consulta.horarioConsulta }}</td>
-                <td>{{ consulta.motivoConsulta }}</td>
-                <td><button>Editar</button></td>
-              </tr>
-        </thead>
-    </table>
-</section>
-</aside>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ consulta.motivoConsulta }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ consulta.dataConsulta }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ consulta.horarioConsulta }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">{{ consulta.descricaoProblema }}</td>
+              <td class="border-2 pl-2 border-white">{{ consulta.medicacaoReceitada }}</td>
+              <td class="border-2 pl-2 border-white">{{ consulta.dosagemPrecaucoes }}</td>
+              <td class="pl-2">
+                <button (click)="editAppoiment(consulta.id)">Editar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section
+        class="bg-gray-400 mx-10 border-2 border-textColor p-2 rounded-2xl text-center"
+      >
+        <h2 class="text-background text-2xl mb-2">Histórico de Exames</h2>
+        <table class="table-auto mx-auto w-full text-sm text-justify">
+            <thead >
+                <tr class="text-blueColor italic">
+                  <th class="border-2 pl-2 border-white">Nome Exame:</th>
+                  <th class="border-2 pl-2 border-white">Data Exame:</th>
+                  <th class="border-2 pl-2 border-white">Horario Exame:</th>
+                  <th class="border-2 pl-2 border-white">Tipo Exame:</th>
+                  <th class="border-2 pl-2 border-white">Laboratorio:</th>
+                  <th class="border-2 pl-2 border-white">urlDocumento:</th>
+                  <th class="border-2 pl-2 border-white">Resultado Exames:</th>
+                  <th class="text-center pr-10">Editar</th>
+                </tr>
+              </thead>
+          <tbody>
+            <tr *ngFor="let exame of exames">
+              <td class="border-2 pl-2 border-white">
+                <span>{{ exame.nomeExame }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ exame.dataExame }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ exame.horarioExame }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">{{ exame.tipoExame }}</td>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ exame.laboratorio }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">
+                <span>{{ exame.urlDocumento }}</span>
+              </td>
+              <td class="border-2 pl-2 border-white">{{ exame.resultadoExames }}</td>
+              <td class="pl-2 "><button (click)="editExam(exame.id)">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </aside>
+  </div>
+</main>

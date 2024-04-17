@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ScreenSizeService } from '../../../services/Screen-size/screen-size.service';
 import {
@@ -84,6 +84,7 @@ export class SidebarComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private sidebarService: SidebarService,
     private screenSizeService: ScreenSizeService,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -124,5 +125,8 @@ export class SidebarComponent implements OnInit {
         this.sidebarService.toggleSidebar();
       }
     });
+  }
+  back(){
+    this.location.back();
   }
 }
