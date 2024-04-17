@@ -13,12 +13,12 @@
     <h2>Dados Pessoais</h2>
     <div *ngIf="paciente">
         <p>Nome do Paciente: {{ paciente.nome }}</p>
+        <p>Convênio: {{paciente.convenio}} </p>
+        <p>Contato de Emergência: {{paciente.contatoEmergencia}}</p>
+        <p>Lista de Alergias:{{paciente.listaAlergias}} </p>
+        <p>Lista de Cuidados Específicos: {{paciente.listaCuidadosEspecificos}}</p>
     </div>
-    <p>Convênio: {{paciente.convenio}} </p>
-    <p>Contato de Emergência: {{paciente.contatoEmergencia}}</p>
-    <p>Lista de Alergias:{{paciente.listaAlergias}} </p>
-    <p>Lista de Cuidados Específicos: {{paciente.listaCuidadosEspecificos}}</p>
-    </section>
+</section>
     <section>
         <h2>Histórico de Consultas</h2>
         <table>
