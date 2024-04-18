@@ -41,8 +41,9 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 
 1. Clone o repositório para a sua máquina local usando `git clone`.
 2. Navegue até a pasta do projeto e execute `npm install` para instalar as dependências.
-3. Execute `npm run start-dev` para iniciar o servidor de desenvolvimento e o json-server simultaneamente.
-4. Abra o navegador e acesse `http://localhost:4200`.
+3. Execute `npm run` para iniciar o servidor de desenvolvimento.
+4. Servidor Json server rodando na web: `http://evolucaoagil.com.br:3000/`
+5. Abra o navegador e acesse `http://localhost:4200`.
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-extutura-da-aplicao)
@@ -95,7 +96,7 @@ lab-medical
 - Implementação de testes de unidade e de integração para garantir a qualidade do código.
 - Melhorar a interface do usuário para torná-la mais intuitiva e fácil de usar.
 - Recuperação de Senha: Implementação da funcionalidade de recuperação de senha para oferecer uma experiência completa de autenticação.
-- Modais de notificação: Alterar os alertas para modais dinâmicos, melhorando a experiência do usuário.
+
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#licença)
