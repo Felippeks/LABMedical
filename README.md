@@ -1,4 +1,3 @@
-<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#lab-medical)
 
 # ➤ Lab Medical
@@ -39,6 +38,37 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 2. Navegue até a pasta do projeto e execute `npm install` para instalar as dependências.
 3. Execute `npm run start-dev` para iniciar o servidor de desenvolvimento e o json-server simultaneamente.
 4. Abra o navegador e acesse `http://localhost:4200`.
+
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#estrutura)
+
+## ➤ Extutura da aplicação
+
+`lab-medical/`
+│
+├── ➤ `app/` # Pasta raiz da aplicação
+│ ├── ➤ `components/` # Componentes da aplicação
+│ │ ├── ➤ `appointment-registration/` # Componente de cadastro de consulta
+│ │ ├── ➤ `exam-registration/` # Componente de cadastro de exame
+│ │ ├── ➤ `home/` # Componente da página inicial
+│ │ ├── ➤ `login/` # Componente de login
+│ │ │ └── ➤ `sign-up/` # Componente de cadastro de usuário
+│ │ ├── ➤ `medical-listing/` # Componente de listagem médica
+│ │ │ └── ➤ `patient-listing/` # Componente de listagem de pacientes
+│ │ ├── ➤ `patient-registration/` # Componente de cadastro de paciente
+│ │ └── ➤ `shared_components/` # Componentes compartilhados
+│ │ ├── ➤ `sidebar/` # Componente de barra lateral
+│ │ ├── ➤ `spinner/` # Componente de spinner de carregamento
+│ │ └── ➤ `toolbar/` # Componente de barra de ferramentas
+│ │
+│ ├── ➤ `guardsRoutes/` # Guardas de rotas
+│ ├── ➤ `pipes/` # Pipes da aplicação
+│ └── ➤ `services/` # Serviços da aplicação
+│
+├── ➤ `assets/` # Arquivos estáticos
+├── ➤ `package.json` # Metadados e dependências do projeto
+└── ➤ `README.md` # Documentação do projeto
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#funcionalidades-implementadas)
