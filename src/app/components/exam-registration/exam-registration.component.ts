@@ -15,6 +15,8 @@ import { NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exame } from '../home/medical.interfaces';
 import { CpfPipe } from '../../pipes/cpf.pipe';
+import { ModalService } from '../../services/modal/modal.service';
+import { ModalComponent } from '../shareds_components/modal/modal.component';
 @Component({
   selector: 'app-exam-registration',
   standalone: true,
@@ -27,9 +29,11 @@ import { CpfPipe } from '../../pipes/cpf.pipe';
     CommonModule,
     FormsModule,
     CpfPipe,
+    ModalComponent
   ],
 })
 export class ExamRegistrationComponent {
+  message: string | undefined;
   pacienteId: string | null = null;
   searchTerm: string | any;
   exameId: string | null = null;
@@ -44,6 +48,7 @@ export class ExamRegistrationComponent {
     private ngZone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
+    private modalService: ModalService,
   ) {
     this.formExamRegistation = new FormGroup({
       pacienteId: new FormControl('', [Validators.required]),
@@ -103,7 +108,8 @@ export class ExamRegistrationComponent {
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      alert(`Arquivo ${file.name} selecionado com sucesso!`);
+      this.modalService.setMessage(`Arquivo ${file.name} selecionado com sucesso!`);
+      this.message = `Arquivo ${file.name} selecionado com sucesso!`;
       this.generateUrlDocumento();
     }
   }
@@ -148,7 +154,8 @@ export class ExamRegistrationComponent {
             this.pacienteId,
           );
         } else {
-          alert('Paciente não encontrado');
+          this.modalService.setMessage('Paciente não encontrado');
+          this.message = 'Paciente não encontrado';
         }
       } catch (error) {
         console.error('Erro ao buscar pacientes:', error);
@@ -158,7 +165,8 @@ export class ExamRegistrationComponent {
 
   async onSubmit() {
     if (!this.selectedPaciente) {
-      alert('Por favor, selecione um paciente para cadastrar o exame.');
+      this.modalService.setMessage('Por favor, selecione um paciente para cadastrar o exame.');
+      this.message = 'Por favor, selecione um paciente para cadastrar o exame.';
       return;
     }
     if (this.formExamRegistation.valid) {
@@ -166,7 +174,8 @@ export class ExamRegistrationComponent {
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
       try {
         await this.apiService.create('exames', this.formExamRegistation.value);
-        alert('Exame cadastrado com sucesso!');
+        this.modalService.setMessage('Exame cadastrado com sucesso!');
+        this.message = 'Exame cadastrado com sucesso!';
         const pacienteId = this.formExamRegistation.get('pacienteId')?.value;
         this.formExamRegistation.reset();
         this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
@@ -180,7 +189,8 @@ export class ExamRegistrationComponent {
         console.error('Erro ao cadastrar exame:', error);
       }
     } else {
-      alert('Por favor, preencha todos os campos obrigatórios do formulário.');
+      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios do formulário.');
+      this.message = 'Por favor, preencha todos os campos obrigatórios do formulário.';
     }
   }
 
@@ -188,13 +198,15 @@ export class ExamRegistrationComponent {
     if (this.formExamRegistation.valid && this.exameId) {
       try {
         await this.apiService.delete('exames', this.exameId);
-        alert('Exame deletado com sucesso!');
+        this.modalService.setMessage('Exame deletado com sucesso!');
+        this.message = 'Exame deletado com sucesso!';
         this.formExamRegistation.reset();
       } catch (error) {
         console.error('Erro ao deletar exame:', error);
       }
     } else {
-      alert('Por favor, selecione um exame para deletar.');
+      this.modalService.setMessage('Por favor, selecione um exame para deletar.');
+      this.message = 'Por favor, selecione um exame para deletar.';
     }
   }
 
@@ -207,7 +219,8 @@ export class ExamRegistrationComponent {
         };
         try {
           await this.apiService.update('exames', this.exameId, updateExame);
-          alert('Exame atualizado com sucesso!');
+          this.modalService.setMessage('Exame atualizado com sucesso!');
+          this.message = 'Exame atualizado com sucesso!';
         } catch (error) {
           console.error('Erro ao atualizar exame:', error);
         }
@@ -215,7 +228,8 @@ export class ExamRegistrationComponent {
         console.error('Erro: exameId é null');
       }
     } else {
-      alert('Por favor, preencha todos os campos obrigatórios para atualização.');
+      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios para atualização.');
+      this.message = 'Por favor, preencha todos os campos obrigatórios para atualização.';
     }
   }
 }

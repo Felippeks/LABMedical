@@ -9,15 +9,18 @@ import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
 import { filter } from 'rxjs';
 import { FormatService } from '../../services/format/format.service';
+import { ModalComponent } from '../shareds_components/modal/modal.component';
+import { ModalService } from '../../services/modal/modal.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
+  imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule, ModalComponent],
 })
 export class HomeComponent implements OnInit {
+  message: string | undefined;
   pageSize: number = 4;
   pageIndex: number = 0;
   totalPacientes: number = 0;
@@ -40,6 +43,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private formatService: FormatService,
+    private modalService: ModalService,
   ) {
     window.addEventListener('resize', this.updatePageSize);
   }

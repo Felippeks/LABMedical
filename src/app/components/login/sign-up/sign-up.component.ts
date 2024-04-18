@@ -10,18 +10,21 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../../../services/api/api.service';
+import { ModalService } from '../../../services/modal/modal.service';
+import { ModalComponent } from "../../shareds_components/modal/modal.component";
 
 @Component({
-  selector: 'app-sign-up',
-  standalone: true,
-  imports: [HttpClientModule, ReactiveFormsModule, FormsModule, CommonModule],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss',
+    selector: 'app-sign-up',
+    standalone: true,
+    templateUrl: './sign-up.component.html',
+    styleUrl: './sign-up.component.scss',
+    imports: [HttpClientModule, ReactiveFormsModule, FormsModule, CommonModule, ModalComponent]
 })
 export class SignUpComponent {
   SignUpForm: FormGroup | any;
+  message: string | undefined;
 
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(private router: Router, private apiService: ApiService, private modalService: ModalService) {
     this.initializeForm();
   }
   initializeForm() {
@@ -43,10 +46,12 @@ export class SignUpComponent {
       if (this.passwordsMatch()) {
         await this.storeUserData();
       } else {
-        alert('As senhas não correspondem!');
+        this.modalService.setMessage('As senhas não correspondem!');
+        this.message = 'As senhas não correspondem!';
       }
     } else {
-      alert('Por favor, preencha todos os campos corretamente!');
+      this.modalService.setMessage('Por favor, preencha todos os campos corretamente!');
+      this.message = 'Por favor, preencha todos os campos corretamente!';
     }
   }
   passwordsMatch(): boolean {
@@ -58,11 +63,13 @@ export class SignUpComponent {
     let formData = { ...this.SignUpForm.value };
     try {
       await this.apiService.create('userData', formData);
-      alert('Usuário cadastrado com sucesso!');
+      this.modalService.setMessage('Usuário cadastrado com sucesso!');
+      this.message = 'Usuário cadastrado com sucesso!';
       this.router.navigate(['/login']);
     } catch (error) {
       console.error(error);
-      alert('Ocorreu um erro ao cadastrar o usuário!');
+      this.modalService.setMessage('Ocorreu um erro ao cadastrar o usuário!');
+      this.message = 'Ocorreu um erro ao cadastrar o usuário!';
     }
   }
   onLogin() {
