@@ -31,7 +31,7 @@ export class LoginComponent {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
 
-      this.apiService.getAll('userData').subscribe(userData => { // Busque os dados do usuário da API
+      this.apiService.getAll('userData').subscribe(userData => { 
         const user = userData.find((user: any) => user.email === email && user.password === password);
 
         if (user) {
@@ -48,21 +48,26 @@ export class LoginComponent {
 
   onForgotPassword() {
     const email = this.loginForm.get('email')?.value;
-
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
-    if (email && userData.email === email) {
-      userData.password = '1q2w3e@!';
-      localStorage.setItem('userData', JSON.stringify(userData));
-
-      alert(
-        'Sua senha foi alterada para a senha padrão: 1q2w3e@!. Por favor, prossiga utilizando essa senha.',
-      );
-    } else {
-      alert('Email não encontrado');
-    }
+  
+    this.apiService.getAll('userData').subscribe(userData => {
+      const user = userData.find((user: any) => user.email === email);
+  
+      if (user) {
+        user.password = '1q2w3e@!';
+        user.confirmPassword = '1q2w3e@!';
+  
+        this.apiService.update('userData', user.id, user).subscribe(updatedUser => {
+          localStorage.setItem('userData', JSON.stringify(updatedUser));
+          alert(
+            'Sua senha foi alterada para a senha padrão: 1q2w3e@!. Por favor, prossiga utilizando essa senha.',
+          );
+        });
+      } else {
+        alert('Email não encontrado');
+      }
+    });
   }
-
+  
   onRegister() {
     this.loading = true;
     setTimeout(() => {

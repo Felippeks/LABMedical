@@ -269,7 +269,7 @@
         </fieldset>
       </form>
       <div class="flex md:flex-row flex-col md:justify-between items-center">
-        <button class="salvar" (click)="onSubmit()">Cadastrar</button>
+        <button class="salvar" (click)="onSubmit()">Salvar</button>
         <button [disabled]="!isEditing" (click)="onSubmit()">Editar</button>
         <button [disabled]="!isEditing || isDeleting" (click)="deletePatient()">
           Deletar

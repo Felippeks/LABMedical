@@ -19,7 +19,7 @@
             <h2>Convenio</h2>
             <h2>Detalhes</h2>
           </div>
-          <div *ngFor="let paciente of filteredPacientes" class="bg-gray-200 md:text-base text-sm text-blueColor italic grid md:grid-cols-5 md:gap-4 md:p-4 p-1 border-2 border-gray-200 rounded-2xl shadow-md shadow-slate-500 text-center">
+          <div *ngFor="let paciente of filteredPacientes" (click)="More(paciente.id)" class="bg-gray-200 cursor-pointer md:text-base text-sm text-blueColor italic grid md:grid-cols-5 md:gap-4 md:p-4 p-1 border-2 border-gray-200 rounded-2xl shadow-md shadow-slate-500 text-center">
             <p>{{ paciente.nome }}</p>
             <p>{{ paciente.cpf }}</p>
             <p>{{ paciente.numeroConvenio }}</p>

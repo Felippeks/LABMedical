@@ -26,7 +26,7 @@ import { CpfPipe } from '../../pipes/cpf.pipe';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    CpfPipe
+    CpfPipe,
   ],
 })
 export class ExamRegistrationComponent {
@@ -46,7 +46,7 @@ export class ExamRegistrationComponent {
     private router: Router,
   ) {
     this.formExamRegistation = new FormGroup({
-      pacienteId: new FormControl('',[Validators.required]),
+      pacienteId: new FormControl('', [Validators.required]),
       nomeExame: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -116,7 +116,7 @@ export class ExamRegistrationComponent {
     this.formExamRegistation.controls['urlDocumento'].setValue(urlDocumento);
   }
 
-  nSelectPaciente(paciente: any) {
+  onSelectPaciente(paciente: any) {
     this.selectedPaciente = paciente;
     this.pacienteId = paciente?.id;
     this.formExamRegistation.controls['pacienteId'].setValue(paciente?.id);
@@ -154,7 +154,7 @@ export class ExamRegistrationComponent {
   }
 
   onSubmit() {
-    if(!this.selectedPaciente){
+    if (!this.selectedPaciente) {
       alert('Por favor, selecione um paciente para cadastrar o exame.');
       return;
     }
