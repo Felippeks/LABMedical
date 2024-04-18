@@ -95,6 +95,7 @@ lab-medical
 - Implementação de testes de unidade e de integração para garantir a qualidade do código.
 - Melhorar a interface do usuário para torná-la mais intuitiva e fácil de usar.
 - Recuperação de Senha: Implementação da funcionalidade de recuperação de senha para oferecer uma experiência completa de autenticação.
+- Modais de notificação: Alterar os alertas para modais dinâmicos, melhorando a experiência do usuário.
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#licença)
