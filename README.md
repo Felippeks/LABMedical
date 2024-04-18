@@ -66,7 +66,8 @@ lab-medical
 │ │  │ └──➤ shared_components/ # Componentes compartilhados 
 │ │  │ │  ├──➤ sidebar/ # Componente de barra lateral 
 │ │  │ │  ├──➤ spinner/ # Componente de spinner de carregamento 
-│ │  │ │  └──➤ toolbar/ # Componente de barra de ferramentas 
+│ │  │ │  ├──➤ toolbar/ # Componente de barra de ferramentas
+│ │  │ │  └──➤ Modal/ # Componente de Modal Dinamico
 │ │  ├──➤ guardsRoutes/ # Guardas de rotas 
 │ │  ├──➤ pipes/ # Pipes da aplicação 
 │ │  └──➤ services/ # Serviços da aplicação 
