@@ -13,6 +13,13 @@
       "email": "dianapbcontato@gmail.com",
       "password": "1q2w3e@!",
       "confirmPassword": "1q2w3e@!"
+    },
+    {
+      "id": "b850",
+      "name": "LabMedical Medico",
+      "email": "labmedical@gmail.com",
+      "password": "12345678",
+      "confirmPassword": "12345678"
     }
   ],
   "pacientes": [

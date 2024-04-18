@@ -27,30 +27,31 @@ export class PatientMedicalListingComponent implements OnInit {
     private formatService: FormatService,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.apiService.get('pacientes', id).subscribe((paciente: Paciente) => {
+      try {
+        const paciente: Paciente = await this.apiService.get('pacientes', id);
         this.paciente = {
           ...paciente,
           contatoEmergencia: this.formatService.formatPhone(paciente.contatoEmergencia),
         }
-      });
-      this.apiService
-        .getConsultasByPacienteId(id)
-        .subscribe((consultas: Consulta[]) => {
-          this.consultas = consultas.sort(
-            (a: Consulta, b: Consulta) =>
-              new Date(a.dataConsulta).getTime() -
-              new Date(b.dataConsulta).getTime(),
-          );
-        });
-      this.apiService.getExamesByPacienteId(id).subscribe((exames: Exame[]) => {
+
+        const consultas: Consulta[] = await this.apiService.getConsultasByPacienteId(id);
+        this.consultas = consultas.sort(
+          (a: Consulta, b: Consulta) =>
+            new Date(a.dataConsulta).getTime() -
+            new Date(b.dataConsulta).getTime(),
+        );
+
+        const exames: Exame[] = await this.apiService.getExamesByPacienteId(id);
         this.exames = exames.sort(
           (a: Exame, b: Exame) =>
             new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime(),
         );
-      });
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 

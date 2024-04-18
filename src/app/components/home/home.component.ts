@@ -44,13 +44,13 @@ export class HomeComponent implements OnInit {
     window.addEventListener('resize', this.updatePageSize);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.updatePageSize();
-    this.fetchData();
+    await this.fetchData();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.fetchData();
+      .subscribe(async () => {
+        await this.fetchData();
       });
   }
 
@@ -58,9 +58,9 @@ export class HomeComponent implements OnInit {
     window.removeEventListener('resize', this.updatePageSize);
   }
 
-  fetchData() {
-    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
-      this.pacientes = [];
+  async fetchData() {
+    try {
+      const pacientes: Paciente[] = await this.apiService.getAll('pacientes');
       this.pacientes = pacientes.map((paciente) => ({
         ...paciente,
         idade: this.ageService.calculateAge(paciente.dataNascimento),
@@ -68,13 +68,12 @@ export class HomeComponent implements OnInit {
       }));
       this.filteredPacientes = [...this.pacientes];
       this.totalPacientes = this.pacientes.length;
-    });
-    this.apiService.getAll('consultas').subscribe((consultas: Consulta[]) => {
-      this.consultas = consultas;
-    });
-    this.apiService.getAll('exames').subscribe((exames: Exame[]) => {
-      this.exames = exames;
-    });
+
+      this.consultas = await this.apiService.getAll('consultas');
+      this.exames = await this.apiService.getAll('exames');
+    } catch (error) {
+      console.error('Erro ao buscar dados', error);
+    }
   }
 
   updatePageSize = () => {

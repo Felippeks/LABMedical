@@ -78,10 +78,11 @@ export class ExamRegistrationComponent {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.apiService.get('exames', id).subscribe((exame: Exame) => {
+      try {
+        const exame: Exame = await this.apiService.get('exames', id);
         this.exameId = exame.id;
         this.formExamRegistation.patchValue(exame);
         this.formExamRegistation.controls['dataExame'].setValue(
@@ -91,12 +92,11 @@ export class ExamRegistrationComponent {
           exame.horarioExame,
         );
         this.pacienteId = exame['pacienteId'];
-        this.apiService
-          .get('pacientes', exame['pacienteId'])
-          .subscribe((paciente: any) => {
-            this.selectedPaciente = paciente;
-          });
-      });
+        const paciente: any = await this.apiService.get('pacientes', exame['pacienteId']);
+        this.selectedPaciente = paciente;
+      } catch (error) {
+        console.error('Erro ao carregar exame:', error);
+      }
     }
   }
 
@@ -122,9 +122,10 @@ export class ExamRegistrationComponent {
     this.formExamRegistation.controls['pacienteId'].setValue(paciente?.id);
   }
 
-  onSearchTermChange() {
+  async onSearchTermChange() {
     if (this.searchTerm) {
-      this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
+      try {
+        const pacientes: any[] = await this.apiService.getAll('pacientes');
         this.selectedPaciente = pacientes.find(
           (paciente) =>
             paciente.nome
@@ -149,11 +150,13 @@ export class ExamRegistrationComponent {
         } else {
           alert('Paciente não encontrado');
         }
-      });
+      } catch (error) {
+        console.error('Erro ao buscar pacientes:', error);
+      }
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.selectedPaciente) {
       alert('Por favor, selecione um paciente para cadastrar o exame.');
       return;
@@ -161,69 +164,58 @@ export class ExamRegistrationComponent {
     if (this.formExamRegistation.valid) {
       this.generateUrlDocumento();
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
-      this.apiService
-        .create('exames', this.formExamRegistation.value)
-        .subscribe(
-          () => {
-            alert('Exame cadastrado com sucesso!');
-            const pacienteId =
-              this.formExamRegistation.get('pacienteId')?.value;
-            this.formExamRegistation.reset();
-            this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
-            this.formExamRegistation.controls['dataExame'].setValue(
-              this.dateService.formatDate(new Date()),
-            );
-            this.formExamRegistation.controls['horarioExame'].setValue(
-              this.dateService.formatTime(new Date()),
-            );
-          },
-          (error) => {
-            console.error('Erro ao cadastrar exame:', error);
-          },
+      try {
+        await this.apiService.create('exames', this.formExamRegistation.value);
+        alert('Exame cadastrado com sucesso!');
+        const pacienteId = this.formExamRegistation.get('pacienteId')?.value;
+        this.formExamRegistation.reset();
+        this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
+        this.formExamRegistation.controls['dataExame'].setValue(
+          this.dateService.formatDate(new Date()),
         );
+        this.formExamRegistation.controls['horarioExame'].setValue(
+          this.dateService.formatTime(new Date()),
+        );
+      } catch (error) {
+        console.error('Erro ao cadastrar exame:', error);
+      }
     } else {
       alert('Por favor, preencha todos os campos obrigatórios do formulário.');
     }
   }
 
-  onDelete() {
+  async onDelete() {
     if (this.formExamRegistation.valid && this.exameId) {
-      this.apiService.delete('exames', this.exameId).subscribe(
-        () => {
-          alert('Exame deletado com sucesso!');
-          this.formExamRegistation.reset();
-        },
-        (error) => {
-          console.error('Erro ao deletar exame:', error);
-        },
-      );
+      try {
+        await this.apiService.delete('exames', this.exameId);
+        alert('Exame deletado com sucesso!');
+        this.formExamRegistation.reset();
+      } catch (error) {
+        console.error('Erro ao deletar exame:', error);
+      }
     } else {
       alert('Por favor, selecione um exame para deletar.');
     }
   }
 
-  onUpdate() {
+  async onUpdate() {
     if (this.formExamRegistation.valid && this.selectedPaciente) {
       if (this.exameId !== null) {
         const updateExame = {
           ...this.formExamRegistation.value,
           pacienteId: this.selectedPaciente.id,
         };
-        this.apiService.update('exames', this.exameId, updateExame).subscribe(
-          () => {
-            alert('Exame atualizado com sucesso!');
-          },
-          (error) => {
-            console.error('Erro ao atualizar exame:', error);
-          },
-        );
+        try {
+          await this.apiService.update('exames', this.exameId, updateExame);
+          alert('Exame atualizado com sucesso!');
+        } catch (error) {
+          console.error('Erro ao atualizar exame:', error);
+        }
       } else {
         console.error('Erro: exameId é null');
       }
     } else {
-      alert(
-        'Por favor, preencha todos os campos obrigatórios para atualização.',
-      );
+      alert('Por favor, preencha todos os campos obrigatórios para atualização.');
     }
   }
 }

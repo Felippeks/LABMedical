@@ -95,42 +95,39 @@ export class PatientRegistrationComponent {
       this.setupValueChanges();
     }
   }
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.ApiService.get('pacientes', id).subscribe(
-        (data) => {
-          this.formPatient.patchValue(data);
-          this.isEditing = true;
-        },
-        (error) => {
-          alert('Erro ao carregar detalhes do paciente: ' + error);
-        },
-      );
+      try {
+        const data = await this.ApiService.get('pacientes', id);
+        this.formPatient.patchValue(data);
+        this.isEditing = true;
+      } catch (error) {
+        alert('Erro ao carregar detalhes do paciente: ' + error);
+      }
     }
+
     this.formPatient.get('cep').valueChanges.subscribe((cep: string) => {
       if (cep && cep.length === 8) {
-        this.cepService.getCepData(cep).subscribe(
-          (data) => {
-            if (data.erro) {
-              alert('CEP inválido!');
-            } else {
-              this.formPatient.patchValue({
-                logradouro: data.logradouro,
-                complemento: data.complemento,
-                bairro: data.bairro,
-                cidade: data.localidade,
-                estado: data.uf,
-              });
-            }
-          },
-          (error) => {
-            alert('Erro ao buscar dados do CEP: ' + error);
-          },
-        );
+        this.cepService.getCepData(cep).subscribe(data => {
+          if (data.erro) {
+            alert('CEP inválido!');
+          } else {
+            this.formPatient.patchValue({
+              logradouro: data.logradouro,
+              complemento: data.complemento,
+              bairro: data.bairro,
+              cidade: data.localidade,
+              estado: data.uf,
+            });
+          }
+        }, error => {
+          alert('Erro ao buscar dados do CEP: ' + error);
+        });
       }
     });
   }
+
   setupValueChanges() {
     this.setupFormatOnValueChange('cpf', this.formatService.formatCPF);
     this.setupFormatOnValueChange('telefone', this.formatService.formatPhone);
@@ -149,78 +146,66 @@ export class PatientRegistrationComponent {
     });
   }
 
-  onSubmit() {
+   async onSubmit() {
     if (this.formPatient.valid) {
       const dadosParaEnviar = { ...this.formPatient.value };
       this.removeFormats(dadosParaEnviar);
       if (this.isEditing) {
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {
-          this.ApiService.update('pacientes', id, dadosParaEnviar).subscribe(
-            (data) => {
-              alert('Paciente atualizado com sucesso!');
-              this.ApiService.getAll('pacientes').subscribe(
-                (data) => {
-                  this.stateManagementService.setPacientes(data as Paciente[]);
-                },
-                (error) => {
-                  alert('Erro ao buscar pacientes: ' + error);
-                },
-              );
-            },
-            (error) => {
-              alert('Erro ao atualizar paciente: ' + error);
-            },
-          );
+          try {
+            await this.ApiService.update('pacientes', id, dadosParaEnviar);
+            alert('Paciente atualizado com sucesso!');
+            const data = await this.ApiService.getAll('pacientes');
+            this.stateManagementService.setPacientes(data as Paciente[]);
+          } catch (error) {
+            alert('Erro ao atualizar paciente: ' + error);
+          }
         } else {
           alert('ID do paciente não encontrado.');
         }
       } else {
-        this.ApiService.create('pacientes', dadosParaEnviar).subscribe(
-          (data) => {
-            alert('Paciente criado com sucesso!');
-            this.isEditing = true;
-            this.stateManagementService.setPacientes(data as Paciente[]);
-          },
-          (error) => {
-            alert('Erro ao criar paciente: ' + error);
-          },
-        );
+        try {
+          const data = await this.ApiService.create('pacientes', dadosParaEnviar);
+          alert('Paciente criado com sucesso!');
+          this.isEditing = true;
+          this.stateManagementService.setPacientes(data as Paciente[]);
+        } catch (error) {
+          alert('Erro ao criar paciente: ' + error);
+        }
       }
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
   }
 
-  deletePatient() {
+  async deletePatient() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isDeleting = true;
-      forkJoin([
-        this.ApiService.getConsultasByPacienteId(id),
-        this.ApiService.getExamesByPacienteId(id),
-      ]).subscribe(([consultas, exames]) => {
+      try {
+        const [consultas, exames] = await Promise.all([
+          this.ApiService.getConsultasByPacienteId(id),
+          this.ApiService.getExamesByPacienteId(id),
+        ]);
         if (consultas.length > 0 || exames.length > 0) {
           alert(
             'O paciente tem consultas e/ou exames cadastrados. Não é possível excluir.',
           );
           this.isDeleting = false;
         } else {
-          this.ApiService.delete('pacientes', id).subscribe(
-            () => {
-              alert('Paciente deletado com sucesso!');
-              this.isDeleting = false;
-              this.router.navigate(['/home']);
-            },
-            (error) => {
-              alert('Erro ao deletar paciente: ' + JSON.stringify(error));
-              this.isDeleting = false;
-            },
-          );
+          await this.ApiService.delete('pacientes', id);
+          alert('Paciente deletado com sucesso!');
+          this.isDeleting = false;
+          this.router.navigate(['/home']);
         }
-      });
+      } catch (error) {
+        alert('Erro ao deletar paciente: ' + JSON.stringify(error));
+        this.isDeleting = false;
+      }
     }
   }
+
   removeFormats(data: any) {
     const fieldsToFormat = [
       'cpf',

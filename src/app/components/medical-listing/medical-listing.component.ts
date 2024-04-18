@@ -31,19 +31,22 @@ export class MedicalRecordListingComponent implements OnInit {
     private ageService: AgeService,
   ) {}
 
-  ngOnInit() {
-    this.fetchData();
+  async ngOnInit() {
+    await this.fetchData();
   }
 
-  fetchData() {
-    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+  async fetchData() {
+    try {
+      const pacientes: Paciente[] = await this.apiService.getAll('pacientes');
       this.pacientes = pacientes.map((paciente) => ({
         ...paciente,
         idade: this.ageService.calculateAge(paciente.dataNascimento),
       }));
       this.filteredPacientes = [...this.pacientes];
       this.totalPacientes = this.pacientes.length;
-    });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   onSearchTermChange() {

@@ -38,9 +38,12 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+  async ngOnInit() {
+    try {
+      const pacientes: Paciente[] = await this.apiService.getAll('pacientes');
       this.stateManagementService.setPacientes(pacientes);
-    });
+    } catch (error) {
+      console.error('Erro ao buscar pacientes', error);
+    }
   }
 }

@@ -38,10 +38,10 @@ export class SignUpComponent {
       ]),
     });
   }
-  SignUp() {
+  async SignUp() {
     if (this.SignUpForm.valid) {
       if (this.passwordsMatch()) {
-        this.storeUserData();
+        await this.storeUserData();
       } else {
         alert('As senhas não correspondem!');
       }
@@ -54,15 +54,16 @@ export class SignUpComponent {
       this.SignUpForm.value.password === this.SignUpForm.value.confirmPassword
     );
   }
-  storeUserData() {
+  async storeUserData() {
     let formData = { ...this.SignUpForm.value };
-    this.apiService.create('userData', formData).subscribe(() => { 
+    try {
+      await this.apiService.create('userData', formData);
       alert('Usuário cadastrado com sucesso!');
       this.router.navigate(['/login']);
-    }, error => {
+    } catch (error) {
       console.error(error);
       alert('Ocorreu um erro ao cadastrar o usuário!');
-    });
+    }
   }
   onLogin() {
     this.router.navigate(['/login']);

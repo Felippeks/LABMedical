@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,33 +14,35 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(endpoint: string): Observable<any> {
-    return this.http.get(`${this.baseUrls[endpoint]}`);
+  async getAll(endpoint: string): Promise<any> {
+    return this.http.get(`${this.baseUrls[endpoint]}`).toPromise();
   }
 
-  get(endpoint: string, id: string): Observable<any> {
-    return this.http.get(`${this.baseUrls[endpoint]}/${id}`);
+  async get(endpoint: string, id: string): Promise<any> {
+    return this.http.get(`${this.baseUrls[endpoint]}/${id}`).toPromise();
   }
 
-  getConsultasByPacienteId(pacienteId: string): Observable<any> {
+  async getConsultasByPacienteId(pacienteId: string): Promise<any> {
     return this.http.get(
       `${this.baseUrls['consultas']}?pacienteId=${pacienteId}`,
-    );
-  }
-  getExamesByPacienteId(pacienteId: string): Observable<any> {
-    return this.http.get(`${this.baseUrls['exames']}?pacienteId=${pacienteId}`);
-  }
-  create(endpoint: string, data: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrls[endpoint]}`, data);
+    ).toPromise();
   }
 
-  update(endpoint: string, id: string, value: any): Observable<Object> {
-    return this.http.put(`${this.baseUrls[endpoint]}/${id}`, value);
+  async getExamesByPacienteId(pacienteId: string): Promise<any> {
+    return this.http.get(`${this.baseUrls['exames']}?pacienteId=${pacienteId}`).toPromise();
   }
 
-  delete(endpoint: string, id: string): Observable<any> {
+  async create(endpoint: string, data: Object): Promise<Object | undefined> {
+    return this.http.post(`${this.baseUrls[endpoint]}`, data).toPromise();
+  }
+  
+  async update(endpoint: string, id: string, value: any): Promise<Object | undefined> {
+    return this.http.put(`${this.baseUrls[endpoint]}/${id}`, value).toPromise();
+  }
+
+  async delete(endpoint: string, id: string): Promise<any> {
     return this.http.delete(`${this.baseUrls[endpoint]}/${id}`, {
       responseType: 'text',
-    });
+    }).toPromise();
   }
 }
