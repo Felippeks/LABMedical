@@ -41,7 +41,7 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 
 1. Clone o repositório para a sua máquina local usando `git clone`.
 2. Navegue até a pasta do projeto e execute `npm install` para instalar as dependências.
-3. Execute `npm run` para iniciar o servidor de desenvolvimento.
+3. Execute `npm run start` para iniciar o servidor de desenvolvimento.
 4. Servidor Json server rodando na web: `http://evolucaoagil.com.br:3000/`
 5. Abra o navegador e acesse `http://localhost:4200`.
 
