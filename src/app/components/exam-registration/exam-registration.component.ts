@@ -14,6 +14,7 @@ import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exame } from '../home/medical.interfaces';
+import { CpfPipe } from '../../pipes/cpf.pipe';
 @Component({
   selector: 'app-exam-registration',
   standalone: true,
@@ -25,6 +26,7 @@ import { Exame } from '../home/medical.interfaces';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    CpfPipe,
   ],
 })
 export class ExamRegistrationComponent {
@@ -41,10 +43,10 @@ export class ExamRegistrationComponent {
     private dateService: DateService,
     private ngZone: NgZone,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
     this.formExamRegistation = new FormGroup({
-      pacienteId: new FormControl(''),
+      pacienteId: new FormControl('', [Validators.required]),
       nomeExame: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -63,9 +65,11 @@ export class ExamRegistrationComponent {
         Validators.minLength(4),
         Validators.maxLength(32),
       ]),
-      laboratorio: new FormControl('', [Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(32)]),
+      laboratorio: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(32),
+      ]),
       urlDocumento: new FormControl(''),
       resultadoExame: new FormControl('', [
         Validators.minLength(16),
@@ -74,22 +78,27 @@ export class ExamRegistrationComponent {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    if (id){
+    if (id) {
       this.apiService.get('exames', id).subscribe((exame: Exame) => {
         this.exameId = exame.id;
         this.formExamRegistation.patchValue(exame);
-        this.formExamRegistation.controls['dataExame'].setValue(this.dateService.formatDate(new Date(exame.dataExame)));
-        this.formExamRegistation.controls['horarioExame'].setValue(exame.horarioExame);
+        this.formExamRegistation.controls['dataExame'].setValue(
+          this.dateService.formatDate(new Date(exame.dataExame)),
+        );
+        this.formExamRegistation.controls['horarioExame'].setValue(
+          exame.horarioExame,
+        );
         this.pacienteId = exame['pacienteId'];
-        this.apiService.get('pacientes', exame['pacienteId']).subscribe((paciente: any) => {
-          this.selectedPaciente = paciente;
-        });
+        this.apiService
+          .get('pacientes', exame['pacienteId'])
+          .subscribe((paciente: any) => {
+            this.selectedPaciente = paciente;
+          });
       });
     }
   }
-
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
@@ -100,11 +109,14 @@ export class ExamRegistrationComponent {
   }
 
   generateUrlDocumento() {
-    const urlDocumento = 'http://exemplo.com/exames/' + Math.random().toString(36).substring(2, 15) + '.pdf';
+    const urlDocumento =
+      'http://exemplo.com/exames/' +
+      Math.random().toString(36).substring(2, 15) +
+      '.pdf';
     this.formExamRegistation.controls['urlDocumento'].setValue(urlDocumento);
   }
 
-  nSelectPaciente(paciente: any) {
+  onSelectPaciente(paciente: any) {
     this.selectedPaciente = paciente;
     this.pacienteId = paciente?.id;
     this.formExamRegistation.controls['pacienteId'].setValue(paciente?.id);
@@ -132,7 +144,8 @@ export class ExamRegistrationComponent {
         if (this.selectedPaciente) {
           this.pacienteId = this.selectedPaciente.id;
           this.formExamRegistation.controls['pacienteId'].setValue(
-            this.pacienteId);                
+            this.pacienteId,
+          );
         } else {
           alert('Paciente não encontrado');
         }
@@ -141,17 +154,28 @@ export class ExamRegistrationComponent {
   }
 
   onSubmit() {
-    if (this.formExamRegistation.valid && this.selectedPaciente) {
+    if (!this.selectedPaciente) {
+      alert('Por favor, selecione um paciente para cadastrar o exame.');
+      return;
+    }
+    if (this.formExamRegistation.valid) {
       this.generateUrlDocumento();
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
-      this.apiService.create('exames', this.formExamRegistation.value).subscribe(
+      this.apiService
+        .create('exames', this.formExamRegistation.value)
+        .subscribe(
           () => {
             alert('Exame cadastrado com sucesso!');
-            const pacienteId = this.formExamRegistation.get('pacienteId')?.value;
+            const pacienteId =
+              this.formExamRegistation.get('pacienteId')?.value;
             this.formExamRegistation.reset();
             this.formExamRegistation.patchValue({ pacienteId: tempPacienteId });
-            this.formExamRegistation.controls['dataExame'].setValue(this.dateService.formatDate(new Date()));
-            this.formExamRegistation.controls['horarioExame'].setValue(this.dateService.formatTime(new Date()));
+            this.formExamRegistation.controls['dataExame'].setValue(
+              this.dateService.formatDate(new Date()),
+            );
+            this.formExamRegistation.controls['horarioExame'].setValue(
+              this.dateService.formatTime(new Date()),
+            );
           },
           (error) => {
             console.error('Erro ao cadastrar exame:', error);

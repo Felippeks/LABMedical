@@ -83,32 +83,41 @@
         
       </section>
       <section
-        class="patient flex md:w-full w-44 md:mx-0 mx-auto flex-row justify-around md:gap-4 border-2 md:p-4 p-2 rounded-2xl bg-shadow shadow-md shadow-slate-500"
+  class="patient flex md:w-full w-44 md:mx-0 mx-auto flex-row justify-around md:gap-4 border-2 md:p-4 p-2 rounded-2xl bg-shadow shadow-md shadow-slate-500"
+>
+  <div
+    class="bg-background md:w-80 w-40 p-2 flex flex-col justify-start items-center rounded-2xl text-white"
+    *ngFor="
+      let paciente of filteredPacientes.slice(
+        pageIndex * pageSize,
+        (pageIndex + 1) * pageSize
+      )
+    "
+  >
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="md:w-12 md:h-12 w-8 h-8"
       >
-        <div
-          class="bg-background md:w-80 w-40 p-2 flex flex-col justify-start items-center rounded-2xl text-white"
-          *ngFor="
-            let paciente of filteredPacientes.slice(
-              pageIndex * pageSize,
-              (pageIndex + 1) * pageSize
-            )
-          "
-        >
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="md:w-12 md:h-12 w-8 h-8"
-            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
               />
             </svg>
+          </div>
+          <div *ngIf="filteredPacientes.length === 0"  class="self-start my-4 bg-blue-950 md:w-full p-2 items-center rounded-2xl md:text-xs text-[8px]">
+            <div>
+              <h2 class="text-textColor">Nenhum paciente</h2>
+              <p class="text-textColor">Idade: N/A</p>
+              <p class="text-textColor">Telefone: N/A</p>
+              <p class="text-textColor">Email: N/A</p>
+              <p class="text-textColor">Convênio: N/A</p>
+            </div>
           </div>
           <div
             class="self-start my-4 bg-blue-950 md:w-full p-2 items-center rounded-2xl md:text-xs text-[8px]"
@@ -130,10 +139,11 @@
               <span class="text-white">{{ paciente.convenio }}</span>
             </p>
           </div>
-
+      
           <button
             class="bg-blue-950 py-2 px-4 m-2 rounded-3xl border-2 border-textColor shadow-md shadow-slate-500 hover:bg-gray-200 hover:text-blueColor hover:border-textColor uppercase md:text-base text-xs"
             (click)="More(paciente.id)"
+            [disabled]="!paciente.id"
           >
             Ver mais
           </button>

@@ -1,26 +1,14 @@
-<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#lab-medical)
+# Lab Medical
 
-# ➤ Lab Medical
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#descrio)
-
-## ➤ Descrição
+## Descrição
 
 Lab Medical é um projeto desenvolvido em Angular que tem como objetivo fornecer uma solução abrangente para a gestão hospitalar, com foco no gerenciamento de pacientes, consultas e exames.
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#problema)
-
-## ➤ Problema
+## Problema
 
 A Medicine365 Inc identificou a necessidade de um software robusto para gerenciar o inventário médico e melhorar a eficiência operacional. O Lab Medical foi concebido para atender a essa demanda, oferecendo uma solução eficaz e fácil de usar para a gestão de pacientes e registros médicos.
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#tecnologias-utilizadas)
-
-## ➤ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - Angular: Framework utilizado para o desenvolvimento do frontend da aplicação.
 - RxJS: Biblioteca para programação reativa usada para lidar com eventos assíncronos.
@@ -30,20 +18,14 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 - TailwindCss: Framework CSS utilizado para estilização do layout da aplicação.
 
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#como-executar)
-
-## ➤ Como Executar
+## Como Executar
 
 1. Clone o repositório para a sua máquina local usando `git clone`.
 2. Navegue até a pasta do projeto e execute `npm install` para instalar as dependências.
 3. Execute `npm run start-dev` para iniciar o servidor de desenvolvimento e o json-server simultaneamente.
 4. Abra o navegador e acesse `http://localhost:4200`.
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#funcionalidades-implementadas)
-
-## ➤ Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
 - Autenticação de Usuário: Implementação de um sistema de autenticação seguro, permitindo que os usuários façam login e acessem as funcionalidades do sistema.
 - Gerenciamento de Estado Global: Utilização de técnicas para gerenciamento eficiente do estado da aplicação, garantindo consistência e performance.
@@ -52,10 +34,7 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 - Versionamento de Código com GitFlow: Adoção do padrão GitFlow para organização e controle de versões do código fonte.
 
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#melhorias-futuras)
-
-## ➤ Melhorias Futuras
+## Melhorias Futuras
 
 - Melhorar a responsividade do design para garantir uma boa experiência do usuário em dispositivos de diferentes tamanhos.
 - Implementação de testes de unidade e de integração para garantir a qualidade do código.
@@ -63,9 +42,6 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 - Recuperação de Senha: Implementação da funcionalidade de recuperação de senha para oferecer uma experiência completa de autenticação.
 
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#licena)
-
-## ➤ Licença
+## Licença
 
 Este projeto está licenciado sob a licença MIT.

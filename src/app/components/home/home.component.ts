@@ -8,6 +8,7 @@ import { Paciente, Consulta, Exame } from './medical.interfaces';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
 import { filter } from 'rxjs';
+import { FormatService } from '../../services/format/format.service';
 
 @Component({
   selector: 'app-home',
@@ -19,20 +20,26 @@ import { filter } from 'rxjs';
 export class HomeComponent implements OnInit {
   pageSize: number = 4;
   pageIndex: number = 0;
-  totalPacientes: number = 0
+  totalPacientes: number = 0;
   pacientes: Paciente[] = [];
   consultas: Consulta[] = [];
   exames: Exame[] = [];
 
   searchTerm: string = '';
   searchField: string = 'nome';
-  filteredPacientes: Paciente[] = [];
+  filteredPacientes = Array(1).fill({
+    nome: 'Não há pacientes cadastrados',
+    idade: 'Não há pacientes cadastrados',
+    telefone: 'Não há pacientes cadastrados',
+    email: 'Não há pacientes cadastrados',
+    convenio: 'Não há pacientes cadastrados',
+  });
 
   constructor(
     private ageService: AgeService,
     private router: Router,
     private apiService: ApiService,
-
+    private formatService: FormatService,
   ) {
     window.addEventListener('resize', this.updatePageSize);
   }
@@ -53,9 +60,11 @@ export class HomeComponent implements OnInit {
 
   fetchData() {
     this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+      this.pacientes = [];
       this.pacientes = pacientes.map((paciente) => ({
         ...paciente,
         idade: this.ageService.calculateAge(paciente.dataNascimento),
+        telefone: this.formatService.formatPhone(paciente.telefone),
       }));
       this.filteredPacientes = [...this.pacientes];
       this.totalPacientes = this.pacientes.length;

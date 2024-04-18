@@ -76,7 +76,7 @@
         <h2 class="text-background text-2xl mb-2">Histórico de Exames</h2>
         <table class="table-auto mx-auto w-full text-sm text-justify">
             <thead >
-                <tr class="text-blueColor italic">
+                <tr class="text-blueColor italic ">
                   <th class="border-2 pl-2 tracking-tighter text-start border-white">Nome Exame:</th>
                   <th class="border-2 pl-2 tracking-tighter text-start border-white">Data Exame:</th>
                   <th class="border-2 pl-2 tracking-tighter text-start border-white">Horario Exame:</th>
@@ -88,7 +88,7 @@
               </thead>
           <tbody>
             <tr *ngFor="let exame of exames">
-              <td class="border-2 pl-2 tracking-tighter text-start border-white">
+              <td class="border-2 pl-2 tracking-tighter text-start border-white ">
                 <span>{{ exame.nomeExame }}</span>
               </td>
               <td class="border-2 pl-2 tracking-tighter text-start border-white">
@@ -105,7 +105,7 @@
                 <span>{{ exame.urlDocumento }}</span>
               </td>
               <td class="border-2 pl-2 tracking-tighter text-start border-white">{{ exame.resultadoExames }}</td>
-              <td class="pl-2 "><button (click)="editExam(exame.id)">Editar</button></td>
+              <td class="pl-2  "><button (click)="editExam(exame.id)">Editar</button></td>
             </tr>
           </tbody>
         </table>

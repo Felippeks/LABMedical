@@ -14,6 +14,8 @@ import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Consulta } from '../home/medical.interfaces';
+import { FormatService } from '../../services/format/format.service';
+import { CpfPipe } from '../../pipes/cpf.pipe';
 @Component({
   selector: 'app-appointment-registration',
   standalone: true,
@@ -25,6 +27,7 @@ import { Consulta } from '../home/medical.interfaces';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    CpfPipe
   ],
 })
 export class AppointmentRegistrationComponent {
@@ -41,10 +44,11 @@ export class AppointmentRegistrationComponent {
     private dateService: DateService,
     private ngZone: NgZone,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+  
   ) {
     this.formAppointment = new FormGroup({
-      pacienteId: new FormControl(''),
+      pacienteId: new FormControl('',[Validators.required]),
       motivoConsulta: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -78,12 +82,18 @@ export class AppointmentRegistrationComponent {
       this.apiService.get('consultas', id).subscribe((consulta: Consulta) => {
         this.consultaId = consulta.id;
         this.formAppointment.patchValue(consulta);
-        this.formAppointment.controls['dataConsulta'].setValue(consulta.dataConsulta);
-        this.formAppointment.controls['horarioConsulta'].setValue(consulta.horarioConsulta);
+        this.formAppointment.controls['dataConsulta'].setValue(
+          consulta.dataConsulta,
+        );
+        this.formAppointment.controls['horarioConsulta'].setValue(
+          consulta.horarioConsulta,
+        );
         this.pacienteId = consulta['pacienteId'];
-        this.apiService.get('pacientes', consulta['pacienteId']).subscribe((paciente: any) => {
-          this.selectedPaciente = paciente;
-        });
+        this.apiService
+          .get('pacientes', consulta['pacienteId'])
+          .subscribe((paciente: any) => {
+            this.selectedPaciente = paciente;
+          });
       });
     }
   }
@@ -93,7 +103,7 @@ export class AppointmentRegistrationComponent {
     this.pacienteId = paciente?.id;
     this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
   }
-  
+
   onSearchTermChange() {
     if (this.searchTerm) {
       this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
@@ -112,7 +122,7 @@ export class AppointmentRegistrationComponent {
               .toLowerCase()
               .includes(this.searchTerm.trim().toLowerCase()),
         );
-  
+
         if (this.selectedPaciente) {
           this.pacienteId = this.selectedPaciente.id;
           this.formAppointment.controls['pacienteId'].setValue(this.pacienteId);
@@ -122,9 +132,14 @@ export class AppointmentRegistrationComponent {
       });
     }
   }
-  
+
   onSubmit() {
-    if (this.formAppointment.valid && this.selectedPaciente) {
+    if (!this.selectedPaciente) {
+      alert('Por favor, selecione um paciente antes de cadastrar uma consulta.');
+      return;
+    }
+  
+    if (this.formAppointment.valid) {
       const tempPacienteId = this.formAppointment.get('pacienteId')?.value;
       this.apiService.create('consultas', this.formAppointment.value).subscribe(
         () => {
@@ -132,8 +147,12 @@ export class AppointmentRegistrationComponent {
           const pacienteId = this.formAppointment.get('pacienteId')?.value;
           this.formAppointment.reset();
           this.formAppointment.patchValue({ pacienteId: tempPacienteId });
-          this.formAppointment.controls['dataConsulta'].setValue(this.dateService.formatDate(new Date()));
-          this.formAppointment.controls['horarioConsulta'].setValue(this.dateService.formatTime(new Date()));
+          this.formAppointment.controls['dataConsulta'].setValue(
+            this.dateService.formatDate(new Date()),
+          );
+          this.formAppointment.controls['horarioConsulta'].setValue(
+            this.dateService.formatTime(new Date()),
+          );
         },
         (error) => {
           console.error('Erro ao cadastrar consulta:', error);
@@ -143,7 +162,7 @@ export class AppointmentRegistrationComponent {
       alert('Por favor, preencha todos os campos obrigatórios do formulário.');
     }
   }
-  
+
   onDelete() {
     if (this.formAppointment.valid && this.consultaId) {
       this.apiService.delete('consultas', this.consultaId).subscribe(
@@ -159,7 +178,7 @@ export class AppointmentRegistrationComponent {
       alert('Por favor, selecione uma consulta para deletar.');
     }
   }
-  
+
   onUpdate() {
     if (this.formAppointment.valid && this.selectedPaciente) {
       if (this.consultaId !== null) {
