@@ -48,7 +48,7 @@ export class AppointmentRegistrationComponent {
   
   ) {
     this.formAppointment = new FormGroup({
-      pacienteId: new FormControl(''),
+      pacienteId: new FormControl('',[Validators.required]),
       motivoConsulta: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -134,7 +134,12 @@ export class AppointmentRegistrationComponent {
   }
 
   onSubmit() {
-    if (this.formAppointment.valid && this.selectedPaciente) {
+    if (!this.selectedPaciente) {
+      alert('Por favor, selecione um paciente antes de cadastrar uma consulta.');
+      return;
+    }
+  
+    if (this.formAppointment.valid) {
       const tempPacienteId = this.formAppointment.get('pacienteId')?.value;
       this.apiService.create('consultas', this.formAppointment.value).subscribe(
         () => {

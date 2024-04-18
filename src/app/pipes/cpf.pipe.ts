@@ -9,7 +9,10 @@ export class CpfPipe implements PipeTransform {
 
   constructor(private formatService: FormatService) {}
 
-  transform(value: any): any {
+  transform(value: string | null): string {
+    if (value === null) {
+      return '';
+    }
     return this.formatService.formatCPF(value);
   }
 

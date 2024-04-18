@@ -6,9 +6,14 @@ import { Injectable } from '@angular/core';
 export class FormatService {
   constructor() {}
 
-  formatCPF(cpf: string): string {
-    const numeros = cpf.replace(/\D/g, '');
-    return numeros.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  formatCPF(cpf: string | null): string {
+    if (cpf === null) {
+      return '';
+    }
+    return cpf.replace(/\D/g, '')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{2})$/, '$1-$2');
   }
 
   formatPhone(telefone: string): string {

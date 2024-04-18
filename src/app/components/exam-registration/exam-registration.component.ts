@@ -46,7 +46,7 @@ export class ExamRegistrationComponent {
     private router: Router,
   ) {
     this.formExamRegistation = new FormGroup({
-      pacienteId: new FormControl(''),
+      pacienteId: new FormControl('',[Validators.required]),
       nomeExame: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -154,7 +154,11 @@ export class ExamRegistrationComponent {
   }
 
   onSubmit() {
-    if (this.formExamRegistation.valid && this.selectedPaciente) {
+    if(!this.selectedPaciente){
+      alert('Por favor, selecione um paciente para cadastrar o exame.');
+      return;
+    }
+    if (this.formExamRegistation.valid) {
       this.generateUrlDocumento();
       const tempPacienteId = this.formExamRegistation.get('pacienteId')?.value;
       this.apiService
