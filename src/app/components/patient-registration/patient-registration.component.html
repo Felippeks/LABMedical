@@ -2,6 +2,8 @@
   <app-sidebar class="max-w-64"></app-sidebar>
   <div class="flex flex-col flex-grow">
     <toolbar class="w-full"></toolbar>
+    <app-modal *ngIf="message"></app-modal>
+
     <aside
       class="flex flex-col items-stretch md:p-4 p-1 overflow-auto my-1 rounded-2xl bg-white md:mx-8 h-screen shadow-md shadow-slate-500 font-roboto"
     >

@@ -9,15 +9,18 @@ import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
 import { filter } from 'rxjs';
 import { FormatService } from '../../services/format/format.service';
+import { ModalComponent } from '../shareds_components/modal/modal.component';
+import { ModalService } from '../../services/modal/modal.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule],
+  imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule, ModalComponent],
 })
 export class HomeComponent implements OnInit {
+  message: string | undefined;
   pageSize: number = 4;
   pageIndex: number = 0;
   totalPacientes: number = 0;
@@ -40,17 +43,18 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private formatService: FormatService,
+    private modalService: ModalService,
   ) {
     window.addEventListener('resize', this.updatePageSize);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.updatePageSize();
-    this.fetchData();
+    await this.fetchData();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.fetchData();
+      .subscribe(async () => {
+        await this.fetchData();
       });
   }
 
@@ -58,9 +62,9 @@ export class HomeComponent implements OnInit {
     window.removeEventListener('resize', this.updatePageSize);
   }
 
-  fetchData() {
-    this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
-      this.pacientes = [];
+  async fetchData() {
+    try {
+      const pacientes: Paciente[] = await this.apiService.getAll('pacientes');
       this.pacientes = pacientes.map((paciente) => ({
         ...paciente,
         idade: this.ageService.calculateAge(paciente.dataNascimento),
@@ -68,13 +72,12 @@ export class HomeComponent implements OnInit {
       }));
       this.filteredPacientes = [...this.pacientes];
       this.totalPacientes = this.pacientes.length;
-    });
-    this.apiService.getAll('consultas').subscribe((consultas: Consulta[]) => {
-      this.consultas = consultas;
-    });
-    this.apiService.getAll('exames').subscribe((exames: Exame[]) => {
-      this.exames = exames;
-    });
+
+      this.consultas = await this.apiService.getAll('consultas');
+      this.exames = await this.apiService.getAll('exames');
+    } catch (error) {
+      console.error('Erro ao buscar dados', error);
+    }
   }
 
   updatePageSize = () => {

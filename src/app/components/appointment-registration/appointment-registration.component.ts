@@ -14,8 +14,9 @@ import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Consulta } from '../home/medical.interfaces';
-import { FormatService } from '../../services/format/format.service';
 import { CpfPipe } from '../../pipes/cpf.pipe';
+import { ModalService } from '../../services/modal/modal.service';
+import { ModalComponent } from '../shareds_components/modal/modal.component';
 @Component({
   selector: 'app-appointment-registration',
   standalone: true,
@@ -27,10 +28,12 @@ import { CpfPipe } from '../../pipes/cpf.pipe';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    CpfPipe
+    CpfPipe,
+    ModalComponent
   ],
 })
 export class AppointmentRegistrationComponent {
+  message: string | undefined;
   pacienteId: string | null = null;
   searchTerm: string | any;
   pacientes: any[] = [];
@@ -45,6 +48,7 @@ export class AppointmentRegistrationComponent {
     private ngZone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
+    private modalService: ModalService,
   
   ) {
     this.formAppointment = new FormGroup({
@@ -76,25 +80,20 @@ export class AppointmentRegistrationComponent {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.apiService.get('consultas', id).subscribe((consulta: Consulta) => {
-        this.consultaId = consulta.id;
-        this.formAppointment.patchValue(consulta);
-        this.formAppointment.controls['dataConsulta'].setValue(
-          consulta.dataConsulta,
-        );
-        this.formAppointment.controls['horarioConsulta'].setValue(
-          consulta.horarioConsulta,
-        );
-        this.pacienteId = consulta['pacienteId'];
-        this.apiService
-          .get('pacientes', consulta['pacienteId'])
-          .subscribe((paciente: any) => {
-            this.selectedPaciente = paciente;
-          });
-      });
+      const consulta: Consulta = await this.apiService.get('consultas', id);
+      this.consultaId = consulta.id;
+      this.formAppointment.patchValue(consulta);
+      this.formAppointment.controls['dataConsulta'].setValue(
+        consulta.dataConsulta,
+      );
+      this.formAppointment.controls['horarioConsulta'].setValue(
+        consulta.horarioConsulta,
+      );
+      this.pacienteId = consulta['pacienteId'];
+      this.selectedPaciente = await this.apiService.get('pacientes', consulta['pacienteId']);
     }
   }
 
@@ -104,105 +103,100 @@ export class AppointmentRegistrationComponent {
     this.formAppointment.controls['pacienteId'].setValue(paciente?.id);
   }
 
-  onSearchTermChange() {
+  async onSearchTermChange() {
     if (this.searchTerm) {
-      this.apiService.getAll('pacientes').subscribe((pacientes: any[]) => {
-        this.selectedPaciente = pacientes.find(
-          (paciente) =>
-            paciente.nome
-              .trim()
-              .toLowerCase()
-              .includes(this.searchTerm.trim().toLowerCase()) ||
-            paciente.cpf
-              .trim()
-              .toLowerCase()
-              .includes(this.searchTerm.trim().toLowerCase()) ||
-            paciente.email
-              .trim()
-              .toLowerCase()
-              .includes(this.searchTerm.trim().toLowerCase()),
-        );
+      const pacientes: any[] = await this.apiService.getAll('pacientes');
+      this.selectedPaciente = pacientes.find(
+        (paciente) =>
+          paciente.nome
+            .trim()
+            .toLowerCase()
+            .includes(this.searchTerm.trim().toLowerCase()) ||
+          paciente.cpf
+            .trim()
+            .toLowerCase()
+            .includes(this.searchTerm.trim().toLowerCase()) ||
+          paciente.email
+            .trim()
+            .toLowerCase()
+            .includes(this.searchTerm.trim().toLowerCase()),
+      );
 
-        if (this.selectedPaciente) {
-          this.pacienteId = this.selectedPaciente.id;
-          this.formAppointment.controls['pacienteId'].setValue(this.pacienteId);
-        } else {
-          alert('Paciente não encontrado');
-        }
-      });
+      if (this.selectedPaciente) {
+        this.pacienteId = this.selectedPaciente.id;
+        this.formAppointment.controls['pacienteId'].setValue(this.pacienteId);
+      } else {
+        this.modalService.setMessage('Paciente não encontrado');
+        this.message = 'Paciente não encontrado';
+      }
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.selectedPaciente) {
-      alert('Por favor, selecione um paciente antes de cadastrar uma consulta.');
+      this.modalService.setMessage('Por favor, selecione um paciente antes de cadastrar uma consulta.'); 
+      this.message = 'Por favor, selecione um paciente antes de cadastrar uma consulta.';
       return;
     }
-  
+
     if (this.formAppointment.valid) {
-      const tempPacienteId = this.formAppointment.get('pacienteId')?.value;
-      this.apiService.create('consultas', this.formAppointment.value).subscribe(
-        () => {
-          alert('Consulta cadastrada com sucesso!');
-          const pacienteId = this.formAppointment.get('pacienteId')?.value;
-          this.formAppointment.reset();
-          this.formAppointment.patchValue({ pacienteId: tempPacienteId });
-          this.formAppointment.controls['dataConsulta'].setValue(
-            this.dateService.formatDate(new Date()),
-          );
-          this.formAppointment.controls['horarioConsulta'].setValue(
-            this.dateService.formatTime(new Date()),
-          );
-        },
-        (error) => {
-          console.error('Erro ao cadastrar consulta:', error);
-        },
-      );
+      try {
+        await this.apiService.create('consultas', this.formAppointment.value);
+        this.modalService.setMessage('Consulta cadastrada com sucesso!');
+        this.message = 'Consulta cadastrada com sucesso!';
+        const tempPacienteId = this.formAppointment.get('pacienteId')?.value;
+        this.formAppointment.reset();
+        this.formAppointment.patchValue({ pacienteId: tempPacienteId });
+        this.formAppointment.controls['dataConsulta'].setValue(
+          this.dateService.formatDate(new Date()),
+        );
+        this.formAppointment.controls['horarioConsulta'].setValue(
+          this.dateService.formatTime(new Date()),
+        );
+      } catch (error) {
+        console.error('Erro ao cadastrar consulta:', error);
+      }
     } else {
-      alert('Por favor, preencha todos os campos obrigatórios do formulário.');
+      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios do formulário.');
+      this.message = 'Por favor, preencha todos os campos obrigatórios do formulário.';
     }
   }
-
-  onDelete() {
+  async onDelete() {
     if (this.formAppointment.valid && this.consultaId) {
-      this.apiService.delete('consultas', this.consultaId).subscribe(
-        () => {
-          alert('Consulta deletada com sucesso!');
-          this.formAppointment.reset();
-        },
-        (error) => {
-          console.error('Erro ao deletar consulta:', error);
-        },
-      );
+      try {
+        await this.apiService.delete('consultas', this.consultaId);
+        this.modalService.setMessage('Consulta deletada com sucesso!');
+        this.message = 'Consulta deletada com sucesso!';
+        this.formAppointment.reset();
+      } catch (error) {
+        console.error('Erro ao deletar consulta:', error);
+      }
     } else {
-      alert('Por favor, selecione uma consulta para deletar.');
+      this.modalService.setMessage('Por favor, selecione uma consulta para deletar.');
+      this.message = 'Por favor, selecione uma consulta para deletar.';
     }
   }
-
-  onUpdate() {
+  
+  async onUpdate() {
     if (this.formAppointment.valid && this.selectedPaciente) {
       if (this.consultaId !== null) {
         const updatedConsultation = {
           ...this.formAppointment.value,
           pacienteId: this.selectedPaciente.id,
         };
-        this.apiService
-          .update('consultas', this.consultaId, updatedConsultation)
-          .subscribe(
-            () => {
-              alert('Consulta atualizada com sucesso!');
-            },
-            (error) => {
-              console.error('Erro ao atualizar consulta:', error);
-            },
-          );
+        try {
+          await this.apiService.update('consultas', this.consultaId, updatedConsultation);
+          this.modalService.setMessage('Consulta atualizada com sucesso!');
+          this.message = 'Consulta atualizada com sucesso!';
+        } catch (error) {
+          console.error('Erro ao atualizar consulta:', error);
+        }
       } else {
         console.error('Erro: consultaId é null');
       }
     } else {
-      alert(
-        'Por favor, preencha todos os campos obrigatórios para atualização.',
-      );
+      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios para atualização.');
+      this.message = 'Por favor, preencha todos os campos obrigatórios para atualização.';
     }
   }
 }
