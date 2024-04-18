@@ -6,6 +6,7 @@ import { Consulta, Exame, Paciente } from '../../home/medical.interfaces';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormatService } from '../../../services/format/format.service';
 
 @Component({
   selector: 'app-patient-medical-listing',
@@ -23,13 +24,17 @@ export class PatientMedicalListingComponent implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
+    private formatService: FormatService,
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.apiService.get('pacientes', id).subscribe((paciente: Paciente) => {
-        this.paciente = paciente;
+        this.paciente = {
+          ...paciente,
+          contatoEmergencia: this.formatService.formatPhone(paciente.contatoEmergencia),
+        }
       });
       this.apiService
         .getConsultasByPacienteId(id)

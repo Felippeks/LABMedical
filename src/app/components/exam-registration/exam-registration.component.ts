@@ -14,6 +14,7 @@ import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exame } from '../home/medical.interfaces';
+import { CpfPipe } from '../../pipes/cpf.pipe';
 @Component({
   selector: 'app-exam-registration',
   standalone: true,
@@ -25,6 +26,7 @@ import { Exame } from '../home/medical.interfaces';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    CpfPipe
   ],
 })
 export class ExamRegistrationComponent {

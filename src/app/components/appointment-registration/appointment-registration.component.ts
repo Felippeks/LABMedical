@@ -14,6 +14,8 @@ import { DateService } from '../../services/DataFormat/date.service';
 import { NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Consulta } from '../home/medical.interfaces';
+import { FormatService } from '../../services/format/format.service';
+import { CpfPipe } from '../../pipes/cpf.pipe';
 @Component({
   selector: 'app-appointment-registration',
   standalone: true,
@@ -25,6 +27,7 @@ import { Consulta } from '../home/medical.interfaces';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    CpfPipe
   ],
 })
 export class AppointmentRegistrationComponent {
@@ -42,6 +45,7 @@ export class AppointmentRegistrationComponent {
     private ngZone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
+  
   ) {
     this.formAppointment = new FormGroup({
       pacienteId: new FormControl(''),

@@ -8,6 +8,7 @@ import { Paciente, Consulta, Exame } from './medical.interfaces';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
 import { filter } from 'rxjs';
+import { FormatService } from '../../services/format/format.service';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
     private ageService: AgeService,
     private router: Router,
     private apiService: ApiService,
+    private formatService: FormatService,
   ) {
     window.addEventListener('resize', this.updatePageSize);
   }
@@ -55,6 +57,7 @@ export class HomeComponent implements OnInit {
       this.pacientes = pacientes.map((paciente) => ({
         ...paciente,
         idade: this.ageService.calculateAge(paciente.dataNascimento),
+        telefone: this.formatService.formatPhone(paciente.telefone),
       }));
       this.filteredPacientes = [...this.pacientes];
       this.totalPacientes = this.pacientes.length;
