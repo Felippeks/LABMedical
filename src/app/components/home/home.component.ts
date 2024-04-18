@@ -27,7 +27,13 @@ export class HomeComponent implements OnInit {
 
   searchTerm: string = '';
   searchField: string = 'nome';
-  filteredPacientes: Paciente[] = [];
+  filteredPacientes = Array(1).fill({
+    nome: 'Não há pacientes cadastrados',
+    idade: 'Não há pacientes cadastrados',
+    telefone: 'Não há pacientes cadastrados',
+    email: 'Não há pacientes cadastrados',
+    convenio: 'Não há pacientes cadastrados',
+  });
 
   constructor(
     private ageService: AgeService,
@@ -54,6 +60,7 @@ export class HomeComponent implements OnInit {
 
   fetchData() {
     this.apiService.getAll('pacientes').subscribe((pacientes: Paciente[]) => {
+      this.pacientes = [];
       this.pacientes = pacientes.map((paciente) => ({
         ...paciente,
         idade: this.ageService.calculateAge(paciente.dataNascimento),
