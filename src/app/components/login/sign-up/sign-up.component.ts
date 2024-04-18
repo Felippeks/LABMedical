@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from '../../../services/api/api.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class SignUpComponent {
   SignUpForm: FormGroup | any;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private apiService: ApiService) {
     this.initializeForm();
   }
   initializeForm() {
@@ -41,7 +42,6 @@ export class SignUpComponent {
     if (this.SignUpForm.valid) {
       if (this.passwordsMatch()) {
         this.storeUserData();
-        alert('Usuário cadastrado com sucesso!');
       } else {
         alert('As senhas não correspondem!');
       }
@@ -56,7 +56,13 @@ export class SignUpComponent {
   }
   storeUserData() {
     let formData = { ...this.SignUpForm.value };
-    localStorage.setItem('userData', JSON.stringify(formData));
+    this.apiService.create('userData', formData).subscribe(() => { 
+      alert('Usuário cadastrado com sucesso!');
+      this.router.navigate(['/login']);
+    }, error => {
+      console.error(error);
+      alert('Ocorreu um erro ao cadastrar o usuário!');
+    });
   }
   onLogin() {
     this.router.navigate(['/login']);

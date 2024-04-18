@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar'; // Added import
 import { Router } from '@angular/router';
+import { ApiService } from '../../../services/api/api.service';
 
 @Component({
   selector: 'toolbar',
@@ -29,14 +30,19 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
+    private apiService: ApiService
   ) {}
 
   ngOnInit(): void {
-    const userData = JSON.parse(localStorage.getItem('userData') as string);
-    if (userData) {
-      this.userName = userData.name;
-      this.userEmail = userData.email;
-    }
+    this.apiService.getAll('userData').subscribe(userData => { 
+      const user = userData[0];
+
+      if (user) {
+        this.userName = user.name;
+        this.userEmail = user.email;
+      }
+    });
+
     this.document.addEventListener('click', this.closeMenu.bind(this));
   }
 

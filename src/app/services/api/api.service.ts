@@ -10,6 +10,7 @@ export class ApiService {
     pacientes: 'http://localhost:3000/pacientes',
     consultas: 'http://localhost:3000/consultas',
     exames: 'http://localhost:3000/exames',
+    userData: 'http://localhost:3000/userData',
   };
 
   constructor(private http: HttpClient) {}

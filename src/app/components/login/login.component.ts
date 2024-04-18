@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
+import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-login',
@@ -23,21 +24,23 @@ export class LoginComponent {
 
   loading = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apiService: ApiService) {}
 
   onLogin() {
     if (this.loginForm.valid) {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
 
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      this.apiService.getAll('userData').subscribe(userData => { // Busque os dados do usuário da API
+        const user = userData.find((user: any) => user.email === email && user.password === password);
 
-      if (email && userData.email === email && userData.password === password) {
-        this.router.navigate(['/home']);
-        localStorage.setItem('isLoggedIn', 'true');
-      } else {
-        alert('Usuário ou senha inválidos');
-      }
+        if (user) {
+          this.router.navigate(['/home']);
+          localStorage.setItem('isLoggedIn', 'true');
+        } else {
+          alert('Usuário ou senha inválidos');
+        }
+      });
     } else {
       alert('Por favor, preencha todos os campos corretamente!');
     }
