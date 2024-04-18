@@ -6,6 +6,7 @@ import { Consulta, Exame, Paciente } from '../../home/medical.interfaces';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormatService } from '../../../services/format/format.service';
 
 @Component({
   selector: 'app-patient-medical-listing',
@@ -22,23 +23,35 @@ export class PatientMedicalListingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private formatService: FormatService,
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.apiService.get('pacientes', id).subscribe((paciente: Paciente) => {
-        this.paciente = paciente;
+        this.paciente = {
+          ...paciente,
+          contatoEmergencia: this.formatService.formatPhone(paciente.contatoEmergencia),
+        }
       });
-      this.apiService.getConsultasByPacienteId(id).subscribe((consultas: Consulta[]) => {
-        this.consultas = consultas.sort((a: Consulta, b: Consulta) => new Date(a.dataConsulta).getTime() - new Date(b.dataConsulta).getTime());
-      });
+      this.apiService
+        .getConsultasByPacienteId(id)
+        .subscribe((consultas: Consulta[]) => {
+          this.consultas = consultas.sort(
+            (a: Consulta, b: Consulta) =>
+              new Date(a.dataConsulta).getTime() -
+              new Date(b.dataConsulta).getTime(),
+          );
+        });
       this.apiService.getExamesByPacienteId(id).subscribe((exames: Exame[]) => {
-        this.exames = exames.sort((a: Exame, b: Exame) => new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime());
+        this.exames = exames.sort(
+          (a: Exame, b: Exame) =>
+            new Date(a.dataExame).getTime() - new Date(b.dataExame).getTime(),
+        );
       });
     }
-    
   }
 
   editAppoiment(id: string) {
@@ -48,8 +61,4 @@ export class PatientMedicalListingComponent implements OnInit {
   editExam(id: string) {
     this.router.navigate(['/exam', id]);
   }
-  
- 
-
- 
 }

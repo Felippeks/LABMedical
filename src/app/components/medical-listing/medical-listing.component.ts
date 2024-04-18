@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   imports: [SidebarComponent, ToolbarComponent, CommonModule, FormsModule],
 })
 export class MedicalRecordListingComponent implements OnInit {
-  totalPacientes: number = 0
+  totalPacientes: number = 0;
   pacientes: Paciente[] = [];
   consultas: Consulta[] = [];
   exames: Exame[] = [];
@@ -61,7 +61,4 @@ export class MedicalRecordListingComponent implements OnInit {
   More(id: string): void {
     this.router.navigate(['/patientListing', id]);
   }
-
-  
 }
-

@@ -13,7 +13,7 @@ export class DateService {
     const year = utcDate.getUTCFullYear();
     const formattedDay = day < 10 ? `0${day}` : day;
     const formattedMonth = month < 10 ? `0${month}` : month;
-  
+
     return `${year}-${formattedMonth}-${formattedDay}`;
   }
 
@@ -24,7 +24,7 @@ export class DateService {
     let minutesString = minutes < 10 ? '0' + minutes : minutes.toString();
     return hoursString + ':' + minutesString;
   }
-  
+
   parseDate(dateString: string): Date {
     const [year, month, day] = dateString.split('-').map(Number);
     const date = new Date(Date.UTC(year, month - 1, day));

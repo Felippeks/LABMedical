@@ -1,4 +1,20 @@
 {
+  "userData": [
+    {
+      "id": "1",
+      "email": "felippeks@gmail.com",
+      "name": "Felippe Sant Ana",
+      "password": "12345678",
+      "confirmPassword": "12345678"
+    },
+    {
+      "id": "4d86",
+      "name": "Diana Barbosa",
+      "email": "dianapbcontato@gmail.com",
+      "password": "1q2w3e@!",
+      "confirmPassword": "1q2w3e@!"
+    }
+  ],
   "pacientes": [
     {
       "nome": "João da Silva",
@@ -12,8 +28,13 @@
       "email": "joao.silva@example.com",
       "naturalidade": "São Paulo",
       "contatoEmergencia": "11999999999",
-      "listaAlergias": ["Penicilina", "Frutos do mar"],
-      "listaCuidadosEspecificos": ["Diabetes tipo 2"],
+      "listaAlergias": [
+        "Penicilina",
+        "Frutos do mar"
+      ],
+      "listaCuidadosEspecificos": [
+        "Diabetes tipo 2"
+      ],
       "convenio": "Unimed",
       "numeroConvenio": "1234567890",
       "validadeConvenio": "2025-12-31",
@@ -39,8 +60,12 @@
       "email": "maria.oliveira@example.com",
       "naturalidade": "Rio de Janeiro",
       "contatoEmergencia": "11999999999",
-      "listaAlergias": ["Aspirina"],
-      "listaCuidadosEspecificos": ["Gestante"],
+      "listaAlergias": [
+        "Aspirina"
+      ],
+      "listaCuidadosEspecificos": [
+        "Gestante"
+      ],
       "convenio": "Bradesco Saúde",
       "numeroConvenio": "0987654321",
       "validadeConvenio": "2024-10-31",
@@ -66,8 +91,12 @@
       "email": "carlos.santos@example.com",
       "naturalidade": "Belo Horizonte",
       "contatoEmergencia": "11999998888",
-      "listaAlergias": ["Nenhuma"],
-      "listaCuidadosEspecificos": ["Nenhum"],
+      "listaAlergias": [
+        "Nenhuma"
+      ],
+      "listaCuidadosEspecificos": [
+        "Nenhum"
+      ],
       "convenio": "SulAmérica",
       "numeroConvenio": "9876543210",
       "validadeConvenio": "2025-08-31",
@@ -93,8 +122,12 @@
       "email": "ana.souza@example.com",
       "naturalidade": "Curitiba",
       "contatoEmergencia": "11998877666",
-      "listaAlergias": ["Nenhuma"],
-      "listaCuidadosEspecificos": ["Nenhum"],
+      "listaAlergias": [
+        "Nenhuma"
+      ],
+      "listaCuidadosEspecificos": [
+        "Nenhum"
+      ],
       "convenio": "Amil",
       "numeroConvenio": "7654321098",
       "validadeConvenio": "2025-11-30",
@@ -120,8 +153,12 @@
       "email": "pedro.oliveira@example.com",
       "naturalidade": "Salvador",
       "contatoEmergencia": "11998877665",
-      "listaAlergias": ["Nenhuma"],
-      "listaCuidadosEspecificos": ["Nenhum"],
+      "listaAlergias": [
+        "Nenhuma"
+      ],
+      "listaCuidadosEspecificos": [
+        "Nenhum"
+      ],
       "convenio": "Golden Cross",
       "numeroConvenio": "6543210987",
       "validadeConvenio": "2025-10-31",
@@ -147,8 +184,12 @@
       "email": "mariana.lima@example.com",
       "naturalidade": "Fortaleza",
       "contatoEmergencia": "11998877664",
-      "listaAlergias": ["Nenhuma"],
-      "listaCuidadosEspecificos": ["Nenhum"],
+      "listaAlergias": [
+        "Nenhuma"
+      ],
+      "listaCuidadosEspecificos": [
+        "Nenhum"
+      ],
       "convenio": "São Francisco",
       "numeroConvenio": "5432109876",
       "validadeConvenio": "2025-09-30",
@@ -174,8 +215,12 @@
       "email": "laura.ferreira@example.com",
       "naturalidade": "Porto Alegre",
       "contatoEmergencia": "Mãe - 11998877663",
-      "listaAlergias": ["Nenhuma"],
-      "listaCuidadosEspecificos": ["Nenhum"],
+      "listaAlergias": [
+        "Nenhuma"
+      ],
+      "listaCuidadosEspecificos": [
+        "Nenhum"
+      ],
       "convenio": "Unimed",
       "numeroConvenio": "4321098765",
       "validadeConvenio": "2025-07-31",
@@ -201,8 +246,12 @@
       "email": "gabriel.almeida@example.com",
       "naturalidade": "Recife",
       "contatoEmergencia": "Pai - 11998877662",
-      "listaAlergias": ["Nenhuma"],
-      "listaCuidadosEspecificos": ["Nenhum"],
+      "listaAlergias": [
+        "Nenhuma"
+      ],
+      "listaCuidadosEspecificos": [
+        "Nenhum"
+      ],
       "convenio": "SulAmérica",
       "numeroConvenio": "8765432109",
       "validadeConvenio": "2025-06-30",
@@ -265,7 +314,7 @@
       "horarioConsulta": "09:30",
       "descricaoProblema": "Consulta de rotina para verificar resultados de exames anteriores e avaliar estado geral.",
       "medicacaoReceitada": "Nenhuma",
-      "dosagemPrecaucoes": "N/A",
+      "dosagemPrecaucoes": "Tomar 1 comprimido a cada 6 horas. Repouso e hidratação adequada.",
       "id": "5"
     },
     {
@@ -295,7 +344,7 @@
       "horarioConsulta": "09:00",
       "descricaoProblema": "Consulta de rotina para acompanhamento de saúde geral.",
       "medicacaoReceitada": "Nenhuma",
-      "dosagemPrecaucoes": "N/A",
+      "dosagemPrecaucoes": "Tomar 1 comprimido a cada 6 horas. Repouso e hidratação adequada.",
       "id": "8"
     }
   ],

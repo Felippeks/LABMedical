@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
+import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-login',
@@ -23,21 +24,23 @@ export class LoginComponent {
 
   loading = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apiService: ApiService) {}
 
   onLogin() {
     if (this.loginForm.valid) {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
 
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      this.apiService.getAll('userData').subscribe(userData => { 
+        const user = userData.find((user: any) => user.email === email && user.password === password);
 
-      if (email && userData.email === email && userData.password === password) {
-        this.router.navigate(['/home']);
-        localStorage.setItem('isLoggedIn', 'true');
-      } else {
-        alert('Usuário ou senha inválidos');
-      }
+        if (user) {
+          this.router.navigate(['/home']);
+          localStorage.setItem('isLoggedIn', 'true');
+        } else {
+          alert('Usuário ou senha inválidos');
+        }
+      });
     } else {
       alert('Por favor, preencha todos os campos corretamente!');
     }
@@ -45,21 +48,26 @@ export class LoginComponent {
 
   onForgotPassword() {
     const email = this.loginForm.get('email')?.value;
-
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
-    if (email && userData.email === email) {
-      userData.password = '1q2w3e@!';
-      localStorage.setItem('userData', JSON.stringify(userData));
-
-      alert(
-        'Sua senha foi alterada para a senha padrão: 1q2w3e@!. Por favor, prossiga utilizando essa senha.',
-      );
-    } else {
-      alert('Email não encontrado');
-    }
+  
+    this.apiService.getAll('userData').subscribe(userData => {
+      const user = userData.find((user: any) => user.email === email);
+  
+      if (user) {
+        user.password = '1q2w3e@!';
+        user.confirmPassword = '1q2w3e@!';
+  
+        this.apiService.update('userData', user.id, user).subscribe(updatedUser => {
+          localStorage.setItem('userData', JSON.stringify(updatedUser));
+          alert(
+            'Sua senha foi alterada para a senha padrão: 1q2w3e@!. Por favor, prossiga utilizando essa senha.',
+          );
+        });
+      } else {
+        alert('Email não encontrado');
+      }
+    });
   }
-
+  
   onRegister() {
     this.loading = true;
     setTimeout(() => {
