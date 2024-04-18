@@ -116,6 +116,7 @@ export class SidebarComponent implements OnInit {
 
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
+    localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   }
 

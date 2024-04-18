@@ -30,13 +30,14 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
-
+  
       this.apiService.getAll('userData').subscribe(userData => { 
         const user = userData.find((user: any) => user.email === email && user.password === password);
-
+  
         if (user) {
           this.router.navigate(['/home']);
           localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('currentUser', JSON.stringify(user));
         } else {
           alert('Usuário ou senha inválidos');
         }

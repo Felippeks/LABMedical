@@ -34,15 +34,15 @@ export class ToolbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.apiService.getAll('userData').subscribe(userData => { 
-      const user = userData[0];
-
-      if (user) {
-        this.userName = user.name;
-        this.userEmail = user.email;
+    const currentUserItem = localStorage.getItem('currentUser');
+    if (currentUserItem) {
+      const currentUser = JSON.parse(currentUserItem);
+      if (currentUser) {
+        this.userName = currentUser.name;
+        this.userEmail = currentUser.email;
       }
-    });
-
+    }
+  
     this.document.addEventListener('click', this.closeMenu.bind(this));
   }
 
@@ -61,6 +61,7 @@ export class ToolbarComponent implements OnInit {
 
   logout(): void {
     localStorage.setItem('isLoggedIn', 'false');
+    localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   }
 }
