@@ -1,9 +1,8 @@
 <!-- <div class="fixed inset-0 bg-transparent bg-opacity-5 backdrop-blur-sm z-20" *ngIf="message"></div> -->
-<div class="modal fixed inset-0 flex pt-4 h-40 z-10 font-roboto" *ngIf="message">
-    <div class="modal-content bg-white p-6 rounded-3xl shadow-lg relative mx-auto" style="height: 160px; width: 600px;">
-      <!-- <p class="absolute top-2 right-2 cursor-pointer" (click)="close()">X</p> -->
-      <h2 class="text-center text-xl text-blueColor font-bold">Mensagem</h2>
-      <p class="text-center text-red-600 my-3">{{ message }}</p>
-      <button class="block mx-auto mt-8 px-4 uppercase text-xl text-blueColor font-medium mb-4 hover:bg-gray-100 hover:text-textColor rounded-3xl" (click)="close()">Fechar</button>
-    </div>
+<div class="modal" *ngIf="message">
+  <div class="modal-content">
+    <h2>Mensagem</h2>
+    <p>{{ message }}</p>
+    <button (click)="close()">Fechar</button>
+  </div>
 </div>
