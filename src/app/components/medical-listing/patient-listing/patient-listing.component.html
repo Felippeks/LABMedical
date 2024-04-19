@@ -6,14 +6,14 @@
       class="font-roboto shadow-slate-500 shadow-md md:rounded-2xl md:mx-8 md:my-6 bg-white pt-4 overflow-auto h-screen md:items-stretch flex flex-col gap-10"
     >
       <header
-        class="flex justify-center items-center bg-shadow mx-10 rounded-2xl text-blueColor text-4xl "
+        class="flex justify-center items-center px-2 mx-auto bg-shadow md:mx-10 rounded-2xl text-blueColor md:text-4xl "
       >
         <h1>Informações do Paciente</h1>
       </header>
       <section
-        class="bg-background mx-10 border-2 border-textColor p-2 rounded-2xl text-center"
+        class="bg-background w-80 md:w-auto md:mx-10 mx-1 border-2 border-textColor p-2 rounded-2xl text-center"
       >
-        <h2 class="text-textColor text-2xl">Dados Pessoais</h2>
+        <h2 class="text-textColor md:text-2xl">Dados Pessoais</h2>
         <div *ngIf="paciente">
           <p>
             Nome do Paciente: <span class="info"> {{ paciente.nome }}</span>
@@ -35,7 +35,7 @@
           </p>
         </div>
       </section>
-      <section class="bg-gray-400 mx-10 border-2 border-textColor p-2 rounded-2xl text-center ">
+      <section class="bg-gray-400 md:mx-10 mx-1 border-2 md:w-auto w-80 border-textColor p-2 rounded-2xl text-center overflow-x-auto">
         <h2 class="text-background text-2xl mb-2">Histórico de Consultas</h2>
         <table class="table-auto mx-auto w-full text-sm text-justify">
           <thead >
@@ -70,9 +70,7 @@
           </tbody>
         </table>
       </section>
-      <section
-        class="bg-gray-400 mx-10 border-2 border-textColor p-2 rounded-2xl text-center"
-      >
+      <section class="bg-gray-400 md:mx-10 mx-1 border-2 md:w-auto w-80 border-textColor p-2 rounded-2xl text-center overflow-x-auto">
         <h2 class="text-background text-2xl mb-2">Histórico de Exames</h2>
         <table class="table-auto mx-auto w-full text-sm text-justify">
             <thead >
