@@ -41,9 +41,8 @@ A Medicine365 Inc identificou a necessidade de um software robusto para gerencia
 
 1. Clone o repositório para a sua máquina local usando `git clone`.
 2. Navegue até a pasta do projeto e execute `npm install` para instalar as dependências.
-3. Execute `npm run start` para iniciar o servidor de desenvolvimento.
-4. Servidor Json server rodando na web: `http://evolucaoagil.com.br:3000/`
-5. Abra o navegador e acesse `http://localhost:4200`.
+3. Execute `npm run start-dev` para iniciar o servidor de desenvolvimento e json server.
+4. Abra o navegador e acesse `http://localhost:4200`.
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#-extutura-da-aplicao)
@@ -67,7 +66,8 @@ lab-medical
 │ │  │ │  ├──➤ sidebar/ # Componente de barra lateral 
 │ │  │ │  ├──➤ spinner/ # Componente de spinner de carregamento 
 │ │  │ │  ├──➤ toolbar/ # Componente de barra de ferramentas
-│ │  │ │  └──➤ Modal/ # Componente de Modal Dinamico
+│ │  │ │  ├──➤ Modal/ # Componente de Modal Dinamico
+│ │  │ │  └──➤ Reset-Password-modal/ # Componente de Modal para resetar Senhas
 │ │  ├──➤ guardsRoutes/ # Guardas de rotas 
 │ │  ├──➤ pipes/ # Pipes da aplicação 
 │ │  └──➤ services/ # Serviços da aplicação 
@@ -96,8 +96,6 @@ lab-medical
 - Melhorar a responsividade do design para garantir uma boa experiência do usuário em dispositivos de diferentes tamanhos.
 - Implementação de testes de unidade e de integração para garantir a qualidade do código.
 - Melhorar a interface do usuário para torná-la mais intuitiva e fácil de usar.
-- Recuperação de Senha: Implementação da funcionalidade de recuperação de senha para oferecer uma experiência completa de autenticação.
-
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#licença)
