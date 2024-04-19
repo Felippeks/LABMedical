@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
   private baseUrls: { [key: string]: string } = {
-    pacientes: 'http://evolucaoagil.com.br:3000/pacientes',
-    consultas: 'http://evolucaoagil.com.br:3000/consultas',
-    exames: 'http://evolucaoagil.com.br:3000/exames',
-    userData: 'http://evolucaoagil.com.br:3000/userData',
+    pacientes: 'http://localhost:3000/pacientes',
+    consultas: 'http://localhost:3000/consultas',
+    exames: 'http://localhost:3000/exames',
+    userData: 'http://localhost:3000/userData',
   };
 
   constructor(private http: HttpClient) {}
