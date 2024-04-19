@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,11 +10,12 @@ import { Router, RouterOutlet } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
 import { ModalComponent } from '../shareds_components/modal/modal.component';
 import { ModalService } from '../../services/modal/modal.service';
+import { ResetPasswordModalComponent } from '../shareds_components/reset-password-modal-component/reset-password-modal-component.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterOutlet, CommonModule, ModalComponent],
+  imports: [ReactiveFormsModule, RouterOutlet, CommonModule, ModalComponent, ResetPasswordModalComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -54,24 +55,22 @@ export class LoginComponent {
   async onForgotPassword() {
     const email = this.loginForm.get('email')?.value;
   
+    if (!email) {
+      this.modalService.setMessage('Por favor, insira um e-mail');
+      return;
+    }
+  
     const userData = await this.apiService.getAll('userData');
     const user = userData.find((user: any) => user.email === email);
   
     if (user) {
-      user.password = '1q2w3e@!';
-      user.confirmPassword = '1q2w3e@!';
-  
-      const updatedUser = await this.apiService.update('userData', user.id, user);
-      localStorage.setItem('userData', JSON.stringify(updatedUser));
-      this.modalService.setMessage(
-        'Sua senha foi alterada para a senha padrão: 1q2w3e@!. Por favor, prossiga utilizando essa senha.',
-      );
-      this.message ='Sua senha foi alterada para a senha padrão: 1q2w3e@!. Por favor, prossiga utilizando essa senha.'
+      this.modalService.setEmail(email);
+      this.modalService.setResetPassword(true);
     } else {
       this.modalService.setMessage('Email não encontrado');
-      this.message = 'Email não encontrado';
     }
   }
+
   onRegister() {
     this.loading = true;
     setTimeout(() => {
