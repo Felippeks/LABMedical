@@ -104,3 +104,6 @@ lab-medical
 ## ➤ ➤ Licença
 
 Este projeto está licenciado sob a licença MIT.
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#licença)
