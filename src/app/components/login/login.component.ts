@@ -28,7 +28,7 @@ export class LoginComponent {
 
   loading = false; 
 
-  constructor(private router: Router, private apiService: ApiService, private modalService: ModalService) {}
+  constructor(private router: Router, private apiService: ApiService, private modalService: ModalService, private cdr: ChangeDetectorRef) {}
 
   async onLogin() {
     if (this.loginForm.valid) {
@@ -57,6 +57,8 @@ export class LoginComponent {
   
     if (!email) {
       this.modalService.setMessage('Por favor, insira um e-mail');
+      this.message = 'Por favor, insira um e-mail';
+      this.cdr.detectChanges();
       return;
     }
   

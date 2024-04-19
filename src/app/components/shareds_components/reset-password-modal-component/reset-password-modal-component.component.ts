@@ -67,5 +67,9 @@ export class ResetPasswordModalComponent implements OnInit, OnDestroy {
   }
   close() {
     this.modalService.setResetPassword(false);
+    this.resetPasswordForm.setValue({
+      password: '',
+      confirmPassword: ''
+    });
   }
 }
