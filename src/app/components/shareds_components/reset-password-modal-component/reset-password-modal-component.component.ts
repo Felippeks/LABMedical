@@ -50,7 +50,7 @@ export class ResetPasswordModalComponent implements OnInit, OnDestroy {
           this.modalService.setMessage('Email não encontrado');
         }
       } else {
-        this.modalService.setMessage('As senhas não coincidem');
+        alert('As senhas não coincidem');
       }
     } else {
       this.modalService.setMessage('Por favor, preencha todos os campos corretamente!');
