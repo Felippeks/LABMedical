@@ -5,9 +5,7 @@ import { authChildGuard } from './auth-child-guard.guard';
 
 describe('authChildGuardGuard', () => {
   const executeGuard: CanActivateChildFn = (...guardParameters) =>
-    TestBed.runInInjectionContext(() =>
-      authChildGuard(...guardParameters),
-    );
+    TestBed.runInInjectionContext(() => authChildGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

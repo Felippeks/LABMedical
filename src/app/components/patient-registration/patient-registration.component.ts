@@ -37,7 +37,7 @@ function dateValidator(): ValidatorFn {
     ToolbarComponent,
     ReactiveFormsModule,
     CommonModule,
-    ModalComponent
+    ModalComponent,
   ],
 })
 export class PatientRegistrationComponent {
@@ -45,7 +45,6 @@ export class PatientRegistrationComponent {
   isDeleting: boolean = false;
   isEditing: boolean = false;
   message: string | undefined;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -109,30 +108,37 @@ export class PatientRegistrationComponent {
         this.formPatient.patchValue(data);
         this.isEditing = true;
       } catch (error) {
-        this.modalService.setMessage('Erro ao carregar detalhes do paciente: ' + error);
+        this.modalService.setMessage(
+          'Erro ao carregar detalhes do paciente: ' + error,
+        );
         this.message = 'Erro ao carregar detalhes do paciente: ' + error;
       }
     }
 
     this.formPatient.get('cep').valueChanges.subscribe((cep: string) => {
       if (cep && cep.length === 8) {
-        this.cepService.getCepData(cep).subscribe(data => {
-          if (data.erro) {
-            this.modalService.setMessage('CEP inválido!');
-            this.message = 'CEP inválido!';
-          } else {
-            this.formPatient.patchValue({
-              logradouro: data.logradouro,
-              complemento: data.complemento,
-              bairro: data.bairro,
-              cidade: data.localidade,
-              estado: data.uf,
-            });
-          }
-        }, error => {
-          this.modalService.setMessage('Erro ao buscar dados do CEP: ' + error);
-          this.message = 'Erro ao buscar dados do CEP: ' + error;
-        });
+        this.cepService.getCepData(cep).subscribe(
+          (data) => {
+            if (data.erro) {
+              this.modalService.setMessage('CEP inválido!');
+              this.message = 'CEP inválido!';
+            } else {
+              this.formPatient.patchValue({
+                logradouro: data.logradouro,
+                complemento: data.complemento,
+                bairro: data.bairro,
+                cidade: data.localidade,
+                estado: data.uf,
+              });
+            }
+          },
+          (error) => {
+            this.modalService.setMessage(
+              'Erro ao buscar dados do CEP: ' + error,
+            );
+            this.message = 'Erro ao buscar dados do CEP: ' + error;
+          },
+        );
       }
     });
   }
@@ -155,7 +161,7 @@ export class PatientRegistrationComponent {
     });
   }
 
-   async onSubmit() {
+  async onSubmit() {
     if (this.formPatient.valid) {
       const dadosParaEnviar = { ...this.formPatient.value };
       this.removeFormats(dadosParaEnviar);
@@ -169,7 +175,9 @@ export class PatientRegistrationComponent {
             const data = await this.ApiService.getAll('pacientes');
             this.stateManagementService.setPacientes(data as Paciente[]);
           } catch (error) {
-            this.modalService.setMessage('Erro ao atualizar paciente: ' + error);
+            this.modalService.setMessage(
+              'Erro ao atualizar paciente: ' + error,
+            );
             this.message = 'Erro ao atualizar paciente: ' + error;
           }
         } else {
@@ -178,7 +186,10 @@ export class PatientRegistrationComponent {
         }
       } else {
         try {
-          const data = await this.ApiService.create('pacientes', dadosParaEnviar);
+          const data = await this.ApiService.create(
+            'pacientes',
+            dadosParaEnviar,
+          );
           this.modalService.setMessage('Paciente criado com sucesso!');
           this.message = 'Paciente criado com sucesso!';
           this.isEditing = true;
@@ -189,7 +200,9 @@ export class PatientRegistrationComponent {
         }
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios.');
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos obrigatórios.',
+      );
       this.message = 'Por favor, preencha todos os campos obrigatórios.';
     }
   }
@@ -207,7 +220,8 @@ export class PatientRegistrationComponent {
           this.modalService.setMessage(
             'O paciente tem consultas e/ou exames cadastrados. Não é possível excluir.',
           );
-          this.message = 'O paciente tem consultas e/ou exames cadastrados. Não é possível excluir.'
+          this.message =
+            'O paciente tem consultas e/ou exames cadastrados. Não é possível excluir.';
           this.isDeleting = false;
         } else {
           await this.ApiService.delete('pacientes', id);
@@ -217,7 +231,9 @@ export class PatientRegistrationComponent {
           this.router.navigate(['/home']);
         }
       } catch (error) {
-        this.modalService.setMessage('Erro ao deletar paciente: ' + JSON.stringify(error));
+        this.modalService.setMessage(
+          'Erro ao deletar paciente: ' + JSON.stringify(error),
+        );
         this.message = 'Erro ao deletar paciente: ' + JSON.stringify(error);
         this.isDeleting = false;
       }

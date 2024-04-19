@@ -17,7 +17,13 @@ import { ModalService } from '../../services/modal/modal.service';
   standalone: true,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [ToolbarComponent, SidebarComponent, CommonModule, FormsModule, ModalComponent],
+  imports: [
+    ToolbarComponent,
+    SidebarComponent,
+    CommonModule,
+    FormsModule,
+    ModalComponent,
+  ],
 })
 export class HomeComponent implements OnInit {
   message: string | undefined;

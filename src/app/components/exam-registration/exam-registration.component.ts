@@ -29,7 +29,7 @@ import { ModalComponent } from '../shareds_components/modal/modal.component';
     CommonModule,
     FormsModule,
     CpfPipe,
-    ModalComponent
+    ModalComponent,
   ],
 })
 export class ExamRegistrationComponent {
@@ -97,7 +97,10 @@ export class ExamRegistrationComponent {
           exame.horarioExame,
         );
         this.pacienteId = exame['pacienteId'];
-        const paciente: any = await this.apiService.get('pacientes', exame['pacienteId']);
+        const paciente: any = await this.apiService.get(
+          'pacientes',
+          exame['pacienteId'],
+        );
         this.selectedPaciente = paciente;
       } catch (error) {
         console.error('Erro ao carregar exame:', error);
@@ -108,7 +111,9 @@ export class ExamRegistrationComponent {
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.modalService.setMessage(`Arquivo ${file.name} selecionado com sucesso!`);
+      this.modalService.setMessage(
+        `Arquivo ${file.name} selecionado com sucesso!`,
+      );
       this.message = `Arquivo ${file.name} selecionado com sucesso!`;
       this.generateUrlDocumento();
     }
@@ -165,7 +170,9 @@ export class ExamRegistrationComponent {
 
   async onSubmit() {
     if (!this.selectedPaciente) {
-      this.modalService.setMessage('Por favor, selecione um paciente para cadastrar o exame.');
+      this.modalService.setMessage(
+        'Por favor, selecione um paciente para cadastrar o exame.',
+      );
       this.message = 'Por favor, selecione um paciente para cadastrar o exame.';
       return;
     }
@@ -189,8 +196,11 @@ export class ExamRegistrationComponent {
         console.error('Erro ao cadastrar exame:', error);
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios do formulário.');
-      this.message = 'Por favor, preencha todos os campos obrigatórios do formulário.';
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos obrigatórios do formulário.',
+      );
+      this.message =
+        'Por favor, preencha todos os campos obrigatórios do formulário.';
     }
   }
 
@@ -205,7 +215,9 @@ export class ExamRegistrationComponent {
         console.error('Erro ao deletar exame:', error);
       }
     } else {
-      this.modalService.setMessage('Por favor, selecione um exame para deletar.');
+      this.modalService.setMessage(
+        'Por favor, selecione um exame para deletar.',
+      );
       this.message = 'Por favor, selecione um exame para deletar.';
     }
   }
@@ -228,8 +240,11 @@ export class ExamRegistrationComponent {
         console.error('Erro: exameId é null');
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios para atualização.');
-      this.message = 'Por favor, preencha todos os campos obrigatórios para atualização.';
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos obrigatórios para atualização.',
+      );
+      this.message =
+        'Por favor, preencha todos os campos obrigatórios para atualização.';
     }
   }
 }

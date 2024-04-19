@@ -11,20 +11,30 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../../../services/api/api.service';
 import { ModalService } from '../../../services/modal/modal.service';
-import { ModalComponent } from "../../shareds_components/modal/modal.component";
+import { ModalComponent } from '../../shareds_components/modal/modal.component';
 
 @Component({
-    selector: 'app-sign-up',
-    standalone: true,
-    templateUrl: './sign-up.component.html',
-    styleUrl: './sign-up.component.scss',
-    imports: [HttpClientModule, ReactiveFormsModule, FormsModule, CommonModule, ModalComponent]
+  selector: 'app-sign-up',
+  standalone: true,
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss',
+  imports: [
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    ModalComponent,
+  ],
 })
 export class SignUpComponent {
   SignUpForm: FormGroup | any;
   message: string | undefined;
 
-  constructor(private router: Router, private apiService: ApiService, private modalService: ModalService) {
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private modalService: ModalService,
+  ) {
     this.initializeForm();
   }
   initializeForm() {
@@ -50,7 +60,9 @@ export class SignUpComponent {
         this.message = 'As senhas não correspondem!';
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos corretamente!');
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos corretamente!',
+      );
       this.message = 'Por favor, preencha todos os campos corretamente!';
     }
   }

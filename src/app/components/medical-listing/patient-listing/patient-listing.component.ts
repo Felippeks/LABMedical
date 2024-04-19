@@ -34,10 +34,13 @@ export class PatientMedicalListingComponent implements OnInit {
         const paciente: Paciente = await this.apiService.get('pacientes', id);
         this.paciente = {
           ...paciente,
-          contatoEmergencia: this.formatService.formatPhone(paciente.contatoEmergencia),
-        }
+          contatoEmergencia: this.formatService.formatPhone(
+            paciente.contatoEmergencia,
+          ),
+        };
 
-        const consultas: Consulta[] = await this.apiService.getConsultasByPacienteId(id);
+        const consultas: Consulta[] =
+          await this.apiService.getConsultasByPacienteId(id);
         this.consultas = consultas.sort(
           (a: Consulta, b: Consulta) =>
             new Date(a.dataConsulta).getTime() -

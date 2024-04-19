@@ -29,7 +29,7 @@ import { ModalComponent } from '../shareds_components/modal/modal.component';
     CommonModule,
     FormsModule,
     CpfPipe,
-    ModalComponent
+    ModalComponent,
   ],
 })
 export class AppointmentRegistrationComponent {
@@ -49,10 +49,9 @@ export class AppointmentRegistrationComponent {
     private router: Router,
     private route: ActivatedRoute,
     private modalService: ModalService,
-  
   ) {
     this.formAppointment = new FormGroup({
-      pacienteId: new FormControl('',[Validators.required]),
+      pacienteId: new FormControl('', [Validators.required]),
       motivoConsulta: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -93,7 +92,10 @@ export class AppointmentRegistrationComponent {
         consulta.horarioConsulta,
       );
       this.pacienteId = consulta['pacienteId'];
-      this.selectedPaciente = await this.apiService.get('pacientes', consulta['pacienteId']);
+      this.selectedPaciente = await this.apiService.get(
+        'pacientes',
+        consulta['pacienteId'],
+      );
     }
   }
 
@@ -134,8 +136,11 @@ export class AppointmentRegistrationComponent {
 
   async onSubmit() {
     if (!this.selectedPaciente) {
-      this.modalService.setMessage('Por favor, selecione um paciente antes de cadastrar uma consulta.'); 
-      this.message = 'Por favor, selecione um paciente antes de cadastrar uma consulta.';
+      this.modalService.setMessage(
+        'Por favor, selecione um paciente antes de cadastrar uma consulta.',
+      );
+      this.message =
+        'Por favor, selecione um paciente antes de cadastrar uma consulta.';
       return;
     }
 
@@ -157,8 +162,11 @@ export class AppointmentRegistrationComponent {
         console.error('Erro ao cadastrar consulta:', error);
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios do formulário.');
-      this.message = 'Por favor, preencha todos os campos obrigatórios do formulário.';
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos obrigatórios do formulário.',
+      );
+      this.message =
+        'Por favor, preencha todos os campos obrigatórios do formulário.';
     }
   }
   async onDelete() {
@@ -172,11 +180,13 @@ export class AppointmentRegistrationComponent {
         console.error('Erro ao deletar consulta:', error);
       }
     } else {
-      this.modalService.setMessage('Por favor, selecione uma consulta para deletar.');
+      this.modalService.setMessage(
+        'Por favor, selecione uma consulta para deletar.',
+      );
       this.message = 'Por favor, selecione uma consulta para deletar.';
     }
   }
-  
+
   async onUpdate() {
     if (this.formAppointment.valid && this.selectedPaciente) {
       if (this.consultaId !== null) {
@@ -185,7 +195,11 @@ export class AppointmentRegistrationComponent {
           pacienteId: this.selectedPaciente.id,
         };
         try {
-          await this.apiService.update('consultas', this.consultaId, updatedConsultation);
+          await this.apiService.update(
+            'consultas',
+            this.consultaId,
+            updatedConsultation,
+          );
           this.modalService.setMessage('Consulta atualizada com sucesso!');
           this.message = 'Consulta atualizada com sucesso!';
         } catch (error) {
@@ -195,8 +209,11 @@ export class AppointmentRegistrationComponent {
         console.error('Erro: consultaId é null');
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos obrigatórios para atualização.');
-      this.message = 'Por favor, preencha todos os campos obrigatórios para atualização.';
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos obrigatórios para atualização.',
+      );
+      this.message =
+        'Por favor, preencha todos os campos obrigatórios para atualização.';
     }
   }
 }
