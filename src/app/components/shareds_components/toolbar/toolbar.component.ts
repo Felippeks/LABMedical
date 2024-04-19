@@ -23,7 +23,7 @@ export class ToolbarComponent implements OnInit {
     '/appointments': 'Cadastro de Consultas',
     '/exam': 'Cadastro de Exames',
     '/medicalListing': 'Listagem de Prontuários',
-    '/medicalListing/patientListing': 'Prontuário do Paciente',
+    '/patientListing/:id': 'Prontuário do Paciente',
     '/patientRegistration': 'Cadastro de Pacientes',
   };
 
@@ -47,6 +47,9 @@ export class ToolbarComponent implements OnInit {
   }
 
   get currentRouteName() {
+    if (this.router.url.includes('patientListing')) {
+      return this.routeNames['/patientListing/:id'];
+    }
     return this.routeNames[this.router.url];
   }
 
