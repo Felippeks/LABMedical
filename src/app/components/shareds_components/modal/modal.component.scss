@@ -12,3 +12,65 @@
   z-index: 9999;
   animation: slideDown 0.5s ease-out;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  padding-top: 1rem;
+  height: 10rem;
+  z-index: 10;
+  font-family: 'Roboto', sans-serif;
+
+  .modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    margin: auto;
+    height: auto;
+    max-height: 220px;
+    width: auto;
+    max-width: 500px;
+
+    h2 {
+      text-align: center;
+      font-size: 1.25rem;
+      color: blue;
+      font-weight: bold;
+    }
+
+    p {
+      text-align: center;
+      color: red;
+      margin: 1rem 0;
+    }
+
+    button {
+      display: block;
+      margin: 2rem auto 1rem;
+      padding: 0 1rem;
+      text-transform: uppercase;
+      font-size: 1.25rem;
+      font-weight: 500;
+      border-radius: 1.5rem;
+      background-color: #014c8b;
+      color: #ffd700;
+      border-color: #ffd700;
+      border: 2px solid;
+      cursor: pointer;
+
+      &:hover {
+        color: #064c8c;
+        background-color: #d1d5db;
+        border-color: #ffd700;
+      }
+    }
+  }
+}

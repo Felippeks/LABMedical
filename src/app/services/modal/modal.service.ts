@@ -5,16 +5,24 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ModalService {
-  private message = new BehaviorSubject<string>('');
-  currentMessage = this.message.asObservable();
+  private messageSource = new BehaviorSubject<string | undefined>(undefined);
+  currentMessage = this.messageSource.asObservable();
 
-  constructor() { }
+  private resetPasswordSource = new BehaviorSubject<boolean>(false);
+  currentResetPassword = this.resetPasswordSource.asObservable();
+
+  private emailSource = new BehaviorSubject<string | undefined>(undefined);
+  currentEmail = this.emailSource.asObservable();
 
   setMessage(message: string) {
-    this.message.next(message);
+    this.messageSource.next(message);
   }
 
-  clearMessage() {
-    this.message.next('');
+  setResetPassword(resetPassword: boolean) {
+    this.resetPasswordSource.next(resetPassword);
+  }
+
+  setEmail(email: string) {
+    this.emailSource.next(email);
   }
 }

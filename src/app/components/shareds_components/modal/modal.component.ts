@@ -9,17 +9,18 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.scss'
+  styleUrl: './modal.component.scss',
 })
-
 export class ModalComponent implements OnInit, OnDestroy {
   message: string | undefined;
   private subscription: Subscription | undefined;
 
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: ModalService) {}
 
   ngOnInit() {
-    this.subscription = this.modalService.currentMessage.subscribe(message => this.message = message);
+    this.subscription = this.modalService.currentMessage.subscribe(
+      (message) => (this.message = message),
+    );
   }
 
   ngOnDestroy() {
