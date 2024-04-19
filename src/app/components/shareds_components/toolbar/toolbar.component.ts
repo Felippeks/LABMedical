@@ -30,7 +30,7 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class ToolbarComponent implements OnInit {
         this.userEmail = currentUser.email;
       }
     }
-  
+
     this.document.addEventListener('click', this.closeMenu.bind(this));
   }
 

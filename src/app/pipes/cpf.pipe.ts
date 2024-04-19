@@ -3,10 +3,9 @@ import { FormatService } from '../services/format/format.service';
 
 @Pipe({
   name: 'cpf',
-  standalone: true
+  standalone: true,
 })
 export class CpfPipe implements PipeTransform {
-
   constructor(private formatService: FormatService) {}
 
   transform(value: string | null): string {
@@ -15,5 +14,4 @@ export class CpfPipe implements PipeTransform {
     }
     return this.formatService.formatCPF(value);
   }
-
 }

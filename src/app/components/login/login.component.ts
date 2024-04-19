@@ -15,7 +15,13 @@ import { ResetPasswordModalComponent } from '../shareds_components/reset-passwor
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterOutlet, CommonModule, ModalComponent, ResetPasswordModalComponent],
+  imports: [
+    ReactiveFormsModule,
+    RouterOutlet,
+    CommonModule,
+    ModalComponent,
+    ResetPasswordModalComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -26,18 +32,25 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  loading = false; 
+  loading = false;
 
-  constructor(private router: Router, private apiService: ApiService, private modalService: ModalService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private modalService: ModalService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   async onLogin() {
     if (this.loginForm.valid) {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
-  
+
       const userData = await this.apiService.getAll('userData');
-      const user = userData.find((user: any) => user.email === email && user.password === password);
-  
+      const user = userData.find(
+        (user: any) => user.email === email && user.password === password,
+      );
+
       if (user) {
         this.router.navigate(['/home']);
         localStorage.setItem('isLoggedIn', 'true');
@@ -47,24 +60,26 @@ export class LoginComponent {
         this.message = 'Usuário ou senha inválidos';
       }
     } else {
-      this.modalService.setMessage('Por favor, preencha todos os campos corretamente!');
+      this.modalService.setMessage(
+        'Por favor, preencha todos os campos corretamente!',
+      );
       this.message = 'Por favor, preencha todos os campos corretamente!';
     }
   }
 
   async onForgotPassword() {
     const email = this.loginForm.get('email')?.value;
-  
+
     if (!email) {
       this.modalService.setMessage('Por favor, insira um e-mail');
       this.message = 'Por favor, insira um e-mail';
       this.cdr.detectChanges();
       return;
     }
-  
+
     const userData = await this.apiService.getAll('userData');
     const user = userData.find((user: any) => user.email === email);
-  
+
     if (user) {
       this.modalService.setEmail(email);
       this.modalService.setResetPassword(true);

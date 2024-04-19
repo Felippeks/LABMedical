@@ -23,26 +23,34 @@ export class ApiService {
   }
 
   async getConsultasByPacienteId(pacienteId: string): Promise<any> {
-    return this.http.get(
-      `${this.baseUrls['consultas']}?pacienteId=${pacienteId}`,
-    ).toPromise();
+    return this.http
+      .get(`${this.baseUrls['consultas']}?pacienteId=${pacienteId}`)
+      .toPromise();
   }
 
   async getExamesByPacienteId(pacienteId: string): Promise<any> {
-    return this.http.get(`${this.baseUrls['exames']}?pacienteId=${pacienteId}`).toPromise();
+    return this.http
+      .get(`${this.baseUrls['exames']}?pacienteId=${pacienteId}`)
+      .toPromise();
   }
 
   async create(endpoint: string, data: Object): Promise<Object | undefined> {
     return this.http.post(`${this.baseUrls[endpoint]}`, data).toPromise();
   }
-  
-  async update(endpoint: string, id: string, value: any): Promise<Object | undefined> {
+
+  async update(
+    endpoint: string,
+    id: string,
+    value: any,
+  ): Promise<Object | undefined> {
     return this.http.put(`${this.baseUrls[endpoint]}/${id}`, value).toPromise();
   }
 
   async delete(endpoint: string, id: string): Promise<any> {
-    return this.http.delete(`${this.baseUrls[endpoint]}/${id}`, {
-      responseType: 'text',
-    }).toPromise();
+    return this.http
+      .delete(`${this.baseUrls[endpoint]}/${id}`, {
+        responseType: 'text',
+      })
+      .toPromise();
   }
 }
